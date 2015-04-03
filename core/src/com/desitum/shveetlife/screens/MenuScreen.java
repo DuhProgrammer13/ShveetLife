@@ -32,7 +32,7 @@ public class MenuScreen implements Screen {
 
         cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         cam.position.set(FRUSTUM_WIDTH/2, FRUSTUM_HEIGHT/2, 0);
-        viewport = new FitViewport(150, 100, cam);
+        viewport = new FitViewport(FRUSTUM_WIDTH, FRUSTUM_HEIGHT, cam);
     }
 
     @Override
