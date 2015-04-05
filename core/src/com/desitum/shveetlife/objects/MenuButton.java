@@ -25,6 +25,8 @@ public class MenuButton extends Sprite {
         this.setSize(width, height);
         this.setPosition(x, y);
 
+        this.setOriginCenter();
+
         this.animators = new ArrayList<Animator>();
     }
 

@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.desitum.shveetlife.ShveetLife;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
+import com.desitum.shveetlife.libraries.animation.ScaleAnimator;
 import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 import com.desitum.shveetlife.objects.MenuButton;
 
@@ -42,6 +43,7 @@ public class MenuScreen implements Screen {
         myButton = new MenuButton(img, img, 0, 0, 15, 10);
         myButton.addAnimator(new MovementAnimator(myButton, 0, 135, 2, Interpolation.ACCELERATE_INTERPOLATOR, true, false));
         myButton.addAnimator(new MovementAnimator(myButton, 0, 90, 2, Interpolation.DECELERATE_INTERPOLATOR, false, true));
+        myButton.addAnimator(new ScaleAnimator(myButton, 2, 0, 1, 0.5f, Interpolation.DECELERATE_INTERPOLATOR, true, true));
         myButton.startAllAnimators();
 
         myAnimator.start(false);
