@@ -5,4 +5,5 @@ package com.desitum.shveetlife.libraries.animation;
  */
 public interface Animator {
     public void update(float delta);
+    public void start(boolean isProtected);
 }

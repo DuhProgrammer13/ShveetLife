@@ -9,8 +9,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.desitum.shveetlife.ShveetLife;
-
-import java.awt.Menu;
+import com.desitum.shveetlife.libraries.animation.MovementAnimator;
+import com.desitum.shveetlife.libraries.interpolation.Interpolation;
+import com.desitum.shveetlife.objects.MenuButton;
 
 /**
  * Created by dvan6234 on 4/3/2015.
@@ -23,8 +24,12 @@ public class MenuScreen implements Screen {
     private Viewport viewport;
     private OrthographicCamera cam;
 
+    private MenuButton myButton;
+
     SpriteBatch batch;
     Texture img;
+
+    private MovementAnimator myAnimator = new MovementAnimator(15, 5, 2, Interpolation.LINEAR_INTERPOLATOR);
 
     public MenuScreen (ShveetLife sl){
         batch = new SpriteBatch();
@@ -33,6 +38,13 @@ public class MenuScreen implements Screen {
         cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         cam.position.set(FRUSTUM_WIDTH/2, FRUSTUM_HEIGHT/2, 0);
         viewport = new FitViewport(FRUSTUM_WIDTH, FRUSTUM_HEIGHT, cam);
+
+        myButton = new MenuButton(img, img, 0, 0, 15, 10);
+        myButton.addAnimator(new MovementAnimator(myButton, 0, 135, 2, Interpolation.ACCELERATE_INTERPOLATOR, true, false));
+        myButton.addAnimator(new MovementAnimator(myButton, 0, 90, 2, Interpolation.DECELERATE_INTERPOLATOR, false, true));
+        myButton.startAllAnimators();
+
+        myAnimator.start(false);
     }
 
     @Override
@@ -43,6 +55,9 @@ public class MenuScreen implements Screen {
     @Override
     public void render(float delta) {
         draw();
+        myAnimator.update(delta);
+        myButton.update(delta);
+        System.out.println(myAnimator.getCurrentPos());
     }
 
     private void draw(){
@@ -51,7 +66,7 @@ public class MenuScreen implements Screen {
 
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        batch.draw(img, 0, 0);
+        myButton.draw(batch);
         batch.end();
 
     }

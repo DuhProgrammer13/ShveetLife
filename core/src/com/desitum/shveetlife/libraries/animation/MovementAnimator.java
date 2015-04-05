@@ -1,20 +1,21 @@
 package com.desitum.shveetlife.libraries.animation;
 
-import com.desitum.crackTheCode.libraries.interpolation.AccelerateDecelerateInterpolator;
-import com.desitum.crackTheCode.libraries.interpolation.AccelerateInterpolator;
-import com.desitum.crackTheCode.libraries.interpolation.AnticipateInterpolator;
-import com.desitum.crackTheCode.libraries.interpolation.BounceInterpolator;
-import com.desitum.crackTheCode.libraries.interpolation.DecelerateInterpolator;
-import com.desitum.crackTheCode.libraries.interpolation.Interpolation;
-import com.desitum.crackTheCode.libraries.interpolation.Interpolator;
-import com.desitum.crackTheCode.libraries.interpolation.LinearInterpolator;
-import com.desitum.crackTheCode.libraries.interpolation.OvershootInterpolator;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.desitum.shveetlife.libraries.interpolation.AccelerateDecelerateInterpolator;
+import com.desitum.shveetlife.libraries.interpolation.AccelerateInterpolator;
+import com.desitum.shveetlife.libraries.interpolation.AnticipateInterpolator;
+import com.desitum.shveetlife.libraries.interpolation.BounceInterpolator;
+import com.desitum.shveetlife.libraries.interpolation.DecelerateInterpolator;
+import com.desitum.shveetlife.libraries.interpolation.Interpolation;
+import com.desitum.shveetlife.libraries.interpolation.Interpolator;
+import com.desitum.shveetlife.libraries.interpolation.LinearInterpolator;
+import com.desitum.shveetlife.libraries.interpolation.OvershootInterpolator;
 
 /**
  * Created by kody on 2/24/15.
  * can be used by kody and people in []
  */
-public class MovementAnimator {
+public class MovementAnimator implements Animator {
 
     private float startPos;
     private float endPos;
@@ -26,13 +27,32 @@ public class MovementAnimator {
 
     private boolean running;
     private boolean ran;
+    private boolean controllingX;
+    private boolean controllingY;
     private Interpolator interpolator;
+    private Sprite controllingSprite;
 
     public MovementAnimator(float startPos, float endPos, float duration, int interpolator){
+        this.controllingSprite = null;
         this.startPos = startPos;
         this.endPos = endPos;
         this.travelDistance = endPos - startPos;
         this.currentPosition = startPos;
+
+        this.duration = duration;
+
+        setupInterpolator(interpolator);
+    }
+
+    public MovementAnimator(Sprite sprite, float startPos, float endPos, float duration, int interpolator, boolean controlX, boolean controlY){
+        this.controllingSprite = sprite;
+        this.startPos = startPos;
+        this.endPos = endPos;
+        this.travelDistance = endPos - startPos;
+        this.currentPosition = startPos;
+
+        this.controllingX = controlX;
+        this.controllingY = controlY;
 
         this.duration = duration;
 
@@ -50,6 +70,15 @@ public class MovementAnimator {
         }
 
         currentPosition = interpolator.getInterpolation(timeInAnimation) * travelDistance + startPos;
+
+        if (this.controllingSprite != null){
+            if (this.controllingX){
+                this.controllingSprite.setX(getCurrentPos());
+            }
+            if (this.controllingY) {
+                this.controllingSprite.setY(getCurrentPos());
+            }
+        }
     }
 
     public float getCurrentPos(){
