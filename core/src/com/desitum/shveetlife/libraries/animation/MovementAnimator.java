@@ -25,6 +25,9 @@ public class MovementAnimator implements Animator {
     private float duration;
     private float timeInAnimation;
 
+    private float currentDelay;
+    private float animationDelay;
+
     private boolean running;
     private boolean ran;
     private boolean controllingX;
@@ -44,12 +47,15 @@ public class MovementAnimator implements Animator {
         setupInterpolator(interpolator);
     }
 
-    public MovementAnimator(Sprite sprite, float startPos, float endPos, float duration, int interpolator, boolean controlX, boolean controlY){
+    public MovementAnimator(Sprite sprite, float startPos, float endPos, float duration, float delay, int interpolator, boolean controlX, boolean controlY){
         this.controllingSprite = sprite;
         this.startPos = startPos;
         this.endPos = endPos;
         this.travelDistance = endPos - startPos;
         this.currentPosition = startPos;
+
+        this.animationDelay = delay;
+        this.currentDelay = 0;
 
         this.controllingX = controlX;
         this.controllingY = controlY;
@@ -63,6 +69,12 @@ public class MovementAnimator implements Animator {
         if (!running){
             return;
         }
+
+        if (currentDelay < animationDelay){
+            currentDelay += delta;
+            return;
+        }
+
         timeInAnimation += delta/duration;
         if (timeInAnimation >= 1){
             timeInAnimation = 1;

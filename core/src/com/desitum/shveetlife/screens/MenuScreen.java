@@ -34,14 +34,15 @@ public class MenuScreen implements Screen {
 
     SpriteBatch batch;
     Texture img;
+    Texture background;
 
     private MovementAnimator myAnimator = new MovementAnimator(15, 5, 2, Interpolation.LINEAR_INTERPOLATOR);
 
     public MenuScreen (ShveetLife sl){
         batch = new SpriteBatch();
         img = new Texture("badlogic.jpg");
+        background = new Texture("menu_bg.png");
 
-        myClient = new Client();
         myServer = new Server();
 
         cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
@@ -49,9 +50,12 @@ public class MenuScreen implements Screen {
         viewport = new FitViewport(FRUSTUM_WIDTH, FRUSTUM_HEIGHT, cam);
 
         myButton = new MenuButton(img, img, 0, 0, 15, 10);
-        myButton.addAnimator(new MovementAnimator(myButton, 0, 135, 2, Interpolation.ACCELERATE_INTERPOLATOR, true, false));
-        myButton.addAnimator(new MovementAnimator(myButton, 0, 90, 2, Interpolation.DECELERATE_INTERPOLATOR, false, true));
+        myButton.addAnimator(new MovementAnimator(myButton, 0, 135, 2, 0, Interpolation.ACCELERATE_INTERPOLATOR, true, false));
+        myButton.addAnimator(new MovementAnimator(myButton, 0, 90, 2, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
         myButton.addAnimator(new ScaleAnimator(myButton, 2, 0, 1, 0.5f, Interpolation.DECELERATE_INTERPOLATOR, true, true));
+        myButton.addAnimator(new MovementAnimator(myButton, 135, 0, 2, 2, Interpolation.ACCELERATE_INTERPOLATOR, true, false));
+        myButton.addAnimator(new MovementAnimator(myButton, 90, 0, 2, 2, Interpolation.DECELERATE_INTERPOLATOR, false, true));
+        myButton.addAnimator(new ScaleAnimator(myButton, 2, 2, 0.5f, 1, Interpolation.DECELERATE_INTERPOLATOR, true, true));
         myButton.startAllAnimators();
 
         myAnimator.start(false);
@@ -74,11 +78,12 @@ public class MenuScreen implements Screen {
     }
 
     private void draw(){
-        Gdx.gl.glClearColor(1, 0, 1, 1);
+        Gdx.gl.glClearColor(0, 0, .196f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
+        batch.draw(background, 0, 0, 160, 160);
         myButton.draw(batch);
         batch.end();
 
