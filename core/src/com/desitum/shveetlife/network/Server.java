@@ -19,7 +19,7 @@ public class Server {
 
     public Server() {
         serverStarted = false;
-        myClient = new Client(this);
+        myClient = new Client(this, null);
     }
 
     public void RunServer() {
@@ -28,20 +28,21 @@ public class Server {
             serverSocket = new ServerSocket(7777);
             System.out.println("Server Started.");
             myClient.startClient();
-            clientSocket = serverSocket.accept();
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, "Server Start Failed");
         }
     }
 
-    public void sendData() {
+    public void sendData(String command) {
         try {
+            clientSocket = serverSocket.accept();
             System.out.println("Connection From: " + clientSocket.getInetAddress());
             out = new DataOutputStream(clientSocket.getOutputStream());
-            out.writeUTF("This is my server message!");
+            out.writeUTF(command);
             System.out.println("Data has been sent");
+            myClient.readData();
         } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, "Problems with Handle Server Info!");
+            JOptionPane.showMessageDialog(null, "Problems with Send Data Method");
         }
     }
 
