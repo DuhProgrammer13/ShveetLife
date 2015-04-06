@@ -12,6 +12,8 @@ import com.desitum.shveetlife.ShveetLife;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
 import com.desitum.shveetlife.libraries.animation.ScaleAnimator;
 import com.desitum.shveetlife.libraries.interpolation.Interpolation;
+import com.desitum.shveetlife.network.Client;
+import com.desitum.shveetlife.network.Server;
 import com.desitum.shveetlife.objects.MenuButton;
 
 /**
@@ -27,6 +29,9 @@ public class MenuScreen implements Screen {
 
     private MenuButton myButton;
 
+    private Server myServer;
+    private Client myClient;
+
     SpriteBatch batch;
     Texture img;
 
@@ -35,6 +40,9 @@ public class MenuScreen implements Screen {
     public MenuScreen (ShveetLife sl){
         batch = new SpriteBatch();
         img = new Texture("badlogic.jpg");
+
+        myClient = new Client();
+        myServer = new Server();
 
         cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         cam.position.set(FRUSTUM_WIDTH/2, FRUSTUM_HEIGHT/2, 0);
@@ -47,6 +55,9 @@ public class MenuScreen implements Screen {
         myButton.startAllAnimators();
 
         myAnimator.start(false);
+
+        myServer.RunServer();
+        //myClient.RunClient();
     }
 
     @Override
