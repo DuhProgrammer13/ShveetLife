@@ -30,6 +30,20 @@ public class MenuButton extends Sprite {
         this.animators = new ArrayList<Animator>();
     }
 
+    public void onClickDown(){
+        this.setTexture(clickText);
+    }
+
+    public void onClickUp(boolean clicked){
+        if (!clicked){
+            this.setTexture(baseText);
+        }
+    }
+
+    public void resetState(){
+        this.setTexture(baseText);
+    }
+
     public void update(float delta){
         for (Animator anim: animators){
             anim.update(delta);

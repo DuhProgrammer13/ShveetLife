@@ -6,20 +6,26 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.desitum.shveetlife.ShveetLife;
+import com.desitum.shveetlife.data.Assets;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
-import com.desitum.shveetlife.libraries.animation.ScaleAnimator;
 import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 import com.desitum.shveetlife.network.Client;
 import com.desitum.shveetlife.network.Server;
 import com.desitum.shveetlife.objects.MenuButton;
+import com.desitum.shveetlife.world.MenuRenderer;
+import com.desitum.shveetlife.world.MenuWorld;
 
 /**
  * Created by dvan6234 on 4/3/2015.
  */
 public class MenuScreen implements Screen {
+
+    public static String PLAY = "play";
+    public static String SETTINGS = "settings";
 
     private static final float FRUSTUM_WIDTH = 150;
     private static final float FRUSTUM_HEIGHT = 100;
@@ -32,6 +38,12 @@ public class MenuScreen implements Screen {
     private Server myServer;
     private Client myClient;
 
+    private MenuWorld menuWorld;
+    private MenuRenderer menuRenderer;
+
+    private boolean isTouched;
+    private Vector3 touchPoint;
+
     SpriteBatch batch;
     Texture img;
     Texture background;
@@ -39,28 +51,23 @@ public class MenuScreen implements Screen {
     private MovementAnimator myAnimator = new MovementAnimator(15, 5, 2, Interpolation.LINEAR_INTERPOLATOR);
 
     public MenuScreen (ShveetLife sl){
-        batch = new SpriteBatch();
-        img = new Texture("badlogic.jpg");
-        background = new Texture("menu_bg.png");
+        //TODO need a splash loading screen
+        Assets.loadMenuButtons();
 
-        myServer = new Server();
+        batch = new SpriteBatch();
+
+        menuWorld = new MenuWorld();
+        menuRenderer = new MenuRenderer(batch, menuWorld);
+
+        background = new Texture("menu_bg.png");
 
         cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         cam.position.set(FRUSTUM_WIDTH/2, FRUSTUM_HEIGHT/2, 0);
         viewport = new FitViewport(FRUSTUM_WIDTH, FRUSTUM_HEIGHT, cam);
 
-        myButton = new MenuButton(img, img, 0, 0, 15, 10);
-        myButton.addAnimator(new MovementAnimator(myButton, 0, 135, 2, 0, Interpolation.ACCELERATE_INTERPOLATOR, true, false));
-        myButton.addAnimator(new MovementAnimator(myButton, 0, 90, 2, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
-        myButton.addAnimator(new ScaleAnimator(myButton, 2, 0, 1, 0.5f, Interpolation.DECELERATE_INTERPOLATOR, true, true));
-        myButton.addAnimator(new MovementAnimator(myButton, 135, 0, 2, 2, Interpolation.ACCELERATE_INTERPOLATOR, true, false));
-        myButton.addAnimator(new MovementAnimator(myButton, 90, 0, 2, 2, Interpolation.DECELERATE_INTERPOLATOR, false, true));
-        myButton.addAnimator(new ScaleAnimator(myButton, 2, 2, 0.5f, 1, Interpolation.DECELERATE_INTERPOLATOR, true, true));
-        myButton.startAllAnimators();
+        touchPoint = new Vector3(0, 0, 0);
 
-        myAnimator.start(false);
-
-        myServer.RunServer();
+        //myServer.RunServer();
         //myClient.RunClient();
     }
 
@@ -71,10 +78,27 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        updateInput();
+        update(delta);
         draw();
-        myAnimator.update(delta);
-        myButton.update(delta);
-        System.out.println(myAnimator.getCurrentPos());
+    }
+
+    private void updateInput(){
+        if (Gdx.input.isTouched()){
+            cam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+            menuWorld.updateClickDown(touchPoint);
+            isTouched = true;
+        } else {
+            if (isTouched) {
+                menuWorld.updateClickUp(touchPoint);
+            }
+            isTouched = false;
+        }
+    }
+
+    private void update(float delta){
+        menuWorld.update(delta);
     }
 
     private void draw(){
@@ -84,7 +108,7 @@ public class MenuScreen implements Screen {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
         batch.draw(background, 0, 0, 160, 160);
-        myButton.draw(batch);
+        menuRenderer.draw();
         batch.end();
 
     }
