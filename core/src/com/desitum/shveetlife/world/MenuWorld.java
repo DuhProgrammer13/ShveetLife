@@ -16,13 +16,21 @@ public class MenuWorld {
 
     private ArrayList<MenuButton> buttons;
 
-    public MenuWorld(){
+    private MenuInterface menuInterface;
+
+    private static final int PLAY = 0;
+    private static final int CONNECT = 1;
+    private static final int SETTINGS = 2;
+
+    public MenuWorld(MenuInterface mi){
+        menuInterface = mi;
+
         buttons = new ArrayList<MenuButton>();
 
         //Create the Menu Buttons
-        MenuButton playButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, 10, 0, 25, 10);
-        MenuButton connectButton = new MenuButton(Assets.connectButtonUp, Assets.connectButtonDown, 10, 0, 25, 10);
-        MenuButton settingsButton = new MenuButton(Assets.settingsButtonUp, Assets.connectButtonDown, 10, 0, 25, 10);
+        MenuButton playButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, PLAY, 10, 0, 25, 10);
+        MenuButton connectButton = new MenuButton(Assets.connectButtonUp, Assets.connectButtonDown, CONNECT, 10, 0, 25, 10);
+        MenuButton settingsButton = new MenuButton(Assets.settingsButtonUp, Assets.settingsButtonDown, SETTINGS, 10, 0, 25, 10);
 
         //Animate/Add Play Button
         playButton.addAnimator(new MovementAnimator(playButton, -playButton.getHeight(), 60, 0.8f, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
@@ -60,6 +68,13 @@ public class MenuWorld {
         for (MenuButton button: buttons){
             if (CollisionDetection.pointInRectangle(button.getBoundingRectangle(), clickPos)){
                 button.onClickUp(true);
+                if (button.getCommand() == PLAY){
+                    menuInterface.playGame();
+                } else if (button.getCommand() == CONNECT){
+                    menuInterface.connect();
+                } else if (button.getCommand() == SETTINGS){
+                    menuInterface.settings();
+                }
             } else {
                 button.onClickUp(false);
             }

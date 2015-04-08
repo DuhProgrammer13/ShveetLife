@@ -1,11 +1,11 @@
-package com.desitum.shveetlife.libraries;
+package com.desitum.shveetlife.libraries.animation;
 
 import com.badlogic.gdx.graphics.Color;
 
 /**
  * Created by dvan6234 on 2/17/2015.
  */
-public class ColorEffects {
+public class ColorEffects implements Animator{
     private float pointInTransition;
     private float duration;
 
@@ -63,11 +63,6 @@ public class ColorEffects {
         endBlue = endColor.b;
     }
 
-    public void start() {
-        //if (currentRed == endRed && currentGreen == endGreen && currentBlue == endBlue) return;
-        transforming = true;
-    }
-
     public void update(float delta) {
         if (transforming) {
             pointInTransition += delta / duration;
@@ -84,6 +79,11 @@ public class ColorEffects {
                 currentBlue = endBlue;
             }
         }
+    }
+
+    @Override
+    public void start(boolean isProtected) {
+        transforming = true;
     }
 
     public Color getCurrentColor() {

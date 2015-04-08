@@ -53,7 +53,7 @@ public class SplashScreen implements Screen {
         } else if (beenThrough && !hasLoaded){
             hasLoaded = true;
             Assets.loadMenuButtons();
-            //Assets.loadGameTextures();
+            Assets.loadGameTextures();
             //Assets.loadSounds();
             Settings.load();
         }

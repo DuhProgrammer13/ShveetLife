@@ -14,6 +14,12 @@ public class Assets {
     public static Texture settingsButtonUp;
     public static Texture settingsButtonDown;
 
+    public static Texture grassTexture;
+
+    public static Texture emptyTexture;
+
+    public static Texture player;
+
     public static void loadMenuButtons(){
         playButtonUp = new Texture("menu/play_button_up.png");
         playButtonDown = new Texture("menu/play_button_down.png");
@@ -21,6 +27,12 @@ public class Assets {
         connectButtonDown = new Texture("menu/connect_button_down.png");
         settingsButtonUp = new Texture("menu/settings_button_up.png");
         settingsButtonDown = new Texture("menu/settings_button_down.png");
+    }
+
+    public static void loadGameTextures(){
+        grassTexture = new Texture("game/grass_land.png");
+        emptyTexture = new Texture("game/empty.png");
+        player = new Texture("game/player/player_square.png");
     }
 
     public static void dispose(){

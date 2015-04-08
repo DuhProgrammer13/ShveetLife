@@ -1,31 +1,27 @@
 package com.desitum.shveetlife.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.desitum.shveetlife.ShveetLife;
-import com.desitum.shveetlife.libraries.animation.MovementAnimator;
-import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 import com.desitum.shveetlife.network.Client;
 import com.desitum.shveetlife.network.Server;
 import com.desitum.shveetlife.objects.MenuButton;
-import com.desitum.shveetlife.world.MenuInterface;
-import com.desitum.shveetlife.world.MenuRenderer;
-import com.desitum.shveetlife.world.MenuWorld;
+import com.desitum.shveetlife.world.GameRenderer;
+import com.desitum.shveetlife.world.GameWorld;
+
+import java.util.ArrayList;
 
 /**
  * Created by dvan6234 on 4/3/2015.
  */
-public class MenuScreen implements Screen, MenuInterface {
-
-    public static String PLAY = "play";
-    public static String SETTINGS = "settings";
+public class GameScreen implements Screen {
 
     public static final float FRUSTUM_WIDTH = 150;
     public static final float FRUSTUM_HEIGHT = 100;
@@ -34,46 +30,36 @@ public class MenuScreen implements Screen, MenuInterface {
 
     private Viewport viewport;
     private OrthographicCamera cam;
+    private SpriteBatch batch;
 
     private MenuButton myButton;
 
     private Server myServer;
     private Client myClient;
 
-    private MenuWorld menuWorld;
-    private MenuRenderer menuRenderer;
+    private GameWorld gameWorld;
+    private GameRenderer gameRenderer;
 
     private boolean isTouched;
     private Vector3 touchPoint;
 
-    SpriteBatch batch;
-    Texture background;
+    private ArrayList<Integer> directionalKeys;
 
-    private MovementAnimator myAnimator = new MovementAnimator(15, 5, 2, Interpolation.LINEAR_INTERPOLATOR);
-
-    public MenuScreen (ShveetLife sl){
-        shveetLife = sl;
-
+    public GameScreen(ShveetLife sl) {
         batch = new SpriteBatch();
-
-        menuWorld = new MenuWorld(this);
-        menuRenderer = new MenuRenderer(batch, menuWorld);
-
-        background = new Texture("menu/menu_bg.png");
 
         cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         cam.position.set(FRUSTUM_WIDTH/2, FRUSTUM_HEIGHT/2, 0);
         viewport = new FitViewport(FRUSTUM_WIDTH, FRUSTUM_HEIGHT, cam);
 
-        touchPoint = new Vector3(0, 0, 0);
+        gameWorld = new GameWorld(sl);
+        gameRenderer = new GameRenderer(gameWorld, batch);
 
-        //myServer.RunServer();
-        //myClient.RunClient();
-    }
-
-    @Override
-    public void show() {
-
+        directionalKeys = new ArrayList<Integer>();
+        directionalKeys.add(Input.Keys.DPAD_DOWN);
+        directionalKeys.add(Input.Keys.DPAD_UP);
+        directionalKeys.add(Input.Keys.DPAD_LEFT);
+        directionalKeys.add(Input.Keys.DPAD_RIGHT);
     }
 
     @Override
@@ -83,47 +69,32 @@ public class MenuScreen implements Screen, MenuInterface {
         draw();
     }
 
-    private void updateInput(){
-        if (Gdx.input.isTouched()){
-            cam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-
-            menuWorld.updateClickDown(touchPoint);
-            isTouched = true;
-        } else {
-            if (isTouched) {
-                menuWorld.updateClickUp(touchPoint);
+    public void updateInput(){
+        boolean dirKeyPressed = false;
+        for (int key: directionalKeys){
+            if (Gdx.input.isKeyPressed(key)){
+                dirKeyPressed = true;
+                gameWorld.updateDirectionalKey(key);
             }
-            isTouched = false;
         }
+        if (!dirKeyPressed){ gameWorld.updateDirectionalKey(-1); }
     }
 
-    private void update(float delta){
-        menuWorld.update(delta);
+    public void update(float delta){
+        gameWorld.update(delta);
     }
 
-    private void draw(){
+    public void draw(){
         Gdx.gl.glClearColor(0, 0, .196f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        batch.draw(background, 0, 0, 160, 160);
-        menuRenderer.draw();
+        gameRenderer.draw();
         batch.end();
-
     }
 
     @Override
-    public void playGame() {
-        shveetLife.setScreen(new GameScreen(shveetLife));
-    }
-
-    @Override
-    public void connect() {
-
-    }
-
-    @Override
-    public void settings() {
+    public void show() {
 
     }
 

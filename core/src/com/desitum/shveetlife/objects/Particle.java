@@ -3,28 +3,20 @@ package com.desitum.shveetlife.objects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.desitum.shveetlife.libraries.animation.Animator;
+import com.desitum.shveetlife.objects.player.Player;
 
 import java.util.ArrayList;
 
 /**
- * Created by Zmyth97 on 4/3/2015.
+ * Created by kody on 4/7/15.
+ * can be used by kody and people in []
  */
-public class MenuButton extends Sprite {
-
-    private Texture baseText;
-    private Texture clickText;
-
-    private int command;
+public class Particle extends GameObject {
 
     private ArrayList<Animator> animators;
 
-    public MenuButton(Texture texture, Texture clickText, int command, float x, float y, float width, float height){
+    public Particle(Texture texture, float lifetime, float width, float height, float x, float y){
         super(texture, 0, 0, texture.getWidth(), texture.getHeight());
-
-        this.baseText = texture;
-        this.clickText = clickText;
-
-        this.command = command;
 
         this.setSize(width, height);
         this.setPosition(x, y);
@@ -34,24 +26,16 @@ public class MenuButton extends Sprite {
         this.animators = new ArrayList<Animator>();
     }
 
-    public void onClickDown(){
-        this.setTexture(clickText);
-    }
-
-    public void onClickUp(boolean clicked){
-        if (!clicked){
-            this.setTexture(baseText);
-        }
-    }
-
-    public void resetState(){
-        this.setTexture(baseText);
-    }
-
+    @Override
     public void update(float delta){
         for (Animator anim: animators){
             anim.update(delta);
         }
+    }
+
+    @Override
+    public void useKey(int key, Player p) {
+        return; // YOU CAN't INTERACT WITH PARTICLES
     }
 
     public void addAnimator(Animator anim){
@@ -62,9 +46,5 @@ public class MenuButton extends Sprite {
         for (Animator anim: animators){
             anim.start(true);
         }
-    }
-
-    public int getCommand(){
-        return command;
     }
 }
