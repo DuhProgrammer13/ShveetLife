@@ -19,19 +19,19 @@ public class MenuWorld {
     public MenuWorld(){
         buttons = new ArrayList<MenuButton>();
 
-        MenuButton playButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, 10, 0, 25, 10);
+        MenuButton playButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, 10, 0, 25, 12.5f);
         playButton.addAnimator(new MovementAnimator(playButton, -playButton.getHeight(), 60, 0.8f, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
         playButton.startAllAnimators();
 
         buttons.add(playButton);
-        playButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, 10, 0, 25, 10);
-        playButton.addAnimator(new MovementAnimator(playButton, -playButton.getHeight(), 40, 0.8f, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
-        playButton.startAllAnimators();
-        buttons.add(playButton);
-        playButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, 10, 0, 25, 10);
-        playButton.addAnimator(new MovementAnimator(playButton, -playButton.getHeight(), 20, 0.8f, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
-        playButton.startAllAnimators();
-        buttons.add(playButton);
+        MenuButton connectButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, 10, 0, 25, 12.5f);
+        connectButton.addAnimator(new MovementAnimator(playButton, -playButton.getHeight(), 40, 0.8f, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
+        connectButton.startAllAnimators();
+        buttons.add(connectButton);
+        MenuButton settingsButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, 10, 0, 25, 12.5f);
+        settingsButton.addAnimator(new MovementAnimator(playButton, -playButton.getHeight(), 20, 0.8f, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
+        settingsButton.startAllAnimators();
+        buttons.add(settingsButton);
 
 
     }
