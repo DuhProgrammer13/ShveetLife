@@ -19,17 +19,21 @@ public class MenuWorld {
     public MenuWorld(){
         buttons = new ArrayList<MenuButton>();
 
-        MenuButton playButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, 10, 0, 25, 12.5f);
+        //Create the Menu Buttons
+        MenuButton playButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, 10, 0, 25, 10);
+        MenuButton connectButton = new MenuButton(Assets.connectButtonUp, Assets.connectButtonDown, 10, 0, 25, 10);
+        MenuButton settingsButton = new MenuButton(Assets.settingsButtonUp, Assets.connectButtonDown, 10, 0, 25, 10);
+
+        //Animate/Add Play Button
         playButton.addAnimator(new MovementAnimator(playButton, -playButton.getHeight(), 60, 0.8f, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
         playButton.startAllAnimators();
-
         buttons.add(playButton);
-        MenuButton connectButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, 10, 0, 25, 12.5f);
-        connectButton.addAnimator(new MovementAnimator(playButton, -playButton.getHeight(), 40, 0.8f, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
+        //Animate/Add Connect Button
+        connectButton.addAnimator(new MovementAnimator(connectButton, -connectButton.getHeight(), 40, 0.8f, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
         connectButton.startAllAnimators();
         buttons.add(connectButton);
-        MenuButton settingsButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, 10, 0, 25, 12.5f);
-        settingsButton.addAnimator(new MovementAnimator(playButton, -playButton.getHeight(), 20, 0.8f, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
+        //Animate/Add Settings Button
+        settingsButton.addAnimator(new MovementAnimator(settingsButton, -settingsButton.getHeight(), 20, 0.8f, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
         settingsButton.startAllAnimators();
         buttons.add(settingsButton);
 

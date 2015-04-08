@@ -27,8 +27,8 @@ public class MenuScreen implements Screen {
     public static String PLAY = "play";
     public static String SETTINGS = "settings";
 
-    private static final float FRUSTUM_WIDTH = 150;
-    private static final float FRUSTUM_HEIGHT = 100;
+    public static final float FRUSTUM_WIDTH = 150;
+    public static final float FRUSTUM_HEIGHT = 100;
 
     private Viewport viewport;
     private OrthographicCamera cam;
@@ -59,7 +59,7 @@ public class MenuScreen implements Screen {
         menuWorld = new MenuWorld();
         menuRenderer = new MenuRenderer(batch, menuWorld);
 
-        background = new Texture("menu_bg.png");
+        background = new Texture("menu/menu_bg.png");
 
         cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         cam.position.set(FRUSTUM_WIDTH/2, FRUSTUM_HEIGHT/2, 0);
@@ -104,7 +104,6 @@ public class MenuScreen implements Screen {
     private void draw(){
         Gdx.gl.glClearColor(0, 0, .196f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
         batch.draw(background, 0, 0, 160, 160);
