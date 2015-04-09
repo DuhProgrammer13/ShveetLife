@@ -14,15 +14,16 @@ public class Client {
     private Server myServer;
     private ProcessData processor;
 
+
     public Client(Server myServer, ProcessData processor) {
         this.myServer = myServer;
         this.processor = processor;
     }
 
-    public void startClient() {
+    public void startClient(String wantedIP) {
         try {
             System.out.println("Connecting...");
-            socket = new Socket("localhost", 7777);
+            socket = new Socket(wantedIP, 7777);
             System.out.println("Connection Successful");
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, "Problems with the Client");
