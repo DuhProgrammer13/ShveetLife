@@ -44,6 +44,7 @@ public class GameScreen implements Screen {
     private Vector3 touchPoint;
 
     private ArrayList<Integer> directionalKeys;
+    private ArrayList<Integer> commandKeys;
 
     public GameScreen(ShveetLife sl) {
         batch = new SpriteBatch();
@@ -60,6 +61,9 @@ public class GameScreen implements Screen {
         directionalKeys.add(Input.Keys.DPAD_UP);
         directionalKeys.add(Input.Keys.DPAD_LEFT);
         directionalKeys.add(Input.Keys.DPAD_RIGHT);
+
+        commandKeys = new ArrayList<Integer>();
+        commandKeys.add(Input.Keys.SPACE);
     }
 
     @Override
@@ -78,6 +82,12 @@ public class GameScreen implements Screen {
             }
         }
         if (!dirKeyPressed){ gameWorld.updateDirectionalKey(-1); }
+
+        for (int key: commandKeys){
+            if (Gdx.input.isKeyPressed(key)){
+                gameWorld.updateKeys(key);
+            }
+        }
     }
 
     public void update(float delta){

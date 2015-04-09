@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.desitum.shveetlife.data.Assets;
 import com.desitum.shveetlife.objects.Chunk;
 import com.desitum.shveetlife.objects.GameObject;
+import com.desitum.shveetlife.objects.particles.Particle;
 import com.desitum.shveetlife.objects.tiles.GrassTile;
 import com.desitum.shveetlife.screens.GameScreen;
 
@@ -31,6 +32,7 @@ public class GameRenderer {
         gameBatch.setProjectionMatrix(gameCam.combined);
 
         drawChunks();
+        drawParticles();
         drawPlayer();
     }
 
@@ -46,6 +48,12 @@ public class GameRenderer {
                     }
                 }
             }
+        }
+    }
+
+    private void drawParticles(){
+        for (Particle p: world.getParticles()){
+            p.draw(gameBatch);
         }
     }
 

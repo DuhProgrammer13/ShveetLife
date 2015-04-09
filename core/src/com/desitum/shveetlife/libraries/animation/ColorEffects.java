@@ -1,6 +1,7 @@
 package com.desitum.shveetlife.libraries.animation;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * Created by dvan6234 on 2/17/2015.
@@ -88,6 +89,11 @@ public class ColorEffects implements Animator{
 
     public Color getCurrentColor() {
         return new Color(currentRed, currentGreen, currentBlue, 1);
+    }
+
+    @Override
+    public void setSprite(Sprite control){
+        return; //TODO currently no effect
     }
 }
 

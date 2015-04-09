@@ -130,6 +130,10 @@ public class ScaleAnimator implements Animator {
         }
     }
 
+    public void setSprite(Sprite control){
+        this.controllingSprite = control;
+    }
+
     public float getScaleSize(){
         return scaleSize;
     }

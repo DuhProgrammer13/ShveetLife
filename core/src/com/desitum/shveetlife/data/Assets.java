@@ -15,6 +15,9 @@ public class Assets {
     public static Texture settingsButtonDown;
 
     public static Texture grassTexture;
+    public static Texture dirtTexture;
+
+    public static Texture grassParticle;
 
     public static Texture emptyTexture;
 
@@ -30,9 +33,20 @@ public class Assets {
     }
 
     public static void loadGameTextures(){
-        grassTexture = new Texture("game/grass_land.png");
-        emptyTexture = new Texture("game/empty.png");
         player = new Texture("game/player/player_square.png");
+
+        loadGameParticles();
+        loadGameTiles();
+    }
+
+    public static void loadGameTiles(){
+        grassTexture = new Texture("game/grass_land.png");
+        dirtTexture = new Texture("game/tiles/dirt.png");
+        emptyTexture = new Texture("game/empty.png");
+    }
+
+    public static void loadGameParticles(){
+        grassParticle = new Texture("game/particles/grass_particles.png");
     }
 
     public static void dispose(){

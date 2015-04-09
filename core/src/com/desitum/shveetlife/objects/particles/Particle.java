@@ -1,8 +1,8 @@
-package com.desitum.shveetlife.objects;
+package com.desitum.shveetlife.objects.particles;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.desitum.shveetlife.libraries.animation.Animator;
+import com.desitum.shveetlife.objects.GameObject;
 import com.desitum.shveetlife.objects.player.Player;
 
 import java.util.ArrayList;
@@ -15,7 +15,9 @@ public class Particle extends GameObject {
 
     private ArrayList<Animator> animators;
 
-    public Particle(Texture texture, float lifetime, float width, float height, float x, float y){
+    private float lifetime;
+
+    public Particle(Texture texture, float lifetime, float width, float height, float x, float y, ParticleSettings ps){
         super(texture, 0, 0, texture.getWidth(), texture.getHeight());
 
         this.setSize(width, height);
@@ -24,6 +26,17 @@ public class Particle extends GameObject {
         this.setOriginCenter();
 
         this.animators = new ArrayList<Animator>();
+
+        this.animators.add(ps.getXAnimator());
+        this.animators.add(ps.getYAnimator());
+
+        for (Animator animator: animators){
+            animator.setSprite(this);
+        }
+
+        startAllAnimators();
+
+        this.lifetime = lifetime;
     }
 
     @Override
@@ -31,6 +44,12 @@ public class Particle extends GameObject {
         for (Animator anim: animators){
             anim.update(delta);
         }
+
+        lifetime -= delta;
+    }
+
+    public float getLifetime(){
+        return lifetime;
     }
 
     @Override

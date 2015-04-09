@@ -2,6 +2,7 @@ package com.desitum.shveetlife.objects.player;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector3;
 import com.desitum.shveetlife.data.Assets;
 import com.desitum.shveetlife.world.GameInterface;
 import com.desitum.shveetlife.data.GameKeys;
@@ -73,5 +74,19 @@ public class Player extends Sprite {
 
     public float getDamage(Class c){
         return 1; //TODO should be directly related to the item held and object being attacked
+    }
+
+    public Vector3 getPositionInFront(){
+        if (direction == GameKeys.RIGHT){
+            return new Vector3(getX() + getWidth() + 1, getY() + (getHeight()/2), 0);
+        } else if (direction == GameKeys.LEFT){
+            return new Vector3(getX() - 1, getY() + (getHeight()/2), 0);
+        } else if (direction == GameKeys.UP){
+            return new Vector3(getX() + (getWidth()/2), getY() + getHeight() + 1, 0);
+        } else if (direction == GameKeys.DOWN){
+            return new Vector3(getX() + (getWidth()/2), getY() - 1, 0);
+        } else {
+            return new Vector3(getX(), getY(), 0);
+        }
     }
 }
