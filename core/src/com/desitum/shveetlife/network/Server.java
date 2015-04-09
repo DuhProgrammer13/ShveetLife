@@ -1,5 +1,7 @@
 package com.desitum.shveetlife.network;
 
+import com.desitum.shveetlife.world.MenuInterface;
+
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,6 +16,7 @@ public class Server {
     private static Socket clientSocket;
     private static DataOutputStream out;
     private Client myClient;
+    //private String ipAddress;
 
     public boolean serverStarted;
 
@@ -22,12 +25,12 @@ public class Server {
         myClient = new Client(this, null);
     }
 
-    public void RunServer() {
+    public void RunServer(String ipAddress) {
         try {
             System.out.println("Starting Server....");
             serverSocket = new ServerSocket(7777);
             System.out.println("Server Started.");
-            myClient.startClient();
+            myClient.startClient(ipAddress);
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, "Server Start Failed");
         }
