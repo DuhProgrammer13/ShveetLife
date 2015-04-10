@@ -8,5 +8,5 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public interface Animator {
     public void update(float delta);
     public void start(boolean isProtected);
-    public void setSprite(Sprite control);
+    public void setSprite(Sprite control, boolean controlx, boolean controly);
 }

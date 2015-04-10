@@ -27,12 +27,11 @@ public class Particle extends GameObject {
 
         this.animators = new ArrayList<Animator>();
 
+        ps.getXAnimator().setSprite(this, true, false);
+        ps.getYAnimator().setSprite(this, false, true);
+
         this.animators.add(ps.getXAnimator());
         this.animators.add(ps.getYAnimator());
-
-        for (Animator animator: animators){
-            animator.setSprite(this);
-        }
 
         startAllAnimators();
 
@@ -63,7 +62,7 @@ public class Particle extends GameObject {
 
     public void startAllAnimators(){
         for (Animator anim: animators){
-            anim.start(true);
+            anim.start(false);
         }
     }
 }

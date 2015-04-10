@@ -21,8 +21,11 @@ public class ParticleSettings {
     public ParticleSettings(float x, float y, float objectWidth, float objectHeight, float minSpeedX, float maxSpeedX, float minSpeedY, float maxSpeedY, float duration){
         Random random = new Random();
         speedX = random.nextFloat() * (maxSpeedX - minSpeedX) + minSpeedX;
+        speedX *= 5;
         speedY = random.nextFloat() * (maxSpeedY - minSpeedY) + minSpeedY;
+        speedY *= 5;
 
+        System.out.println(speedX);
         float startPosX = random.nextFloat() * (objectWidth) + x;
         float startPosY = random.nextFloat() * (objectHeight) + y;
 

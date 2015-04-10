@@ -65,8 +65,11 @@ public class MovementAnimator implements Animator {
         setupInterpolator(interpolator);
     }
 
-    public void setSprite(Sprite control){
+    public void setSprite(Sprite control, boolean controlX, boolean controlY){
         this.controllingSprite = control;
+
+        this.controllingX = controlX;
+        this.controllingY = controlY;
     }
 
     public void update(float delta){

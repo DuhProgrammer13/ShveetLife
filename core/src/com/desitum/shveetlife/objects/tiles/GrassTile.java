@@ -33,7 +33,7 @@ public class GrassTile extends GameObject {
         this.setX(x);
         this.setY(y);
 
-        particleSettings = new ParticleSettings(this.getX(), this.getY(), this.getWidth(), this.getHeight(), 0.1f, 1, 0.1f, 1, 0.4f);
+        particleSettings = new ParticleSettings(this.getX(), this.getY(), this.getWidth(), this.getHeight(), -1f, 1, -1, 1, 0.4f);
 
     }
 
@@ -54,6 +54,8 @@ public class GrassTile extends GameObject {
     private void doDamage(float amount){
         System.out.println("Hrm");
         health -= amount;
+        particleSettings = new ParticleSettings(this.getX(), this.getY(), this.getWidth(), this.getHeight(), -1f, 1, -1, 0, 0.4f);
+
         gi.addParticles(new Particle(Assets.grassParticle, 0.4f, 5, 5, this.getX(), this.getY(), particleSettings));
         if (health <= 0){
             gi.changeTile(this, new DirtTile(gi, this.getX(), this.getY()));

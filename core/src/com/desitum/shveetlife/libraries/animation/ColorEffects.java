@@ -92,7 +92,7 @@ public class ColorEffects implements Animator{
     }
 
     @Override
-    public void setSprite(Sprite control){
+    public void setSprite(Sprite control, boolean x, boolean y){
         return; //TODO currently no effect
     }
 }
