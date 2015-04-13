@@ -110,13 +110,8 @@ public class MenuScreen implements Screen, MenuInterface {
 
     @Override
     public void playGame() {
-        String username = "Zmyth97";
-        String password = "Pass";
-        String ipAddress = "localhost";
-        accounts = new Accounts(username, password, ipAddress);
-        if(accounts.isValid) {
-            shveetLife.setScreen(new GameScreen(shveetLife));
-        }
+        accounts.runServer();
+        shveetLife.setScreen(new GameScreen(shveetLife));
         //shveetLife.setScreen(new GameScreen(shveetLife));
     }
 
@@ -126,8 +121,14 @@ public class MenuScreen implements Screen, MenuInterface {
         //After the pop up, or from the pop up, call this method!
 
         //Quickly setup Test Version! (Yes I know I could have just plugged them straight in...)
-            accounts.runServer();
+        String username = "Kody";
+        String password = "Pass";
+        //String ipAddress = "localhost";
+        String ipAddress = "10.228.7.220";
+        accounts = new Accounts(username, password, ipAddress);
+        if(accounts.isValid) {
             shveetLife.setScreen(new GameScreen(shveetLife));
+        }
 
     }
 

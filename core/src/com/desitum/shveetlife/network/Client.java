@@ -25,6 +25,7 @@ public class Client {
             System.out.println("Connecting...");
             socket = new Socket(wantedIP, 7777);
             System.out.println("Connection Successful");
+            //readData();
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, "Problems with the Client");
         }
@@ -36,6 +37,7 @@ public class Client {
             in = new DataInputStream(socket.getInputStream());
             System.out.println("Input from server: " + socket.getInputStream());
             String data = in.readUTF();
+            System.out.println(data);
             processData(data);
         } catch(Exception exception){
            JOptionPane.showMessageDialog(null, "Problem with Reading the Data");

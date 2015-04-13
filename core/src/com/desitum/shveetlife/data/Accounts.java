@@ -19,6 +19,7 @@ public class Accounts {
 
     public boolean isValid;
     private Server myServer;
+    private Client myClient;
 
     private ArrayList<String> accounts;
     private ArrayList<String> passwords;
@@ -31,6 +32,7 @@ public class Accounts {
         isValid = false;
 
         myServer = new Server();
+        myClient = new Client(null, null);
 
         accounts = new ArrayList<String>();
         passwords = new ArrayList<String>();
@@ -43,6 +45,7 @@ public class Accounts {
         passwords.add("Pass");
         accounts.add("Kody");
         passwords.add("Pass");
+        System.out.println(passwords.get(0) + passwords.get(1));
 
         if(accounts.contains(username)){
             verifyPassword(password, username, ipAddress);
@@ -56,8 +59,11 @@ public class Accounts {
     }
     private void verifyPassword(String password, String username, String ipAddress){
         int userID = accounts.indexOf(username);
-        if(passwords.indexOf(password) == userID){
-            myServer.RunServer(ipAddress);
+        System.out.println(userID);
+        System.out.println(passwords.get(userID) + password);
+        if(passwords.get(userID).equals(password)){
+            myClient.startClient(ipAddress);
+
             isValid = true;
         } else {
             JOptionPane.showMessageDialog(null, "Wrong password!");
