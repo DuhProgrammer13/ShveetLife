@@ -34,7 +34,7 @@ public class Client {
     public void readData(){
         try {
             in = new DataInputStream(socket.getInputStream());
-            System.out.println("Receiving Information...");
+            System.out.println("Input from server: " + socket.getInputStream());
             String data = in.readUTF();
             processData(data);
         } catch(Exception exception){

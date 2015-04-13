@@ -23,10 +23,6 @@ public class Accounts {
     private ArrayList<String> accounts;
     private ArrayList<String> passwords;
 
-    //Hahahaha, user "info" in array lists....
-    private ArrayList<String> goldAmount;
-    private ArrayList<String> userAvatar;
-
     public Accounts(String username, String password, String ipAddress) {
         this.username = username;
         this.password = password;
@@ -55,6 +51,9 @@ public class Accounts {
         }
     }
 
+    public void runServer(){
+        myServer.RunServer("localhost");
+    }
     private void verifyPassword(String password, String username, String ipAddress){
         int userID = accounts.indexOf(username);
         if(passwords.indexOf(password) == userID){

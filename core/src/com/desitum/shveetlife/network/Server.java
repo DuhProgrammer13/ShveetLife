@@ -30,7 +30,6 @@ public class Server {
             System.out.println("Starting Server....");
             serverSocket = new ServerSocket(7777);
             System.out.println("Server Started.");
-            myClient.startClient(ipAddress);
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, "Server Start Failed");
         }
@@ -43,7 +42,7 @@ public class Server {
             out = new DataOutputStream(clientSocket.getOutputStream());
             out.writeUTF(command);
             System.out.println("Data has been sent");
-            myClient.readData();
+            //myClient.readData();
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, "Problems with Send Data Method");
         }
