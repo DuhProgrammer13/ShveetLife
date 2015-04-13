@@ -17,6 +17,7 @@ import java.util.Iterator;
 public class GameWorld implements GameInterface{
 
     private Player player;
+    private Player player2;
     private ArrayList<Chunk> loadedChunks;
     private ArrayList<Chunk> allChunks;
 
@@ -24,6 +25,7 @@ public class GameWorld implements GameInterface{
 
     public GameWorld(ShveetLife sl){
         player = new Player(this, 10, 10, 10, 10);
+        player2 = new Player(this, 10, 10, 10, 10);
 
         loadedChunks = new ArrayList<Chunk>();
         allChunks = new ArrayList<Chunk>();
@@ -34,6 +36,7 @@ public class GameWorld implements GameInterface{
 
     public void update(float delta){
         player.update(delta);
+        player2.update(delta);
 
         for (Chunk chunk: loadedChunks){
             chunk.update(delta);

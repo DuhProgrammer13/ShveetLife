@@ -33,6 +33,7 @@ public class Assets {
     public static Texture emptyTexture;
 
     public static Texture player;
+    public static Texture player2;
 
     public static BitmapFont textFieldFont;
 
@@ -55,6 +56,7 @@ public class Assets {
 
     public static void loadGameTextures(){
         player = new Texture("game/player/player_square.png");
+        player2 = new Texture("game/player/player_square_two.png");
 
         loadGameParticles();
         loadGameTiles();
