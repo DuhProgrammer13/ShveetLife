@@ -119,9 +119,9 @@ public class MenuScreen implements Screen, MenuInterface {
         //After the pop up, or from the pop up, call this method!
 
         //Quickly setup Test Version! (Yes I know I could have just plugged them straight in...)
-        String username = "Zmyth97";
+        String username = "Kody";
         String password = "Pass";
-        String ipAddress = "localhost";
+        String ipAddress = "10.228.7.220";
         accounts = new Accounts(username, password, ipAddress);
         if(accounts.isValid) {
             shveetLife.setScreen(new GameScreen(shveetLife));
