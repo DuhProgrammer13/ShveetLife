@@ -1,6 +1,7 @@
 package com.desitum.shveetlife.world;
 
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.desitum.shveetlife.data.Assets;
 import com.desitum.shveetlife.libraries.CollisionDetection;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
@@ -17,6 +18,7 @@ public class MenuWorld {
     private ArrayList<MenuButton> buttons;
 
     private MenuInterface menuInterface;
+    public TextField tf;
 
     private static final int PLAY = 0;
     private static final int CONNECT = 1;
@@ -24,6 +26,11 @@ public class MenuWorld {
 
     public MenuWorld(MenuInterface mi){
         menuInterface = mi;
+
+        tf = new TextField("", new TextField.TextFieldStyle());
+        tf.setX(5);
+        tf.setY(5);
+        tf.setSize(20, 10);
 
         buttons = new ArrayList<MenuButton>();
 
