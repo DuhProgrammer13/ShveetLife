@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 /**
- * Created by Zmyth97 on 4/3/2015.
+ * Created by Zmyth97 on 2/9/2015.
  */
 public class CollisionDetection {
 

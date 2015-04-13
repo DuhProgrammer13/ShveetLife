@@ -6,33 +6,65 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.desitum.shveetlife.ShveetLife;
-
-import java.awt.Menu;
+import com.desitum.shveetlife.data.Accounts;
+import com.desitum.shveetlife.libraries.animation.MovementAnimator;
+import com.desitum.shveetlife.libraries.interpolation.Interpolation;
+import com.desitum.shveetlife.network.Client;
+import com.desitum.shveetlife.network.Server;
+import com.desitum.shveetlife.objects.MenuButton;
+import com.desitum.shveetlife.world.MenuInterface;
+import com.desitum.shveetlife.world.MenuRenderer;
+import com.desitum.shveetlife.world.MenuWorld;
 
 /**
  * Created by dvan6234 on 4/3/2015.
  */
-public class MenuScreen implements Screen {
+public class MenuScreen implements Screen, MenuInterface {
 
-    private static final float FRUSTUM_WIDTH = 150;
-    private static final float FRUSTUM_HEIGHT = 100;
+    public static String PLAY = "play";
+    public static String SETTINGS = "settings";
+
+    public static final float FRUSTUM_WIDTH = 150;
+    public static final float FRUSTUM_HEIGHT = 100;
+
+    private ShveetLife shveetLife;
+    private Accounts accounts;
 
     private Viewport viewport;
     private OrthographicCamera cam;
 
+    private MenuButton myButton;
+
+    private MenuWorld menuWorld;
+    private MenuRenderer menuRenderer;
+
+    private boolean isTouched;
+    private Vector3 touchPoint;
+
     SpriteBatch batch;
-    Texture img;
+    Texture background;
+
+    private MovementAnimator myAnimator = new MovementAnimator(15, 5, 2, Interpolation.LINEAR_INTERPOLATOR);
 
     public MenuScreen (ShveetLife sl){
+        shveetLife = sl;
+
         batch = new SpriteBatch();
-        img = new Texture("badlogic.jpg");
+
+        menuWorld = new MenuWorld(this);
+        menuRenderer = new MenuRenderer(batch, menuWorld);
+
+        background = new Texture("menu/menu_bg.png");
 
         cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         cam.position.set(FRUSTUM_WIDTH/2, FRUSTUM_HEIGHT/2, 0);
         viewport = new FitViewport(FRUSTUM_WIDTH, FRUSTUM_HEIGHT, cam);
+
+        touchPoint = new Vector3(0, 0, 0);
     }
 
     @Override
@@ -42,17 +74,62 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        updateInput();
+        update(delta);
         draw();
     }
 
-    private void draw(){
-        Gdx.gl.glClearColor(1, 0, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    private void updateInput(){
+        if (Gdx.input.isTouched()){
+            cam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
+            menuWorld.updateClickDown(touchPoint);
+            isTouched = true;
+        } else {
+            if (isTouched) {
+                menuWorld.updateClickUp(touchPoint);
+            }
+            isTouched = false;
+        }
+    }
+
+    private void update(float delta){
+        menuWorld.update(delta);
+    }
+
+    private void draw(){
+        Gdx.gl.glClearColor(0, 0, .196f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        batch.draw(img, 0, 0);
+        batch.draw(background, 0, 0, 160, 160);
+        menuRenderer.draw();
         batch.end();
+
+    }
+
+    @Override
+    public void playGame() {
+        shveetLife.setScreen(new GameScreen(shveetLife));
+    }
+
+    @Override
+    public void connect() {
+        //TODO Do the stuff here to make it have a nice pop up window with a box for Username, Password, and IP Address
+        //After the pop up, or from the pop up, call this method!
+
+        //Quickly setup Test Version! (Yes I know I could have just plugged them straight in...)
+        String username = "Zmyth97";
+        String password = "Pass";
+        String ipAddress = "localhost";
+        accounts = new Accounts(username, password, ipAddress);
+        if(accounts.isValid) {
+            shveetLife.setScreen(new GameScreen(shveetLife));
+        }
+    }
+
+    @Override
+    public void settings() {
 
     }
 
