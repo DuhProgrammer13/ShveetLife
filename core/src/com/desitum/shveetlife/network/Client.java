@@ -11,12 +11,10 @@ import javax.swing.JOptionPane;
 public class Client {
     private static Socket socket;
     private static DataInputStream in;
-    private Server myServer;
     private ProcessData processor;
 
 
-    public Client(Server myServer, ProcessData processor) {
-        this.myServer = myServer;
+    public Client (ProcessData processor) {
         this.processor = processor;
     }
 
@@ -25,7 +23,6 @@ public class Client {
             System.out.println("Connecting...");
             socket = new Socket(wantedIP, 7777);
             System.out.println("Connection Successful");
-            //readData();
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, "Problems with the Client");
         }

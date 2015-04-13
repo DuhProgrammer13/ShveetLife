@@ -22,7 +22,7 @@ public class Server {
 
     public Server() {
         serverStarted = false;
-        myClient = new Client(this, null);
+        myClient = new Client(null);
     }
 
     public void RunServer(String ipAddress) {

@@ -35,9 +35,7 @@ public class Player extends Sprite {
 
     public void update(float delta){
         if (moving){
-            System.out.println("okk.....");
             if (direction == GameKeys.RIGHT){
-                System.out.println("AYAY");
                 setX(getX() + SPEED * delta);
             } else if (direction == GameKeys.LEFT){
                 setX(getX() - SPEED * delta);

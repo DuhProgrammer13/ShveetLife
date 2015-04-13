@@ -32,7 +32,7 @@ public class Accounts {
         isValid = false;
 
         myServer = new Server();
-        myClient = new Client(null, null);
+        myClient = new Client(null);
 
         accounts = new ArrayList<String>();
         passwords = new ArrayList<String>();
