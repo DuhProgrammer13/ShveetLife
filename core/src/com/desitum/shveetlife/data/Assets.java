@@ -1,6 +1,13 @@
 package com.desitum.shveetlife.data;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * Created by Zmyth97 on 4/3/2015.
@@ -14,6 +21,10 @@ public class Assets {
     public static Texture settingsButtonUp;
     public static Texture settingsButtonDown;
 
+    public static TextureRegionDrawable textCursor;
+    public static TextureRegionDrawable textSelection;
+    public static TextureRegionDrawable textFieldBackground;
+
     public static Texture grassTexture;
     public static Texture dirtTexture;
 
@@ -23,6 +34,8 @@ public class Assets {
 
     public static Texture player;
 
+    public static BitmapFont textFieldFont;
+
     public static void loadMenuButtons(){
         playButtonUp = new Texture("menu/play_button_up.png");
         playButtonDown = new Texture("menu/play_button_down.png");
@@ -30,6 +43,14 @@ public class Assets {
         connectButtonDown = new Texture("menu/connect_button_down.png");
         settingsButtonUp = new Texture("menu/settings_button_up.png");
         settingsButtonDown = new Texture("menu/settings_button_down.png");
+
+        textCursor = new TextureRegionDrawable(new TextureRegion(new Texture("menu/cursor.png")));
+        textSelection = new TextureRegionDrawable(new TextureRegion(new Texture("menu/highlight.png")));
+        textFieldBackground = new TextureRegionDrawable(new TextureRegion(new Texture("menu/textFieldBackground.png")));
+
+        textFieldFont = new BitmapFont(Gdx.files.internal("font/cartoon.fnt"), Gdx.files.internal("font/cartoon.png"), false);
+        textFieldFont.setScale(0.15f);
+        textFieldFont.setColor(Color.BLACK);
     }
 
     public static void loadGameTextures(){

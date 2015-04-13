@@ -45,6 +45,8 @@ public class Accounts {
     private void checkExisting(String username, String password, String ipAddress){
         accounts.add("Zmyth97");
         passwords.add("Pass");
+        accounts.add("Kody");
+        passwords.add("Pass");
 
         if(accounts.contains(username)){
             verifyPassword(password, username, ipAddress);

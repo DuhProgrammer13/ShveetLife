@@ -1,5 +1,6 @@
 package com.desitum.shveetlife.world;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.desitum.shveetlife.data.Assets;
@@ -27,7 +28,7 @@ public class MenuWorld {
     public MenuWorld(MenuInterface mi){
         menuInterface = mi;
 
-        tf = new TextField("", new TextField.TextFieldStyle());
+        tf = new TextField("", new TextField.TextFieldStyle(Assets.textFieldFont, Color.WHITE, Assets.textCursor, Assets.textSelection, Assets.textFieldBackground));
         tf.setX(5);
         tf.setY(5);
         tf.setSize(20, 10);
