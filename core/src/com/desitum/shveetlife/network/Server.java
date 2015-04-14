@@ -44,7 +44,6 @@ public class Server {
             System.out.println("Data has been sent");
             //myClient.readData();
         } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, "Problems with Send Data Method");
         }
     }
 
