@@ -21,6 +21,12 @@ public class ShveetLife extends Game {
             public void run() {
                 DataManager.sendData();
                 DataManager.receiveData();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                run();
             }
         }).start();
 
