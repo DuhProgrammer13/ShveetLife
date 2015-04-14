@@ -111,7 +111,6 @@ public class GameWorld implements GameInterface{
 
     public String getDataString(){
         String returnString = "";
-        return "This is my data";
 
         String separator = "";
         for (String item: data){
@@ -119,6 +118,7 @@ public class GameWorld implements GameInterface{
             returnString += item;
             separator = ";";
         }
+        returnString = "This is my data";
         return returnString;
     }
     public ArrayList<String> getData(){
