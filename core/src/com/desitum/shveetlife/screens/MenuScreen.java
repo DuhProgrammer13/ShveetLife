@@ -14,6 +14,7 @@ import com.desitum.shveetlife.data.Accounts;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
 import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 import com.desitum.shveetlife.network.Client;
+import com.desitum.shveetlife.network.DataManager;
 import com.desitum.shveetlife.network.Server;
 import com.desitum.shveetlife.objects.MenuButton;
 import com.desitum.shveetlife.world.MenuInterface;
@@ -110,26 +111,15 @@ public class MenuScreen implements Screen, MenuInterface {
 
     @Override
     public void playGame() {
-        accounts.runServer();
+        DataManager.startManager("localhost", "localhost");
         shveetLife.setScreen(new GameScreen(shveetLife));
         //shveetLife.setScreen(new GameScreen(shveetLife));
     }
 
     @Override
     public void connect() {
-        //TODO Do the stuff here to make it have a nice pop up window with a box for Username, Password, and IP Address
-        //After the pop up, or from the pop up, call this method!
-
-        //Quickly setup Test Version! (Yes I know I could have just plugged them straight in...)
-        String username = "Kody";
-        String password = "Pass";
-        //String ipAddress = "localhost";
-        String ipAddress = "10.228.7.220";
-        accounts = new Accounts(username, password, ipAddress);
-        if(accounts.isValid) {
-            shveetLife.setScreen(new GameScreen(shveetLife));
-        }
-
+        DataManager.startManager("10.228.7.220", "10.228.7.220");
+        shveetLife.setScreen(new GameScreen(shveetLife));
     }
 
     @Override

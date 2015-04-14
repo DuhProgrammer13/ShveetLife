@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.desitum.shveetlife.network.DataManager;
 import com.desitum.shveetlife.screens.MenuScreen;
 import com.desitum.shveetlife.screens.SplashScreen;
 
@@ -14,6 +15,15 @@ public class ShveetLife extends Game {
 	
 	@Override
 	public void create () {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DataManager.sendData();
+                DataManager.receiveData();
+            }
+        }).start();
+
         Screen splashScreen = new SplashScreen(this);
         this.setScreen(splashScreen);
 	}

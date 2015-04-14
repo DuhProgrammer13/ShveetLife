@@ -49,14 +49,20 @@ public class Chunk {
         }
     }
 
-    public void changeTile(GameObject from, GameObject to){
+    public int[] changeTile(GameObject from, GameObject to){
+        int[] returnArray = new int[2];
         for (int z = 0; z < chunkObjects.length; z++){
             for (int w = 0; w < chunkObjects[z].length; w++){
                 if (chunkObjects[z][w] == from){
                     chunkObjects[z][w] = to;
+
+                    returnArray[0] = z;
+                    returnArray[1] = w;
+                    return returnArray;
                 }
             }
         }
+        return null;
     }
 
     public GameObject getObjectAt(Vector3 pos){
