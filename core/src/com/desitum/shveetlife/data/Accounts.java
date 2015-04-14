@@ -54,9 +54,6 @@ public class Accounts {
         }
     }
 
-    public void runServer(){
-        myServer.RunServer("localhost");
-    }
     private void verifyPassword(String password, String username, String ipAddress){
         int userID = accounts.indexOf(username);
         System.out.println(userID);
