@@ -52,7 +52,6 @@ public class GrassTile extends GameObject {
     }
 
     private void doDamage(float amount){
-        System.out.println("Hrm");
         health -= amount;
         particleSettings = new ParticleSettings(this.getX(), this.getY(), this.getWidth(), this.getHeight(), -1f, 1, -1, 0, 0.4f);
 

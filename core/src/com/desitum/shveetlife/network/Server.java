@@ -25,7 +25,7 @@ public class Server {
         myClient = new Client(null);
     }
 
-    public void RunServer(String ipAddress) {
+    public void RunServer() {
         try {
             System.out.println("Starting Server....");
             serverSocket = new ServerSocket(7777);

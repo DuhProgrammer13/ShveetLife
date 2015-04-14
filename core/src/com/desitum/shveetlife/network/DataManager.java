@@ -17,6 +17,7 @@ public class DataManager {
         gameWorld = null;
         if (host.equals("localhost")){
             mainServer = new Server();
+            mainServer.RunServer();
         } else {
             myClient = new Client(new ProcessData());
             myClient.startClient(ipAddress);

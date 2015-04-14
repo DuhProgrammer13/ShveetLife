@@ -25,7 +25,6 @@ public class ParticleSettings {
         speedY = random.nextFloat() * (maxSpeedY - minSpeedY) + minSpeedY;
         speedY *= 5;
 
-        System.out.println(speedX);
         float startPosX = random.nextFloat() * (objectWidth) + x;
         float startPosY = random.nextFloat() * (objectHeight) + y;
 
