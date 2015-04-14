@@ -42,4 +42,8 @@ public class DataManager {
             myClient.readData();
         }
     }
+
+    public static void setGameWorld(GameWorld gw){
+        gameWorld = gw;
+    }
 }

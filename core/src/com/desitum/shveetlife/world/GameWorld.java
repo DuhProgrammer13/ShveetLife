@@ -3,6 +3,7 @@ package com.desitum.shveetlife.world;
 import com.badlogic.gdx.Input;
 import com.desitum.shveetlife.ShveetLife;
 import com.desitum.shveetlife.libraries.CollisionDetection;
+import com.desitum.shveetlife.network.DataManager;
 import com.desitum.shveetlife.network.ProcessData;
 import com.desitum.shveetlife.objects.Chunk;
 import com.desitum.shveetlife.objects.GameObject;
@@ -37,6 +38,8 @@ public class GameWorld implements GameInterface{
         data = new ArrayList<String>();
 
         loadedChunks.add( new Chunk(0, 0, this));
+
+        DataManager.setGameWorld(this);
     }
 
     public void update(float delta){
