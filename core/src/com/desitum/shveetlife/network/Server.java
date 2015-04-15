@@ -44,14 +44,13 @@ public class Server {
     public void sendData(String command) {
         try {
             if(clientSocket != null) {
-                clientSocket = serverSocket.accept();
                 System.out.println("Connection From: " + clientSocket.getInetAddress());
                 out = new DataOutputStream(clientSocket.getOutputStream());
                 out.writeUTF(command);
                 System.out.println("Data has been sent");
                 //myClient.readData();
             } else {
-                //Do Nothing!
+                clientSocket = serverSocket.accept();
             }
         } catch (Exception exception) {
 

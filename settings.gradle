@@ -1,2 +1,2 @@
-include ':lib'
+include ':lib', ':dynamicgui'
 include 'desktop', 'android', 'core'
