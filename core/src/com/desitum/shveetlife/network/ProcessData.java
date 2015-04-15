@@ -9,6 +9,9 @@ public class ProcessData {
     public static final int REMOVE = 1;
     public static final int PLACE = 2;
     public static final int EDIT = 3;
+    public static final int MOVE = 4;
+
+    public static final int PLAYER = 5;
 
     public ProcessData(){
 

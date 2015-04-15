@@ -29,23 +29,14 @@ public class Client {
 
     }
 
-    public void readData(){
+    public String readData(){
+        String data = "";
         try {
             in = new DataInputStream(socket.getInputStream());
-            String data = in.readUTF();
+            data = in.readUTF();
             System.out.println(data);
-            processData(data);
         } catch(Exception exception){
         }
-    }
-
-    public void processData(String data){
-        String request = "";
-        String[] requestArray = data.split(" ");
-        String command = requestArray[0];
-        String object = requestArray[1];
-        int commandId = Integer.parseInt(command);
-        int objectId = Integer.parseInt(object);
-        processor.process(commandId, objectId);
+        return data;
     }
 }

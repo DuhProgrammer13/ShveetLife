@@ -25,6 +25,7 @@ public class GameWorld implements GameInterface{
     private ArrayList<Chunk> allChunks;
 
     private ArrayList<String> data;
+    private ArrayList<String> loadData;
 
     private ArrayList<Particle> particles;
 
@@ -38,6 +39,8 @@ public class GameWorld implements GameInterface{
         data = new ArrayList<String>();
 
         loadedChunks.add( new Chunk(0, 0, this));
+
+        createLoadString();
 
         DataManager.setGameWorld(this);
     }
@@ -124,5 +127,33 @@ public class GameWorld implements GameInterface{
     }
     public ArrayList<String> getData(){
         return data;
+    }
+
+    private void createLoadString(){
+        String chunkAppend = "";
+        String chunkString = "";
+        for (Chunk chunk: allChunks){
+            chunkString += chunkAppend;
+            chunkString += chunk.getLoadString();
+            chunkAppend = "/";
+        }
+        loadData.add(chunkString);
+    }
+    public String getGameLoad(){
+        String returnString = "";
+
+        String append = "";
+        for (String s: loadData){
+            returnString += append + s;
+            append = ":";
+        }
+
+        return returnString;
+    }
+
+    public static GameWorld loadGameFromString(){
+        GameWorld newWorld = null;
+
+        return newWorld;
     }
 }

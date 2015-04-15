@@ -28,7 +28,7 @@ public class DataManager {
         if (gameWorld == null) return;
         String data = gameWorld.getDataString();
         if (mainServer != null){
-            mainServer.sendData(data);
+            mainServer.sendData(data, gameWorld);
         } else if (myClient != null){
             //myClient.sendData(data);
         }
@@ -46,4 +46,11 @@ public class DataManager {
     public static void setGameWorld(GameWorld gw){
         gameWorld = gw;
     }
+
+    private static void setUpWorld(String data){
+
+    }
+
+    String setup = "CHUNK:PLAYER:YOURSELF:GAMEOBJECTS";
+    String setup2 = "x y|0 0 0; 0 0 1; 0 0 2/0 0 0;0 0 1;0 0 2;0 0 3:NAME x y texture/inventory:NAME x y texture/inventory:GAMEOBJECT# x y/inventory";
 }

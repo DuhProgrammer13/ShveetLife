@@ -1,5 +1,6 @@
 package com.desitum.shveetlife.network;
 
+import com.desitum.shveetlife.world.GameWorld;
 import com.desitum.shveetlife.world.MenuInterface;
 
 import java.io.DataInputStream;
@@ -41,7 +42,7 @@ public class Server {
     }
 
 
-    public void sendData(String command) {
+    public void sendData(String command, GameWorld gameWorld) {
         try {
             if(clientSocket != null) {
                 System.out.println("Connection From: " + clientSocket.getInetAddress());
@@ -51,6 +52,8 @@ public class Server {
                 //myClient.readData();
             } else {
                 clientSocket = serverSocket.accept();
+                out = new DataOutputStream(clientSocket.getOutputStream());
+                out.writeUTF(gameWorld.getGameLoad());
             }
         } catch (Exception exception) {
 
