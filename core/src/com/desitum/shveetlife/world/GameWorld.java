@@ -70,13 +70,11 @@ public class GameWorld implements GameInterface{
             }
         }
         if (affectedChunk == null){
-            System.out.println("Shoot");
             return;
         }
 
         GameObject affectedObject = affectedChunk.getObjectAt(player.getPositionInFront());
         if (affectedObject == null){
-            System.out.println("Shoot1");
             return;
         }
 

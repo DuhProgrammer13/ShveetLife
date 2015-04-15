@@ -2,6 +2,7 @@ package com.desitum.shveetlife.network;
 
 import com.desitum.shveetlife.world.MenuInterface;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,13 +16,17 @@ public class Server {
     private static ServerSocket serverSocket;
     private static Socket clientSocket;
     private static DataOutputStream out;
+    private static DataInputStream in;
     private Client myClient;
+
+    private boolean clientConnected;
     //private String ipAddress;
 
     public boolean serverStarted;
 
     public Server() {
         serverStarted = false;
+        clientConnected = false;
         myClient = new Client(null);
     }
 
@@ -35,15 +40,21 @@ public class Server {
         }
     }
 
+
     public void sendData(String command) {
         try {
-            clientSocket = serverSocket.accept();
-            System.out.println("Connection From: " + clientSocket.getInetAddress());
-            out = new DataOutputStream(clientSocket.getOutputStream());
-            out.writeUTF(command);
-            System.out.println("Data has been sent");
-            //myClient.readData();
+            if(clientSocket != null) {
+                clientSocket = serverSocket.accept();
+                System.out.println("Connection From: " + clientSocket.getInetAddress());
+                out = new DataOutputStream(clientSocket.getOutputStream());
+                out.writeUTF(command);
+                System.out.println("Data has been sent");
+                //myClient.readData();
+            } else {
+                //Do Nothing!
+            }
         } catch (Exception exception) {
+
         }
     }
 
