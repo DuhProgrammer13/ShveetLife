@@ -39,12 +39,14 @@ public class Chunk {
     }
 
     private Chunk(GameObject[][] objects, Rectangle boundingRect, GameInterface gameInterface){
+        this.x = boundingRect.getX();
+        this.y = boundingRect.getY();
         this.gi = gameInterface;
         this.chunkObjects = objects;
         this.boundingRect = boundingRect;
     }
 
-    public Chunk loadFromString(String data, GameInterface gameInterface) {
+    public static Chunk loadFromString(String data, GameInterface gameInterface) {
         Chunk returnChunk = null;
 
         Rectangle boundingRect2 = new Rectangle(0, 0, 160, 160);
@@ -52,15 +54,13 @@ public class Chunk {
 
         String[] data2 = data1[0].split(" ");
         boundingRect2.setX(Integer.parseInt(data2[0]));
-        this.x = boundingRect2.getX();
         boundingRect2.setY(Integer.parseInt(data2[1]));
-        this.y = boundingRect2.getY();
 
         String[] data3 = data1[1].split(";");
-        chunkObjects = new GameObject[16][16];
-        for (int z = 0; z < chunkObjects.length; z++){
-            for (int w = 0; w < chunkObjects[z].length; w++){
-                chunkObjects[z][w] = TileData.createTile(Integer.parseInt(data3[z*16 + w].split(" ")[0]), this.x + z * 10, this.y + w * 10, gameInterface);
+        GameObject[][] chunkObjects2 = new GameObject[16][16];
+        for (int z = 0; z < chunkObjects2.length; z++){
+            for (int w = 0; w < chunkObjects2[z].length; w++){
+                chunkObjects2[z][w] = TileData.createTile(Integer.parseInt(data3[z*16 + w].split(" ")[0]), boundingRect2.getX() + z * 10, boundingRect2.getY() + w * 10, gameInterface);
             }
         }
 
@@ -116,6 +116,14 @@ public class Chunk {
 
     public float getY(){
         return y;
+    }
+
+    public float getWidth(){
+        return boundingRect.getWidth();
+    }
+
+    public float getHeight(){
+        return boundingRect.getHeight();
     }
 
     public Rectangle getBoundingRect(){

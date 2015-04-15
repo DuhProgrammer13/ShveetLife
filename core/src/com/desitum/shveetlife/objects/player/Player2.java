@@ -33,58 +33,26 @@ public class Player2 extends Sprite {
         this.gameInterface = gi;
     }
 
-    public void update(float delta){
-        if (moving){
-            if (direction == GameKeys.RIGHT){
-                setX(getX() + SPEED * delta);
-            } else if (direction == GameKeys.LEFT){
-                setX(getX() - SPEED * delta);
-            } else if (direction == GameKeys.UP){
-                setY(getY() + SPEED * delta);
-            } else if (direction == GameKeys.DOWN){
-                setY(getY() - SPEED * delta);
-            }
-        }
+    public void update(float delta, String command){
+        String[] info = command.split(" ");
+
+        setX(Integer.parseInt(info[0]));
+        setY(Integer.parseInt(info[1]));
     }
 
-    public void useKey(int key){
-        switch (key){
-        }
+    public static Player2 loadFromString(String data, GameInterface gi){
+        String[] dataStrings = data.split(" ");
+
+        float x = Integer.parseInt(dataStrings[1]);
+        float y = Integer.parseInt(dataStrings[2]);
+        float width = Integer.parseInt(dataStrings[3]);
+        float height = Integer.parseInt(dataStrings[4]);
+
+        return new Player2(gi, width, height, x, y);
     }
 
-    public void useDirectionalKey(int key){
-        if (key == Input.Keys.DPAD_RIGHT){
-            direction = GameKeys.RIGHT;
-            moving = true;
-        } else if (key == Input.Keys.DPAD_LEFT){
-            direction = GameKeys.LEFT;
-            moving = true;
-        } else if (key == Input.Keys.DPAD_UP){
-            direction = GameKeys.UP;
-            moving = true;
-        } else if (key == Input.Keys.DPAD_DOWN){
-            direction = GameKeys.DOWN;
-            moving = true;
-        } else {
-            moving = false;
-        }
-    }
-
-    public float getDamage(Class c){
-        return 1; //TODO should be directly related to the item held and object being attacked
-    }
-
-    public Vector3 getPositionInFront(){
-        if (direction == GameKeys.RIGHT){
-            return new Vector3(getX() + getWidth() + 1, getY() + (getHeight()/2), 0);
-        } else if (direction == GameKeys.LEFT){
-            return new Vector3(getX() - 1, getY() + (getHeight()/2), 0);
-        } else if (direction == GameKeys.UP){
-            return new Vector3(getX() + (getWidth()/2), getY() + getHeight() + 1, 0);
-        } else if (direction == GameKeys.DOWN){
-            return new Vector3(getX() + (getWidth()/2), getY() - 1, 0);
-        } else {
-            return new Vector3(getX(), getY(), 0);
-        }
+    @Override
+    public String toString(){
+        return "Name " + getX() + " " + getY() + " " + getWidth() + " " + getHeight();
     }
 }

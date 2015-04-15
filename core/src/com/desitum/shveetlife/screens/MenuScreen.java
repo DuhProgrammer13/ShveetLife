@@ -17,6 +17,7 @@ import com.desitum.shveetlife.network.Client;
 import com.desitum.shveetlife.network.DataManager;
 import com.desitum.shveetlife.network.Server;
 import com.desitum.shveetlife.objects.MenuButton;
+import com.desitum.shveetlife.world.GameWorld;
 import com.desitum.shveetlife.world.MenuInterface;
 import com.desitum.shveetlife.world.MenuRenderer;
 import com.desitum.shveetlife.world.MenuWorld;
@@ -118,7 +119,8 @@ public class MenuScreen implements Screen, MenuInterface {
 
     @Override
     public void connect() {
-        DataManager.startManager("10.228.7.220", "10.228.7.220");
+        GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("10.228.7.220", "10.228.7.220"));
+        DataManager.receiveData();
         shveetLife.setScreen(new GameScreen(shveetLife));
     }
 

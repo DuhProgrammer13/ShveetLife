@@ -66,6 +66,26 @@ public class GameScreen implements Screen {
         commandKeys.add(Input.Keys.SPACE);
     }
 
+    public GameScreen(ShveetLife sl, String loadString){
+        batch = new SpriteBatch();
+
+        cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+        cam.position.set(FRUSTUM_WIDTH/2, FRUSTUM_HEIGHT/2, 0);
+        viewport = new FitViewport(FRUSTUM_WIDTH, FRUSTUM_HEIGHT, cam);
+
+        gameWorld = GameWorld.loadGameFromString(loadString);
+        gameRenderer = new GameRenderer(gameWorld, batch);
+
+        directionalKeys = new ArrayList<Integer>();
+        directionalKeys.add(Input.Keys.DPAD_DOWN);
+        directionalKeys.add(Input.Keys.DPAD_UP);
+        directionalKeys.add(Input.Keys.DPAD_LEFT);
+        directionalKeys.add(Input.Keys.DPAD_RIGHT);
+
+        commandKeys = new ArrayList<Integer>();
+        commandKeys.add(Input.Keys.SPACE);
+    }
+
     @Override
     public void render(float delta) {
         updateInput();

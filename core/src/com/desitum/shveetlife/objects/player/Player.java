@@ -87,4 +87,13 @@ public class Player extends Sprite {
             return new Vector3(getX(), getY(), 0);
         }
     }
+
+    public static Player loadFromString(String data, GameInterface gi){
+        return new Player(gi, 10, 10, 10, 10);
+    }
+
+    public String toString(){
+        //TODO need a big time fix here
+        return "";
+    }
 }

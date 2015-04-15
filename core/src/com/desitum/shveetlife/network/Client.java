@@ -18,15 +18,19 @@ public class Client {
         this.processor = processor;
     }
 
-    public void startClient(String wantedIP) {
+    public String startClient(String wantedIP) {
         try {
             System.out.println("Connecting...");
             socket = new Socket(wantedIP, 7777);
             System.out.println("Connection Successful");
+            in = new DataInputStream(socket.getInputStream());
+            String data = in.readUTF();
+            System.out.println(data);
+            return data;
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, "Problems with the Client");
         }
-
+        return "";
     }
 
     public String readData(){

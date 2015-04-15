@@ -9,7 +9,9 @@ import com.desitum.shveetlife.objects.Chunk;
 import com.desitum.shveetlife.objects.GameObject;
 import com.desitum.shveetlife.objects.particles.Particle;
 import com.desitum.shveetlife.objects.player.Player;
+import com.desitum.shveetlife.objects.player.Player2;
 import com.desitum.shveetlife.objects.tiles.TileData;
+import com.desitum.shveetlife.screens.GameScreen;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -39,6 +41,7 @@ public class GameWorld implements GameInterface{
         data = new ArrayList<String>();
 
         loadedChunks.add( new Chunk(0, 0, this));
+        allChunks.add(loadedChunks.get(0));
 
         createLoadString();
 
@@ -125,6 +128,20 @@ public class GameWorld implements GameInterface{
         returnString = "This is my data";
         return returnString;
     }
+
+    private void updateLoadedChunks(){
+        loadedChunks = new ArrayList<Chunk>();
+
+        for (Chunk chunk: allChunks){
+            if (chunk.getX() < player.getX() + player.getWidth()/2 + GameScreen.FRUSTUM_WIDTH/2 &&
+                    chunk.getY() < player.getY() + player.getHeight()/2 + GameScreen.FRUSTUM_HEIGHT/2 &&
+                    chunk.getX() + chunk.getWidth() > player.getX() - GameScreen.FRUSTUM_WIDTH/2 &&
+                    chunk.getY() + chunk.getHeight() > player.getY() - GameScreen.FRUSTUM_HEIGHT/2){
+                loadedChunks.add(chunk);
+            }
+        }
+    }
+
     public ArrayList<String> getData(){
         return data;
     }
@@ -138,6 +155,10 @@ public class GameWorld implements GameInterface{
             chunkAppend = "/";
         }
         loadData.add(chunkString);
+
+        loadData.add(player2.toString());
+
+        loadData.add(player.toString());
     }
     public String getGameLoad(){
         String returnString = "";
@@ -151,9 +172,21 @@ public class GameWorld implements GameInterface{
         return returnString;
     }
 
-    public static GameWorld loadGameFromString(){
+    public static GameWorld loadGameFromString(String loadString){
         GameWorld newWorld = null;
 
+        ArrayList<Chunk> newWorldChunks = new ArrayList<Chunk>();
+        String[] loadStrings = loadString.split(":");
+
+        String[] chunkStrings = loadStrings[0].split("/");
+        for (String chunkString: chunkStrings){
+            newWorldChunks.add(Chunk.loadFromString(chunkString, newWorld));
+        }
+
+        Player2 otherPlayer = Player2.loadFromString(loadStrings[1], newWorld);
+
+
+        Player myNewPlayer = Player.loadFromString(loadStrings[2], newWorld);
         return newWorld;
     }
 }

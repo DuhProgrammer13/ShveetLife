@@ -13,15 +13,16 @@ public class DataManager {
     public static Client myClient;
     public static GameWorld gameWorld;
 
-    public static void startManager(String host, String ipAddress){
+    public static String startManager(String host, String ipAddress){
         gameWorld = null;
         if (host.equals("localhost")){
             mainServer = new Server();
             mainServer.RunServer();
         } else {
             myClient = new Client(new ProcessData());
-            myClient.startClient(ipAddress);
+            return myClient.startClient(ipAddress);
         }
+        return "";
     }
 
     public static void sendData(){
