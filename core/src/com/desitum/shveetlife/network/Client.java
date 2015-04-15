@@ -1,6 +1,9 @@
 package com.desitum.shveetlife.network;
 
+import com.desitum.shveetlife.world.GameWorld;
+
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.net.Socket;
 
 import javax.swing.JOptionPane;
@@ -11,6 +14,7 @@ import javax.swing.JOptionPane;
 public class Client {
     private static Socket socket;
     private static DataInputStream in;
+    private static DataOutputStream out;
     private ProcessData processor;
 
 
@@ -42,5 +46,20 @@ public class Client {
         } catch(Exception exception){
         }
         return data;
+    }
+
+    public void sendData(String command) {
+        try {
+            if(socket != null) {
+                System.out.println("Connection From: " + socket.getInetAddress());
+                out = new DataOutputStream(socket.getOutputStream());
+                out.writeUTF(command);
+                System.out.println("Data has been sent");
+            } else {
+
+            }
+        } catch (Exception exception) {
+
+        }
     }
 }
