@@ -50,11 +50,17 @@ public class Chunk {
         Chunk returnChunk = null;
 
         Rectangle boundingRect2 = new Rectangle(0, 0, 160, 160);
-        String[] data1 = data.split("|");
+        String[] data1 = data.split("\\|");
+        for (String str: data1){
+            System.out.println("Line -" + str);
+        }
 
         String[] data2 = data1[0].split(" ");
-        boundingRect2.setX(Integer.parseInt(data2[0]));
-        boundingRect2.setY(Integer.parseInt(data2[1]));
+        for (String str: data2){
+            System.out.println(str);
+        }
+        boundingRect2.setX(Float.parseFloat(data2[0]));
+        boundingRect2.setY(Float.parseFloat(data2[1]));
 
         String[] data3 = data1[1].split(";");
         GameObject[][] chunkObjects2 = new GameObject[16][16];
