@@ -128,7 +128,7 @@ public class GameWorld implements GameInterface{
         for (Chunk chunk: loadedChunks){
             if (CollisionDetection.pointInRectangle(chunk.getBoundingRect(), player.getPositionInFront())){
                 int[] position = chunk.changeTile(from, to);
-                data.add(ProcessData.EDIT + " TILE " + position[0] + " " + position[1] + " " + TileData.getTile(to.getClass()));
+                data.add(ProcessData.EDIT + " " + ProcessData.TILE + " " + position[0] + " " + position[1] + " " + TileData.getTile(to.getClass()) + " " + chunk.getX() + " " + chunk.getY());
             }
         }
     }
@@ -210,5 +210,24 @@ public class GameWorld implements GameInterface{
 
         newWorld = new GameWorld(sl, newWorldChunks, myNewPlayer, otherPlayer);
         return newWorld;
+    }
+
+    public void updateData(String info){
+        for (String infoPiece: info.split(";")){
+            String[] infoToUse = infoPiece.split(" ");
+            if (Integer.parseInt(infoToUse[1]) == ProcessData.TILE){
+                workOnTile(infoToUse);
+            }
+        }
+    }
+
+    private void workOnTile(String[] info){
+        for (Chunk chunk: allChunks){
+            if (chunk.getX() == Float.parseFloat(info[TileData.CHUNK_X]) &&
+                    chunk.getY() == Float.parseFloat(info[TileData.CHUNK_Y])){
+                int[] tilePos = {Integer.parseInt(info[TileData.POS_X]), Integer.parseInt(info[TileData.POS_Y])};
+                chunk.changeTileAtPosition(tilePos, TileData.buildTileFromString(info, chunk, this));
+            }
+        }
     }
 }

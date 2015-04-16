@@ -58,6 +58,7 @@ public class GameRenderer {
     }
 
     private void drawPlayer(){
+        world.getPlayer2().draw(gameBatch);
         world.getPlayer().draw(gameBatch);
     }
 

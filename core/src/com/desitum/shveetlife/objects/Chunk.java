@@ -101,6 +101,14 @@ public class Chunk {
         return null;
     }
 
+    public int[] changeTileAtPosition(int[] pos, GameObject to){
+        int[] returnArray = new int[2];
+
+        chunkObjects[pos[0]][pos[1]] = to;
+
+        return pos;
+    }
+
     public GameObject getObjectAt(Vector3 pos){
         for (GameObject[] gameObjects: chunkObjects){
             for (GameObject gameObject: gameObjects){

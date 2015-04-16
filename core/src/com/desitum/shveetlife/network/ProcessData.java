@@ -12,6 +12,7 @@ public class ProcessData {
     public static final int MOVE = 4;
 
     public static final int PLAYER = 5;
+    public static final int TILE = 6;
 
     public ProcessData(){
 
