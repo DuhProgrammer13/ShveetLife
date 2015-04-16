@@ -2,8 +2,6 @@ package com.desitum.shveetlife.network;
 
 import com.desitum.shveetlife.world.GameWorld;
 
-import java.util.ArrayList;
-
 /**
  * Created by dvan6234 on 4/13/2015.
  */
@@ -19,7 +17,7 @@ public class DataManager {
             mainServer = new Server();
             mainServer.RunServer();
         } else {
-            myClient = new Client(new ProcessData());
+            myClient = new Client();
             return myClient.startClient(ipAddress);
         }
         return "";

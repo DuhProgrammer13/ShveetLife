@@ -1,7 +1,5 @@
 package com.desitum.shveetlife.network;
 
-import com.desitum.shveetlife.world.GameWorld;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
@@ -18,8 +16,7 @@ public class Client {
     private ProcessData processor;
 
 
-    public Client (ProcessData processor) {
-        this.processor = processor;
+    public Client () {
     }
 
     public String startClient(String wantedIP) {

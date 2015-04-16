@@ -2,7 +2,6 @@ package com.desitum.shveetlife.data;
 
 import com.desitum.shveetlife.network.Client;
 import com.desitum.shveetlife.network.Server;
-import com.desitum.shveetlife.screens.MenuScreen;
 
 import java.util.ArrayList;
 
@@ -32,7 +31,6 @@ public class Accounts {
         isValid = false;
 
         myServer = new Server();
-        myClient = new Client(null);
 
         accounts = new ArrayList<String>();
         passwords = new ArrayList<String>();

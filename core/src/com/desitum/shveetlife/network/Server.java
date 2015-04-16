@@ -1,7 +1,6 @@
 package com.desitum.shveetlife.network;
 
 import com.desitum.shveetlife.world.GameWorld;
-import com.desitum.shveetlife.world.MenuInterface;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -18,7 +17,6 @@ public class Server {
     private static Socket clientSocket;
     private static DataOutputStream out;
     private static DataInputStream in;
-    private Client myClient;
 
     private boolean clientConnected;
     //private String ipAddress;
@@ -28,7 +26,6 @@ public class Server {
     public Server() {
         serverStarted = false;
         clientConnected = false;
-        myClient = new Client(null);
     }
 
     public void RunServer() {

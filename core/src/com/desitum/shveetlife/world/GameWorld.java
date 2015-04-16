@@ -22,7 +22,7 @@ import java.util.Iterator;
 public class GameWorld implements GameInterface{
 
     private Player player;
-    private Player player2;
+    private Player2 player2;
     private ArrayList<Chunk> loadedChunks;
     private ArrayList<Chunk> allChunks;
 
@@ -33,7 +33,24 @@ public class GameWorld implements GameInterface{
 
     public GameWorld(ShveetLife sl){
         player = new Player(this, 10, 10, 10, 10);
-        player2 = new Player(this, 10, 10, 10, 10);
+        player2 = new Player2(this, 10, 10, 10, 10);
+
+        loadedChunks = new ArrayList<Chunk>();
+        allChunks = new ArrayList<Chunk>();
+        particles = new ArrayList<Particle>();
+        data = new ArrayList<String>();
+
+        loadedChunks.add( new Chunk(0, 0, this));
+        allChunks.add(loadedChunks.get(0));
+
+        createLoadString();
+
+        DataManager.setGameWorld(this);
+    }
+
+    public GameWorld(ShveetLife sl, ArrayList<Chunk> chunks, Player p, Player2 p2){
+        player = p;
+        player2 = p2;
 
         loadedChunks = new ArrayList<Chunk>();
         allChunks = new ArrayList<Chunk>();
@@ -50,7 +67,7 @@ public class GameWorld implements GameInterface{
 
     public void update(float delta){
         player.update(delta);
-        player2.update(delta);
+        player2.update(delta, "");
 
         for (Chunk chunk: loadedChunks){
             chunk.update(delta);
@@ -154,6 +171,8 @@ public class GameWorld implements GameInterface{
             chunkString += chunk.getLoadString();
             chunkAppend = "/";
         }
+        loadData = new ArrayList<String>();
+
         loadData.add(chunkString);
 
         loadData.add(player2.toString());
@@ -172,7 +191,7 @@ public class GameWorld implements GameInterface{
         return returnString;
     }
 
-    public static GameWorld loadGameFromString(String loadString){
+    public static GameWorld loadGameFromString(String loadString, ShveetLife sl){
         GameWorld newWorld = null;
 
         ArrayList<Chunk> newWorldChunks = new ArrayList<Chunk>();
@@ -187,6 +206,8 @@ public class GameWorld implements GameInterface{
 
 
         Player myNewPlayer = Player.loadFromString(loadStrings[2], newWorld);
+
+        newWorld = new GameWorld(sl, newWorldChunks, myNewPlayer, otherPlayer);
         return newWorld;
     }
 }
