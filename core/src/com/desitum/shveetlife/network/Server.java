@@ -4,8 +4,11 @@ import com.desitum.shveetlife.world.GameWorld;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketAddress;
 
 import javax.swing.JOptionPane;
 
@@ -31,7 +34,7 @@ public class Server {
     public void RunServer() {
         try {
             System.out.println("Starting Server....");
-            serverSocket = new ServerSocket(7777);
+            serverSocket = new ServerSocket(9001);
             System.out.println("Server Started.");
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, "Server Start Failed");

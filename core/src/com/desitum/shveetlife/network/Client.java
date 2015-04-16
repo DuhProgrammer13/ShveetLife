@@ -53,7 +53,8 @@ public class Client {
                 out.writeUTF(command);
                 System.out.println("Data has been sent");
             } else {
-
+                //If the server is null you have bigger problems than an empty else section... :P
+                //If the server is null you have bigger problems than an empty else section... :P
             }
         } catch (Exception exception) {
 
