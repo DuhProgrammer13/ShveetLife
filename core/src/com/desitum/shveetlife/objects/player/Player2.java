@@ -1,10 +1,7 @@
 package com.desitum.shveetlife.objects.player;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector3;
 import com.desitum.shveetlife.data.Assets;
-import com.desitum.shveetlife.data.GameKeys;
 import com.desitum.shveetlife.world.GameInterface;
 
 /**
@@ -36,8 +33,8 @@ public class Player2 extends Sprite {
     public void update(float delta, String command){
         String[] info = command.split(" ");
 
-        setX(Integer.parseInt(info[0]));
-        setY(Integer.parseInt(info[1]));
+        //setX(Integer.parseInt(info[0]));
+        //setY(Integer.parseInt(info[1]));
     }
 
     public static Player2 loadFromString(String data, GameInterface gi){
