@@ -142,6 +142,8 @@ public class GameWorld implements GameInterface{
             returnString += item;
             separator = ";";
         }
+
+        data = new ArrayList<String>();
         return returnString;
     }
 
