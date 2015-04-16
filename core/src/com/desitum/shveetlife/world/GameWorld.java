@@ -230,4 +230,8 @@ public class GameWorld implements GameInterface{
             }
         }
     }
+
+    public Player2 getPlayer2(){
+        return player2;
+    }
 }
