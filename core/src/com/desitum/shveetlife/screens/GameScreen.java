@@ -73,7 +73,7 @@ public class GameScreen implements Screen {
         cam.position.set(FRUSTUM_WIDTH/2, FRUSTUM_HEIGHT/2, 0);
         viewport = new FitViewport(FRUSTUM_WIDTH, FRUSTUM_HEIGHT, cam);
 
-        gameWorld = GameWorld.loadGameFromString(loadString);
+        gameWorld = GameWorld.loadGameFromString(loadString, shveetLife);
         gameRenderer = new GameRenderer(gameWorld, batch);
 
         directionalKeys = new ArrayList<Integer>();
