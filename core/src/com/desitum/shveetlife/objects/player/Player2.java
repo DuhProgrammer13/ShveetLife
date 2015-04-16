@@ -40,10 +40,10 @@ public class Player2 extends Sprite {
     public static Player2 loadFromString(String data, GameInterface gi){
         String[] dataStrings = data.split(" ");
 
-        float x = Integer.parseInt(dataStrings[1]);
-        float y = Integer.parseInt(dataStrings[2]);
-        float width = Integer.parseInt(dataStrings[3]);
-        float height = Integer.parseInt(dataStrings[4]);
+        float x = Float.parseFloat(dataStrings[1]);
+        float y = Float.parseFloat(dataStrings[2]);
+        float width = Float.parseFloat(dataStrings[3]);
+        float height = Float.parseFloat(dataStrings[4]);
 
         return new Player2(gi, width, height, x, y);
     }
