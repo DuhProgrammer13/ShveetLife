@@ -94,6 +94,6 @@ public class Player extends Sprite {
 
     public String toString(){
         //TODO need a big time fix here
-        return "";
+        return "fetch a roo";
     }
 }
