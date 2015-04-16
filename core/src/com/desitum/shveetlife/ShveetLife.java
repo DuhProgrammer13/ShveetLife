@@ -13,7 +13,6 @@ public class ShveetLife extends Game {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Running");
                 DataManager.sendData();
                 DataManager.receiveData();
                 try {
