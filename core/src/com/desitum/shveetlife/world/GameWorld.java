@@ -142,7 +142,6 @@ public class GameWorld implements GameInterface{
             returnString += item;
             separator = ";";
         }
-        returnString = "You are a complete idiot my friend, but if you are reading this Im proud of you!";
         return returnString;
     }
 
