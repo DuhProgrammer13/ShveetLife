@@ -213,9 +213,18 @@ public class GameWorld implements GameInterface{
     }
 
     public void updateData(String info){
-        for (String infoPiece: info.split(";")){
-            String[] infoToUse = infoPiece.split(" ");
-            if (Integer.parseInt(infoToUse[1]) == ProcessData.TILE){
+        System.out.println(info);
+        if (info.contains(";")) {
+            for (String infoPiece : info.split(";")) {
+                System.out.println(" Hey " + infoPiece);
+                String[] infoToUse = infoPiece.split(" ");
+                if (Integer.parseInt(infoToUse[1]) == ProcessData.TILE) {
+                    workOnTile(infoToUse);
+                }
+            }
+        } else {
+            String[] infoToUse = info.split(" ");
+            if (Integer.parseInt(infoToUse[1]) == ProcessData.TILE) {
                 workOnTile(infoToUse);
             }
         }
