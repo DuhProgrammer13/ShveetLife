@@ -133,13 +133,16 @@ public class Chunk {
     public String getLoadString(){
         String returnString = "";
 
+        returnString += x + " " + y + "|";
         String separator = "";
         for (int z = 0; z < chunkObjects.length; z++){
             for (int w = 0; w < chunkObjects[z].length; w++){
-                returnString += separator + TileData.getTile(chunkObjects[z][w].getClass()) + " " + z + " " + y;
+                returnString += separator + TileData.getTile(chunkObjects[z][w].getClass()) + " " + z + " " + w;
                 separator = ";";
             }
         }
+
+        System.out.println(returnString);
 
         return returnString;
     }
