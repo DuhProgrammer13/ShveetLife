@@ -55,10 +55,12 @@ public class Server {
             if(clientSocket != null) {
                 out = new DataOutputStream(clientSocket.getOutputStream());
                 out.writeUTF(command);
+                out.flush();
             } else {
                 clientSocket = serverSocket.accept();
                 out = new DataOutputStream(clientSocket.getOutputStream());
                 out.writeUTF(gameWorld.getGameLoad());
+                out.flush();
             }
         } catch (Exception exception) {
 

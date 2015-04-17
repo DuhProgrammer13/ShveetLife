@@ -55,6 +55,7 @@ public class Client {
                 System.out.println("Connection From: " + socket.getInetAddress());
                 out = new DataOutputStream(socket.getOutputStream());
                 out.writeUTF(command);
+                out.flush();
                 System.out.println("Data has been sent");
             } else {
                 //If the server is null you have bigger problems than an empty else section... :P
