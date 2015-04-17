@@ -27,7 +27,7 @@ public class Client {
             socket = new Socket(wantedIP, 9001);
             System.out.println("Connection Successful");
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String data = in.readLine()
+            String data = in.readLine();
             System.out.println(data);
             return data;
         } catch (Exception exception) {
@@ -40,8 +40,8 @@ public class Client {
         String data = "";
         try {
             if(socket != null) {
-                in = new DataInputStream(socket.getInputStream());
-                data = in.readUTF();
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                data = in.readLine();
 
                 System.out.println(data);
             } else {
