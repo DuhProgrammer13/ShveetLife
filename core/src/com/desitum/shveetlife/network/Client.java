@@ -42,7 +42,7 @@ public class Client {
                 data = in.readUTF();
                 System.out.println(data);
             } else {
-                JOptionPane.showMessageDialog(null, "HAHAHAHAHAHAAHA");
+                JOptionPane.showMessageDialog(null, "HAHAHAHAHAHAAHAHA");
             }
         } catch(Exception exception){
         }
