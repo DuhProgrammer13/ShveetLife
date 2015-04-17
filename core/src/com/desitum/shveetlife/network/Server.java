@@ -61,6 +61,7 @@ public class Server {
                 out = new DataOutputStream(clientSocket.getOutputStream());
                 out.writeUTF(gameWorld.getGameLoad());
                 out.flush();
+                readData();
             }
         } catch (Exception exception) {
 

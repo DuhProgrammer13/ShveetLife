@@ -40,8 +40,8 @@ public class DataManager {
     public static void receiveData(){
         if (gameWorld == null) return;
         if (mainServer != null){
-            String dataRead = mainServer.readData();
-            //String dataRead = "";
+            //String dataRead = mainServer.readData();
+            String dataRead = "";
             if (!dataRead.equals("")){
                 //gameWorld.updateData(dataRead);
             }
