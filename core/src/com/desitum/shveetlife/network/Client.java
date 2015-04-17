@@ -37,9 +37,13 @@ public class Client {
     public String readData(){
         String data = "";
         try {
-            in = new DataInputStream(socket.getInputStream());
-            data = in.readUTF();
-            System.out.println(data);
+            if(socket != null) {
+                in = new DataInputStream(socket.getInputStream());
+                data = in.readUTF();
+                System.out.println(data);
+            } else {
+                JOptionPane.showMessageDialog(null, "HAHAHAHAHAHAAHA");
+            }
         } catch(Exception exception){
         }
         return data;
