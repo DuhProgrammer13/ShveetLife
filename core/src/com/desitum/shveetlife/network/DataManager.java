@@ -33,6 +33,7 @@ public class DataManager {
             mainServer.sendData(data, gameWorld);
         } else if (myClient != null){
             myClient.sendData(data);
+            System.out.println("Made out of send");
         }
     }
 
@@ -47,6 +48,7 @@ public class DataManager {
             String dataRead = myClient.readData();
             if (!dataRead.equals("")){
                 gameWorld.updateData(dataRead);
+                System.out.println("Made out of recieve");
             }
         }
     }
