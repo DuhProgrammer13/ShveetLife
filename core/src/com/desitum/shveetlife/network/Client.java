@@ -1,7 +1,9 @@
 package com.desitum.shveetlife.network;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 import java.net.Socket;
 
 import javax.swing.JOptionPane;
@@ -11,7 +13,7 @@ import javax.swing.JOptionPane;
  */
 public class Client {
     private static Socket socket;
-    private static DataInputStream in;
+    private static BufferedReader in;
     private static DataOutputStream out;
     private ProcessData processor;
 
@@ -24,8 +26,8 @@ public class Client {
             System.out.println("Connecting...");
             socket = new Socket(wantedIP, 9001);
             System.out.println("Connection Successful");
-            in = new DataInputStream(socket.getInputStream());
-            String data = in.readUTF();
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String data = in.readLine()
             System.out.println(data);
             return data;
         } catch (Exception exception) {
@@ -40,6 +42,7 @@ public class Client {
             if(socket != null) {
                 in = new DataInputStream(socket.getInputStream());
                 data = in.readUTF();
+
                 System.out.println(data);
             } else {
                 JOptionPane.showMessageDialog(null, "HAHAHAHAHAHAAHAHA");
