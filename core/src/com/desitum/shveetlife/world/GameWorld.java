@@ -215,6 +215,7 @@ public class GameWorld implements GameInterface{
     }
 
     public void updateData(String info){
+        System.out.println("HELLLO");
         System.out.println(info);
         if (info.contains(";")) {
             for (String infoPiece : info.split(";")) {
@@ -255,6 +256,7 @@ public class GameWorld implements GameInterface{
     }
 
     private void editPlayer(String[] info){
+        System.out.println("Hello2");
         player2.setX(Float.parseFloat(info[Player.X]));
         player2.setY(Float.parseFloat(info[Player.Y]));
     }

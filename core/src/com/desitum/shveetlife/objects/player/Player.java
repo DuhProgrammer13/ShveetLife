@@ -102,6 +102,6 @@ public class Player extends Sprite {
     }
 
     public String getUpdateString(){
-        return ProcessData.EDIT + " " + ProcessData.PLAYER + " " + X + " " + Y;
+        return ProcessData.EDIT + " " + ProcessData.PLAYER + " " + getX() + " " + getY();
     }
 }
