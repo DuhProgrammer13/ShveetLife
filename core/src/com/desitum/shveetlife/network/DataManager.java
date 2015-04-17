@@ -32,7 +32,7 @@ public class DataManager {
         if (mainServer != null){
             mainServer.sendData(data, gameWorld);
         } else if (myClient != null){
-            myClient.sendData(data);
+            //myClient.sendData(data);
             System.out.println("Made out of send");
         }
     }
@@ -43,7 +43,7 @@ public class DataManager {
             //String dataRead = mainServer.readData();
             String dataRead = "";
             if (!dataRead.equals("")){
-                gameWorld.updateData(dataRead);
+                //gameWorld.updateData(dataRead);
             }
         } else if (myClient != null){
             System.out.println("Into read");

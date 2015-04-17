@@ -219,11 +219,9 @@ public class GameWorld implements GameInterface{
     }
 
     public void updateData(String info){
-        System.out.println("HELLLO");
         System.out.println(info);
         if (info.contains(";")) {
             for (String infoPiece : info.split(";")) {
-                System.out.println(" Hey " + infoPiece);
                 String[] infoToUse = infoPiece.split(" ");
                 if (Integer.parseInt(infoToUse[1]) == ProcessData.TILE) {
                     workOnTile(infoToUse);
@@ -234,9 +232,6 @@ public class GameWorld implements GameInterface{
         } else {
             String[] infoToUse = info.split(" ");
             System.out.println("info : " + info);
-            for (String item: infoToUse){
-                System.out.println("Hey - " + item);
-            }
             if (Integer.parseInt(infoToUse[1]) == ProcessData.TILE) {
                 workOnTile(infoToUse);
             } else if (Integer.parseInt(infoToUse[1]) == ProcessData.PLAYER) {
@@ -260,7 +255,7 @@ public class GameWorld implements GameInterface{
     }
 
     private void editPlayer(String[] info){
-        System.out.println("Hello2");
+        System.out.println("Hello2 " + info[Player.X] + info[Player.Y]);
         player2.setX(Float.parseFloat(info[Player.X]));
         player2.setY(Float.parseFloat(info[Player.Y]));
     }
