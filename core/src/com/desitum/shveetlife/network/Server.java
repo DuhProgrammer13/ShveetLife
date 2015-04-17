@@ -41,6 +41,17 @@ public class Server {
         }
     }
 
+    public String readData(){
+        String data = "";
+        try {
+            in = new DataInputStream(clientSocket.getInputStream());
+            data = in.readUTF();
+            System.out.println(data);
+        } catch(Exception exception){
+        }
+        return data;
+    }
+
 
     public void sendData(String command, GameWorld gameWorld) {
         try {
