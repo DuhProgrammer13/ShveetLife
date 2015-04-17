@@ -1,11 +1,7 @@
 package com.desitum.shveetlife.network;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 import javax.swing.JOptionPane;
@@ -15,8 +11,8 @@ import javax.swing.JOptionPane;
  */
 public class Client {
     private static Socket socket;
-    private static BufferedReader in;
-    private static BufferedWriter out;
+    private static DataInputStream in;
+    private static DataOutputStream out;
     private ProcessData processor;
 
 
@@ -28,8 +24,8 @@ public class Client {
             System.out.println("Connecting...");
             socket = new Socket(wantedIP, 9001);
             System.out.println("Connection Successful");
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String data = in.readLine();
+            in = new DataInputStream(socket.getInputStream());
+            String data = in.readUTF();
             System.out.println(data);
             return data;
         } catch (Exception exception) {
@@ -42,15 +38,13 @@ public class Client {
         String data = "";
         try {
             if(socket != null) {
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                data = in.readLine();
-
+                in = new DataInputStream(socket.getInputStream());
+                data = in.readUTF();
                 System.out.println(data);
             } else {
                 JOptionPane.showMessageDialog(null, "HAHAHAHAHAHAAHAHA");
             }
         } catch(Exception exception){
-            System.out.println(exception);
         }
         return data;
     }
@@ -59,8 +53,8 @@ public class Client {
         try {
             if(socket != null) {
                 System.out.println("Connection From: " + socket.getInetAddress());
-                out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                out.write(command);
+                out = new DataOutputStream(socket.getOutputStream());
+                out.writeUTF(command);
                 out.flush();
                 System.out.println("Data has been sent");
             } else {
