@@ -32,7 +32,7 @@ public class DataManager {
         if (mainServer != null){
             mainServer.sendData(data, gameWorld);
         } else if (myClient != null){
-            myClient.sendData(data);
+            //myClient.sendData(data);
             System.out.println("Made out of send");
         }
     }
