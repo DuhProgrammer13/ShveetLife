@@ -20,7 +20,7 @@ public class SplashScreen implements Screen {
     private SpriteBatch batch;
     private ShveetLife game;
 
-    private Sprite desitum; //We still using this?
+    private Sprite desitum;
 
     private boolean beenThrough = false;
     private boolean hasLoaded = false;

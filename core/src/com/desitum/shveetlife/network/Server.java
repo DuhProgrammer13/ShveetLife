@@ -1,14 +1,11 @@
 package com.desitum.shveetlife.network;
 
 import com.desitum.shveetlife.world.GameWorld;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
+
 
 import javax.swing.JOptionPane;
 
@@ -21,14 +18,12 @@ public class Server {
     private static DataOutputStream out;
     private static DataInputStream in;
 
-    private boolean clientConnected;
-    //private String ipAddress;
 
     public boolean serverStarted;
 
     public Server() {
         serverStarted = false;
-        clientConnected = false;
+
     }
 
     public void RunServer() {
@@ -44,9 +39,11 @@ public class Server {
     public String readData(){
         String data = "";
         try {
-            in = new DataInputStream(clientSocket.getInputStream());
-            data = in.readUTF();
-            System.out.println(data);
+            if(clientSocket != null) {
+                in = new DataInputStream(clientSocket.getInputStream());
+                data = in.readUTF();
+                System.out.println(data);
+            }
         } catch(Exception exception){
         }
         return data;
@@ -56,11 +53,8 @@ public class Server {
     public void sendData(String command, GameWorld gameWorld) {
         try {
             if(clientSocket != null) {
-                System.out.println("Connection From: " + clientSocket.getInetAddress());
                 out = new DataOutputStream(clientSocket.getOutputStream());
                 out.writeUTF(command);
-                System.out.println("Data has been sent");
-                //myClient.readData();
             } else {
                 clientSocket = serverSocket.accept();
                 out = new DataOutputStream(clientSocket.getOutputStream());

@@ -32,7 +32,7 @@ public class GameWorld implements GameInterface{
     private ArrayList<Particle> particles;
 
     public GameWorld(ShveetLife sl){
-        player = new Player(this, 10, 10, 10, 10);
+        player = new Player(this, 10, 10, 20, 10);
         player2 = new Player2(this, 10, 10, 10, 10);
 
         loadedChunks = new ArrayList<Chunk>();
