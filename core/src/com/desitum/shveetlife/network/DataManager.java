@@ -40,16 +40,19 @@ public class DataManager {
     public static void receiveData(){
         if (gameWorld == null) return;
         if (mainServer != null){
-            String dataRead = mainServer.readData();
+            //String dataRead = mainServer.readData();
+            String dataRead = "";
             if (!dataRead.equals("")){
                 gameWorld.updateData(dataRead);
             }
         } else if (myClient != null){
+            System.out.println("Into read");
             String dataRead = myClient.readData();
+            System.out.println("dataRead : " + dataRead);
             if (!dataRead.equals("")){
                 gameWorld.updateData(dataRead);
-                System.out.println("Made out of recieve");
             }
+            System.out.println("Made out of recieve");
         }
     }
 
