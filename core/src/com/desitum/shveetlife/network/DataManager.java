@@ -11,8 +11,11 @@ public class DataManager {
     public static Client myClient;
     public static GameWorld gameWorld;
 
+    private static String connectionType;
+
     public static String startManager(String host, String ipAddress){
         gameWorld = null;
+        connectionType = host;
         if (host.equals("localhost")){
             mainServer = new Server();
             mainServer.RunServer();
@@ -50,6 +53,16 @@ public class DataManager {
 
     public static void setGameWorld(GameWorld gw){
         gameWorld = gw;
+    }
+
+    public static void exitGame(){
+       if(connectionType == "localhost"){
+            mainServer.disconnect();
+            gameWorld.exitScreen();
+       } else {
+            myClient.disconnect();
+            gameWorld.exitScreen();
+       }
     }
 
     private static void setUpWorld(String data){

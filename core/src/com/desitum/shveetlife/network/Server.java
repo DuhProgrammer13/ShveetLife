@@ -65,4 +65,12 @@ public class Server {
         }
     }
 
+    public void disconnect(){
+        try {
+            serverSocket.close();
+        } catch(Exception exception){
+            JOptionPane.showMessageDialog(null, "It had troubles closing the server?");
+        }
+    }
+
 }

@@ -12,6 +12,7 @@ import com.desitum.shveetlife.objects.player.Player;
 import com.desitum.shveetlife.objects.player.Player2;
 import com.desitum.shveetlife.objects.tiles.TileData;
 import com.desitum.shveetlife.screens.GameScreen;
+import com.desitum.shveetlife.screens.MenuScreen;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,12 +27,15 @@ public class GameWorld implements GameInterface{
     private ArrayList<Chunk> loadedChunks;
     private ArrayList<Chunk> allChunks;
 
+    private ShveetLife shveetLife;
     private ArrayList<String> data;
     private ArrayList<String> loadData;
 
     private ArrayList<Particle> particles;
 
     public GameWorld(ShveetLife sl){
+        this.shveetLife = sl;
+
         player = new Player(this, 10, 10, 20, 10);
         player2 = new Player2(this, 10, 10, 10, 10);
 
@@ -259,5 +263,10 @@ public class GameWorld implements GameInterface{
         System.out.println("Hello2");
         player2.setX(Float.parseFloat(info[Player.X]));
         player2.setY(Float.parseFloat(info[Player.Y]));
+    }
+
+    public void exitScreen(){
+        shveetLife.setScreen(new MenuScreen(shveetLife));
+
     }
 }

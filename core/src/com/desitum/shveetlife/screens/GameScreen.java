@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.desitum.shveetlife.ShveetLife;
 import com.desitum.shveetlife.network.Client;
+import com.desitum.shveetlife.network.DataManager;
 import com.desitum.shveetlife.network.Server;
 import com.desitum.shveetlife.objects.MenuButton;
 import com.desitum.shveetlife.world.GameRenderer;
@@ -64,6 +65,7 @@ public class GameScreen implements Screen {
 
         commandKeys = new ArrayList<Integer>();
         commandKeys.add(Input.Keys.SPACE);
+        commandKeys.add(Input.Keys.ESCAPE);
     }
 
     public GameScreen(ShveetLife sl, String loadString){
@@ -84,6 +86,7 @@ public class GameScreen implements Screen {
 
         commandKeys = new ArrayList<Integer>();
         commandKeys.add(Input.Keys.SPACE);
+        commandKeys.add(Input.Keys.ESCAPE);
     }
 
     @Override
@@ -105,6 +108,9 @@ public class GameScreen implements Screen {
 
         for (int key: commandKeys){
             if (Gdx.input.isKeyPressed(key)){
+                if(key == Input.Keys.ESCAPE){
+                    DataManager.exitGame();
+                }
                 gameWorld.updateKeys(key);
             }
         }
@@ -123,6 +129,9 @@ public class GameScreen implements Screen {
         batch.end();
     }
 
+    private void exitGame(){
+
+    }
     @Override
     public void show() {
 

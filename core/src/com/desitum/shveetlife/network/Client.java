@@ -59,4 +59,12 @@ public class Client {
 
         }
     }
+
+    public void disconnect(){
+        try {
+            socket.close();
+        } catch(Exception exception){
+            JOptionPane.showMessageDialog(null, "It had troubles closing the client socket?");
+        }
+    }
 }
