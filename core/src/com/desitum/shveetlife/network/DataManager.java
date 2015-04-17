@@ -39,7 +39,7 @@ public class DataManager {
             //mainServer.readData();
         } else if (myClient != null){
             String dataRead = myClient.readData();
-            if (!myClient.readData().equals("")){
+            if (!dataRead.equals("")){
                 gameWorld.updateData(dataRead);
             }
         }

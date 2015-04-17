@@ -4,8 +4,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.desitum.shveetlife.data.Assets;
-import com.desitum.shveetlife.world.GameInterface;
 import com.desitum.shveetlife.data.GameKeys;
+import com.desitum.shveetlife.network.ProcessData;
+import com.desitum.shveetlife.world.GameInterface;
 
 /**
  * Created by kody on 4/7/15.
@@ -20,6 +21,9 @@ public class Player extends Sprite {
     private boolean moving;
 
     private static final int SPEED = 30;
+
+    public static final int X = 2;
+    public static final int Y = 3;
 
     public Player (GameInterface gi, float width, float height, float x, float y){
         //super(texture, 0, 0, texture.getWidth(), texture.getHeight());
@@ -95,5 +99,9 @@ public class Player extends Sprite {
     public String toString(){
         //TODO need a big time fix here
         return "fetch a roo";
+    }
+
+    public String getUpdateString(){
+        return ProcessData.EDIT + " " + ProcessData.PLAYER + " " + X + " " + Y;
     }
 }

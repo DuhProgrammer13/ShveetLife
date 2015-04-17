@@ -16,7 +16,7 @@ public class TileData {
     public static final int POS_Y = 3;
     public static final int TILE_TYPE = 4;
     public static final int CHUNK_X = 5;
-    public static final int CHUNK_Y = 5;
+    public static final int CHUNK_Y = 6;
 
     public static final float WIDTH = 10;
     public static final float HEIGHT = 10;
@@ -44,10 +44,10 @@ public class TileData {
 
         if (tileNum == GRASS){
             return new GrassTile(gi, chunk.getX() + Integer.parseInt(info[POS_X]) * TileData.WIDTH,
-                    chunk.getY() + Integer.parseInt(info[POS_X]) * TileData.HEIGHT);
+                    chunk.getY() + Integer.parseInt(info[POS_Y]) * TileData.HEIGHT);
         } else if (tileNum == DIRT){
             return new DirtTile(gi, chunk.getX() + Integer.parseInt(info[POS_X]) * TileData.WIDTH,
-                    chunk.getY() + Integer.parseInt(info[POS_X]) * TileData.HEIGHT);
+                    chunk.getY() + Integer.parseInt(info[POS_Y]) * TileData.HEIGHT);
         }
         return null;
     }
