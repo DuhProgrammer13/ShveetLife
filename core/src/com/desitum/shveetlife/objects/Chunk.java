@@ -24,7 +24,7 @@ public class Chunk {
 
     private GameInterface gi;
 
-    public Chunk(int x, int y, GameInterface gi){
+    public Chunk(float x, float y, GameInterface gi){
         this.x = x;
         this.y = y;
 

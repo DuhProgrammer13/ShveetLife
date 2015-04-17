@@ -1,6 +1,7 @@
 package com.desitum.shveetlife.world;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector3;
 import com.desitum.shveetlife.ShveetLife;
 import com.desitum.shveetlife.libraries.CollisionDetection;
 import com.desitum.shveetlife.network.DataManager;
@@ -83,6 +84,8 @@ public class GameWorld implements GameInterface{
             p.update(delta);
             if (p.getLifetime() <= 0) iter.remove();
         }
+
+        updateLoadedChunks();
     }
 
     public void updateDirectionalKey(int key){
@@ -155,6 +158,56 @@ public class GameWorld implements GameInterface{
 
     private void updateLoadedChunks(){
         loadedChunks = new ArrayList<Chunk>();
+
+        ArrayList<Vector3> posToCheck = new ArrayList<Vector3>();
+        posToCheck.add(new Vector3(player.getX() + GameScreen.FRUSTUM_WIDTH, player.getY(), 0));
+        posToCheck.add(new Vector3(player.getX() - GameScreen.FRUSTUM_WIDTH, player.getY(), 0));
+        posToCheck.add(new Vector3(player.getX(), player.getY() + GameScreen.FRUSTUM_HEIGHT, 0));
+        posToCheck.add(new Vector3(player.getX(), player.getY() - GameScreen.FRUSTUM_HEIGHT, 0));
+        posToCheck.add(new Vector3(player.getX() - GameScreen.FRUSTUM_WIDTH, player.getY() - GameScreen.FRUSTUM_HEIGHT, 0));
+        posToCheck.add(new Vector3(player.getX() - GameScreen.FRUSTUM_WIDTH, player.getY() + GameScreen.FRUSTUM_HEIGHT, 0));
+        posToCheck.add(new Vector3(player.getX() + GameScreen.FRUSTUM_WIDTH, player.getY() - GameScreen.FRUSTUM_HEIGHT, 0));
+        posToCheck.add(new Vector3(player.getX() + GameScreen.FRUSTUM_WIDTH, player.getY() + GameScreen.FRUSTUM_HEIGHT, 0));
+
+        for (int currentPos = 0; currentPos < posToCheck.size(); currentPos++){
+            boolean inChunk = false;
+            for (Chunk chunk: allChunks){
+                if (CollisionDetection.pointInRectangle(chunk.getBoundingRect(), posToCheck.get(currentPos))){
+                    inChunk = true;
+                    break;
+                }
+            }
+
+            if (!inChunk){
+                Chunk toGoOffOf = getChunkAtPos(player.getX(), player.getY());
+                switch (currentPos){
+                    case 0:
+                        allChunks.add(new Chunk(toGoOffOf.getX() + Chunk.WIDTH, toGoOffOf.getY(), this));
+                        break;
+                    case 1:
+                        allChunks.add(new Chunk(toGoOffOf.getX() - Chunk.WIDTH, toGoOffOf.getY(), this));
+                        break;
+                    case 2:
+                        allChunks.add(new Chunk(toGoOffOf.getX(), toGoOffOf.getY() + Chunk.HEIGHT, this));
+                        break;
+                    case 3:
+                        allChunks.add(new Chunk(toGoOffOf.getX(), toGoOffOf.getY() - Chunk.HEIGHT, this));
+                        break;
+                    case 4:
+                        allChunks.add(new Chunk(toGoOffOf.getX() - Chunk.WIDTH, toGoOffOf.getY() - Chunk.HEIGHT, this));
+                        break;
+                    case 5:
+                        allChunks.add(new Chunk(toGoOffOf.getX() - Chunk.WIDTH, toGoOffOf.getY() + Chunk.HEIGHT, this));
+                        break;
+                    case 6:
+                        allChunks.add(new Chunk(toGoOffOf.getX() + Chunk.WIDTH, toGoOffOf.getY() - Chunk.HEIGHT, this));
+                        break;
+                    case 7:
+                        allChunks.add(new Chunk(toGoOffOf.getX() + Chunk.WIDTH, toGoOffOf.getY() + Chunk.HEIGHT, this));
+                        break;
+                }
+            }
+        }
 
         for (Chunk chunk: allChunks){
             if (chunk.getX() < player.getX() + player.getWidth()/2 + GameScreen.FRUSTUM_WIDTH/2 &&
@@ -263,5 +316,14 @@ public class GameWorld implements GameInterface{
     public void exitScreen(){
         shveetLife.setScreen(new MenuScreen(shveetLife));
 
+    }
+
+    public Chunk getChunkAtPos(float x, float y){
+        for (Chunk chunk: allChunks){
+            if (CollisionDetection.pointInRectangle(chunk.getBoundingRect(), new Vector3(x, y, 0))){
+                return chunk;
+            }
+        }
+        return null;
     }
 }
