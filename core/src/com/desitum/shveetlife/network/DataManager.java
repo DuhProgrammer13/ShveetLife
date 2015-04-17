@@ -60,6 +60,7 @@ public class DataManager {
     public static void exitGame(){
        if(connectionType == "localhost"){
             mainServer.disconnect();
+            myClient = null;
             gameWorld.exitScreen();
        } else {
             myClient.disconnect();
