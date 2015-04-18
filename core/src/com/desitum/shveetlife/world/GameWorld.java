@@ -7,7 +7,7 @@ import com.desitum.shveetlife.libraries.CollisionDetection;
 import com.desitum.shveetlife.network.DataManager;
 import com.desitum.shveetlife.network.ProcessData;
 import com.desitum.shveetlife.objects.Chunk;
-import com.desitum.shveetlife.objects.GameObject;
+import com.desitum.shveetlife.objects.tiles.TileObject;
 import com.desitum.shveetlife.objects.particles.Particle;
 import com.desitum.shveetlife.objects.player.Player;
 import com.desitum.shveetlife.objects.player.Player2;
@@ -103,7 +103,7 @@ public class GameWorld implements GameInterface{
             return;
         }
 
-        GameObject affectedObject = affectedChunk.getObjectAt(player.getPositionInFront());
+        TileObject affectedObject = affectedChunk.getObjectAt(player.getPositionInFront());
         if (affectedObject == null){
             return;
         }
@@ -131,7 +131,7 @@ public class GameWorld implements GameInterface{
         return particles;
     }
 
-    public void changeTile(GameObject from, GameObject to){
+    public void changeTile(TileObject from, TileObject to){
         for (Chunk chunk: loadedChunks){
             if (CollisionDetection.pointInRectangle(chunk.getBoundingRect(), player.getPositionInFront())){
                 int[] position = chunk.changeTile(from, to);

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.desitum.shveetlife.data.Assets;
 import com.desitum.shveetlife.objects.Chunk;
-import com.desitum.shveetlife.objects.GameObject;
+import com.desitum.shveetlife.objects.tiles.TileObject;
 import com.desitum.shveetlife.objects.particles.Particle;
 import com.desitum.shveetlife.objects.tiles.GrassTile;
 import com.desitum.shveetlife.screens.GameScreen;
@@ -40,8 +40,8 @@ public class GameRenderer {
         for (Chunk chunk: world.getChunks()){
             gameBatch.draw(Assets.grassTexture, chunk.getX(), chunk.getY(), Chunk.WIDTH, Chunk.HEIGHT);
 
-            for (GameObject[] gameObjects: chunk.getChunkObjects()){
-                for (GameObject gameObject: gameObjects){
+            for (TileObject[] gameObjects: chunk.getChunkObjects()){
+                for (TileObject gameObject: gameObjects){
                     if (gameObject.getClass().equals(GrassTile.class)){
                     } else {
                         gameObject.draw(gameBatch);

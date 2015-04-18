@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.desitum.shveetlife.libraries.CollisionDetection;
 import com.desitum.shveetlife.objects.tiles.GrassTile;
 import com.desitum.shveetlife.objects.tiles.TileData;
+import com.desitum.shveetlife.objects.tiles.TileObject;
 import com.desitum.shveetlife.world.GameInterface;
 
 /**
@@ -12,7 +13,7 @@ import com.desitum.shveetlife.world.GameInterface;
  */
 public class Chunk {
 
-    GameObject[][] chunkObjects;
+    TileObject[][] chunkObjects;
 
     private float x;
     private float y;
@@ -30,7 +31,7 @@ public class Chunk {
 
         boundingRect = new Rectangle(x, y, WIDTH, HEIGHT);
 
-        chunkObjects = new GameObject[16][16];
+        chunkObjects = new TileObject[16][16];
         for (int z = 0; z < chunkObjects.length; z++){
             for (int w = 0; w < chunkObjects[z].length; w++){
                 chunkObjects[z][w] = new GrassTile(gi, this.x + z * 10, this.y + w * 10);
@@ -38,7 +39,7 @@ public class Chunk {
         }
     }
 
-    private Chunk(GameObject[][] objects, Rectangle boundingRect, GameInterface gameInterface){
+    private Chunk(TileObject[][] objects, Rectangle boundingRect, GameInterface gameInterface){
         this.x = boundingRect.getX();
         this.y = boundingRect.getY();
         this.gi = gameInterface;
@@ -61,7 +62,7 @@ public class Chunk {
         boundingRect2.setY(Float.parseFloat(data2[1]));
 
         String[] data3 = data1[1].split(";");
-        GameObject[][] chunkObjects2 = new GameObject[16][16];
+        TileObject[][] chunkObjects2 = new TileObject[16][16];
         for (int z = 0; z < chunkObjects2.length; z++){
             for (int w = 0; w < chunkObjects2[z].length; w++){
                 chunkObjects2[z][w] = TileData.createTile(Integer.parseInt(data3[z*16 + w].split(" ")[0]), boundingRect2.getX() + z * 10, boundingRect2.getY() + w * 10, gameInterface);
@@ -72,8 +73,8 @@ public class Chunk {
     }
 
     public void update(float delta){
-        for (GameObject[] gameObjects: chunkObjects){
-            for (GameObject gameObject: gameObjects){
+        for (TileObject[] gameObjects: chunkObjects){
+            for (TileObject gameObject: gameObjects){
                 if (gameObject != null){
                     gameObject.update(delta);
                 } else {
@@ -82,7 +83,7 @@ public class Chunk {
         }
     }
 
-    public int[] changeTile(GameObject from, GameObject to){
+    public int[] changeTile(TileObject from, TileObject to){
         int[] returnArray = new int[2];
         for (int z = 0; z < chunkObjects.length; z++){
             for (int w = 0; w < chunkObjects[z].length; w++){
@@ -98,7 +99,7 @@ public class Chunk {
         return null;
     }
 
-    public int[] changeTileAtPosition(int[] pos, GameObject to){
+    public int[] changeTileAtPosition(int[] pos, TileObject to){
         int[] returnArray = new int[2];
 
         chunkObjects[pos[0]][pos[1]] = to;
@@ -106,9 +107,9 @@ public class Chunk {
         return pos;
     }
 
-    public GameObject getObjectAt(Vector3 pos){
-        for (GameObject[] gameObjects: chunkObjects){
-            for (GameObject gameObject: gameObjects){
+    public TileObject getObjectAt(Vector3 pos){
+        for (TileObject[] gameObjects: chunkObjects){
+            for (TileObject gameObject: gameObjects){
                 if (CollisionDetection.pointInRectangle(gameObject.getBoundingRectangle(), pos)){
                     return gameObject;
                 }
@@ -117,7 +118,7 @@ public class Chunk {
         return null;
     }
 
-    public GameObject[][] getChunkObjects(){
+    public TileObject[][] getChunkObjects(){
         return chunkObjects;
     }
 

@@ -1,7 +1,6 @@
 package com.desitum.shveetlife.objects.tiles;
 
 import com.desitum.shveetlife.objects.Chunk;
-import com.desitum.shveetlife.objects.GameObject;
 import com.desitum.shveetlife.world.GameInterface;
 
 /**
@@ -30,7 +29,7 @@ public class TileData {
         return -1;
     }
 
-    public static GameObject createTile(int tileNum, float posX, float posY, GameInterface gi){
+    public static TileObject createTile(int tileNum, float posX, float posY, GameInterface gi){
         if (tileNum == GRASS){
             return new GrassTile(gi, posX, posY);
         } else if (tileNum == DIRT){
@@ -39,7 +38,7 @@ public class TileData {
         return null;
     }
 
-    public static GameObject buildTileFromString(String[] info, Chunk chunk, GameInterface gi){
+    public static TileObject buildTileFromString(String[] info, Chunk chunk, GameInterface gi){
         int tileNum = Integer.parseInt(info[TILE_TYPE]);
 
         if (tileNum == GRASS){

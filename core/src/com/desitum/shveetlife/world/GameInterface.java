@@ -1,6 +1,6 @@
 package com.desitum.shveetlife.world;
 
-import com.desitum.shveetlife.objects.GameObject;
+import com.desitum.shveetlife.objects.tiles.TileObject;
 import com.desitum.shveetlife.objects.particles.Particle;
 
 /**
@@ -10,5 +10,5 @@ import com.desitum.shveetlife.objects.particles.Particle;
 public interface GameInterface {
 
     public void addParticles(Particle p);
-    public void changeTile(GameObject from, GameObject to);
+    public void changeTile(TileObject from, TileObject to);
 }

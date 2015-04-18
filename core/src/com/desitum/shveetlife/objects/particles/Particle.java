@@ -2,7 +2,7 @@ package com.desitum.shveetlife.objects.particles;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.desitum.shveetlife.libraries.animation.Animator;
-import com.desitum.shveetlife.objects.GameObject;
+import com.desitum.shveetlife.objects.tiles.TileObject;
 import com.desitum.shveetlife.objects.player.Player;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by kody on 4/7/15.
  * can be used by kody and people in []
  */
-public class Particle extends GameObject {
+public class Particle extends TileObject {
 
     private ArrayList<Animator> animators;
 

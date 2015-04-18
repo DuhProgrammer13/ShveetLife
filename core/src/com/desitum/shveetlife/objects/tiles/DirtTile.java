@@ -2,7 +2,6 @@ package com.desitum.shveetlife.objects.tiles;
 
 import com.badlogic.gdx.Input;
 import com.desitum.shveetlife.data.Assets;
-import com.desitum.shveetlife.objects.GameObject;
 import com.desitum.shveetlife.objects.player.Player;
 import com.desitum.shveetlife.world.GameInterface;
 
@@ -10,7 +9,7 @@ import com.desitum.shveetlife.world.GameInterface;
  * Created by kody on 4/8/15.
  * can be used by kody and people in []
  */
-public class DirtTile extends GameObject {
+public class DirtTile extends TileObject {
     private GameInterface gi;
     private float health;
 
