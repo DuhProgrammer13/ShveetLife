@@ -2,6 +2,7 @@ package com.desitum.shveetlife.objects.player;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.desitum.shveetlife.data.Assets;
+import com.desitum.shveetlife.network.ProcessData;
 import com.desitum.shveetlife.world.GameInterface;
 
 /**
@@ -51,5 +52,9 @@ public class Player2 extends Sprite {
     @Override
     public String toString(){
         return "Name " + getX() + " " + getY() + " " + getWidth() + " " + getHeight();
+    }
+
+    public String getUpdateString(){
+        return ProcessData.EDIT + " " + ProcessData.PLAYER + " " + getX() + " " + getY();
     }
 }

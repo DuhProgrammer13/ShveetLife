@@ -51,7 +51,7 @@ public class Client {
 
     public void sendData(String command) {
         try {
-            if(socket != null && in.available() == 0) {
+            if(socket != null) {
                 System.out.println("Client Send Data Actual: " + command);
                 out = new DataOutputStream(socket.getOutputStream());
                 out.writeUTF(command);

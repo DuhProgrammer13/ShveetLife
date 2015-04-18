@@ -28,19 +28,20 @@ public class DataManager {
 
     public static void sendData(){
         if (gameWorld == null) return;
-        String data = gameWorld.getDataString();
-        if (connectionType == "localhost"){
+        if (mainServer != null){
             System.out.println("Server Send Data");
+            String data = gameWorld.getDataString();
             mainServer.sendData(data, gameWorld);
         } else{
             System.out.println("Client Send Data");
+            String data = gameWorld.getDataString();
             myClient.sendData(data);
         }
     }
 
     public static void receiveData(){
         if (gameWorld == null) return;
-        if (connectionType == "localhost"){
+        if (mainServer != null){
             System.out.println("Server Read Data");
             String dataRead = mainServer.readData();
             if (!dataRead.equals("")){
