@@ -103,7 +103,7 @@ public class GameWorld implements GameInterface{
             return;
         }
 
-        TileObject affectedObject = affectedChunk.getObjectAt(player.getPositionInFront());
+        TileObject affectedObject = affectedChunk.getTileAt(player.getPositionInFront());
         if (affectedObject == null){
             return;
         }
@@ -132,12 +132,25 @@ public class GameWorld implements GameInterface{
     }
 
     public void changeTile(TileObject from, TileObject to){
+        Chunk chunk = getChunkAt(player.getPositionInFront());
+        int[] position = chunk.changeTile(from, to);
+        data.add(ProcessData.EDIT + " " + ProcessData.TILE + " " + position[0] + " " + position[1] + " " + TileData.getTile(to.getClass()) + " " + chunk.getX() + " " + chunk.getY());
+    }
+
+    @Override
+    public TileObject getTile(Vector3 pos) {
+        return getChunkAt(pos).getTileAt(pos);
+    }
+
+    private Chunk getChunkAt(Vector3 pos){
+        Chunk returnChunk = null;
         for (Chunk chunk: loadedChunks){
-            if (CollisionDetection.pointInRectangle(chunk.getBoundingRect(), player.getPositionInFront())){
-                int[] position = chunk.changeTile(from, to);
-                data.add(ProcessData.EDIT + " " + ProcessData.TILE + " " + position[0] + " " + position[1] + " " + TileData.getTile(to.getClass()) + " " + chunk.getX() + " " + chunk.getY());
+            if (CollisionDetection.pointInRectangle(chunk.getBoundingRect(), pos)){
+                returnChunk = chunk;
+                break;
             }
         }
+        return returnChunk;
     }
 
     public String getDataString(){

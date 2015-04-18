@@ -3,10 +3,8 @@ package com.desitum.shveetlife.data;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
@@ -27,6 +25,7 @@ public class Assets {
 
     public static Texture grassTexture;
     public static Texture dirtTexture;
+    public static Texture waterTexture;
 
     public static Texture grassParticle;
 
@@ -65,6 +64,7 @@ public class Assets {
     public static void loadGameTiles(){
         grassTexture = new Texture("game/grass_land.png");
         dirtTexture = new Texture("game/tiles/dirt.png");
+        waterTexture = new Texture("game/tiles/water.png");
         emptyTexture = new Texture("game/empty.png");
     }
 

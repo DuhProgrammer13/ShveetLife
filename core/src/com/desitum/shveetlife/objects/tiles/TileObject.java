@@ -17,4 +17,6 @@ public abstract class TileObject extends Sprite {
     public abstract void update(float delta);
 
     public abstract void useKey(int key, Player p);
+
+    public abstract float getPlayerSpeed();
 }

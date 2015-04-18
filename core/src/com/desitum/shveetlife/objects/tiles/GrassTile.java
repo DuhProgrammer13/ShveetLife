@@ -50,6 +50,11 @@ public class GrassTile extends TileObject {
         }
     }
 
+    @Override
+    public float getPlayerSpeed() {
+        return 40;
+    }
+
     private void doDamage(float amount){
         health -= amount;
         particleSettings = new ParticleSettings(this.getX(), this.getY(), this.getWidth(), this.getHeight(), -1f, 1, -1, 0, 0.4f);

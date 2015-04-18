@@ -20,7 +20,7 @@ public class Player extends Sprite {
     private int direction;
     private boolean moving;
 
-    private static final int SPEED = 30;
+    private float speed;
 
     public static final int X = 2;
     public static final int Y = 3;
@@ -33,6 +33,7 @@ public class Player extends Sprite {
         this.setPosition(x, y);
 
         this.setOriginCenter();
+        this.speed = 30;
 
         this.gameInterface = gi;
     }
@@ -40,14 +41,15 @@ public class Player extends Sprite {
     public void update(float delta){
         if (moving){
             if (direction == GameKeys.RIGHT){
-                setX(getX() + SPEED * delta);
+                setX(getX() + speed * delta);
             } else if (direction == GameKeys.LEFT){
-                setX(getX() - SPEED * delta);
+                setX(getX() - speed * delta);
             } else if (direction == GameKeys.UP){
-                setY(getY() + SPEED * delta);
+                setY(getY() + speed * delta);
             } else if (direction == GameKeys.DOWN){
-                setY(getY() - SPEED * delta);
+                setY(getY() - speed * delta);
             }
+            updateSpeed();
         }
     }
 
@@ -103,5 +105,9 @@ public class Player extends Sprite {
 
     public String getUpdateString(){
         return ProcessData.EDIT + " " + ProcessData.PLAYER + " " + getX() + " " + getY();
+    }
+
+    private void updateSpeed(){
+        speed = gameInterface.getTile(new Vector3(getX() + getWidth()/2, getY() + getHeight()/2, 0)).getPlayerSpeed();
     }
 }

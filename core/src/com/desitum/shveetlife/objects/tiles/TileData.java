@@ -50,4 +50,8 @@ public class TileData {
         }
         return null;
     }
+
+    public int getConnectingTileNum(Class c){
+        return 0;
+    }
 }

@@ -107,7 +107,7 @@ public class Chunk {
         return pos;
     }
 
-    public TileObject getObjectAt(Vector3 pos){
+    public TileObject getTileAt(Vector3 pos){
         for (TileObject[] gameObjects: chunkObjects){
             for (TileObject gameObject: gameObjects){
                 if (CollisionDetection.pointInRectangle(gameObject.getBoundingRectangle(), pos)){

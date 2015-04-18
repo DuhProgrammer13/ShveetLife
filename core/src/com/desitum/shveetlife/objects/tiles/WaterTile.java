@@ -2,16 +2,15 @@ package com.desitum.shveetlife.objects.tiles;
 
 import com.badlogic.gdx.Input;
 import com.desitum.shveetlife.data.Assets;
-import com.desitum.shveetlife.objects.particles.Particle;
 import com.desitum.shveetlife.objects.particles.ParticleSettings;
 import com.desitum.shveetlife.objects.player.Player;
 import com.desitum.shveetlife.world.GameInterface;
 
 /**
- * Created by kody on 4/8/15.
+ * Created by kody on 4/18/15.
  * can be used by kody and people in []
  */
-public class DirtTile extends TileObject {
+public class WaterTile extends TileObject {
     private GameInterface gi;
     private float health;
     private ParticleSettings particleSettings;
@@ -21,9 +20,9 @@ public class DirtTile extends TileObject {
      * else we decide to add
      * @param gi
      */
-    public DirtTile(GameInterface gi, float x, float y){
-        super(Assets.dirtTexture, 0, 0, Assets.dirtTexture.getWidth(), Assets.dirtTexture.getHeight());
-        health = 20;
+    public WaterTile(GameInterface gi, float x, float y){
+        super(Assets.waterTexture, 0, 0, Assets.waterTexture.getWidth(), Assets.waterTexture.getHeight());
+        health = 10;
 
         this.gi = gi;
 
@@ -48,16 +47,10 @@ public class DirtTile extends TileObject {
 
     @Override
     public float getPlayerSpeed() {
-        return 40;
+        return 20;
     }
 
     private void doDamage(float amount){
         health -= amount;
-        particleSettings = new ParticleSettings(this.getX(), this.getY(), this.getWidth(), this.getHeight(), -1f, 1, -1, 0, 0.4f);
-
-        gi.addParticles(new Particle(Assets.dirtTexture, 0.4f, 5, 5, this.getX(), this.getY(), particleSettings));
-        if (health <= 0){
-            gi.changeTile(this, new WaterTile(gi, this.getX(), this.getY()));
-        }
     }
 }

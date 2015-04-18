@@ -1,8 +1,8 @@
 package com.desitum.shveetlife.objects.particles;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.desitum.shveetlife.libraries.animation.Animator;
-import com.desitum.shveetlife.objects.tiles.TileObject;
 import com.desitum.shveetlife.objects.player.Player;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by kody on 4/7/15.
  * can be used by kody and people in []
  */
-public class Particle extends TileObject {
+public class Particle extends Sprite {
 
     private ArrayList<Animator> animators;
 
@@ -38,7 +38,7 @@ public class Particle extends TileObject {
         this.lifetime = lifetime;
     }
 
-    @Override
+
     public void update(float delta){
         for (Animator anim: animators){
             anim.update(delta);
@@ -51,7 +51,7 @@ public class Particle extends TileObject {
         return lifetime;
     }
 
-    @Override
+
     public void useKey(int key, Player p) {
         return; // YOU CAN't INTERACT WITH PARTICLES
     }
