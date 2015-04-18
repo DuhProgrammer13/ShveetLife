@@ -58,7 +58,6 @@ public class Accounts {
         System.out.println(passwords.get(userID) + password);
         if(passwords.get(userID).equals(password)){
             myClient.startClient(ipAddress);
-
             isValid = true;
         } else {
             JOptionPane.showMessageDialog(null, "Wrong password!");

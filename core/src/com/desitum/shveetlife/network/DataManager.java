@@ -30,29 +30,30 @@ public class DataManager {
         if (gameWorld == null) return;
         String data = gameWorld.getDataString();
         if (mainServer != null){
+            System.out.println("Server Send Data");
             mainServer.sendData(data, gameWorld);
         } else if (myClient != null){
-            //myClient.sendData(data);
-            System.out.println("Made out of send");
+            System.out.println("Client Send Data");
+            myClient.sendData(data);
         }
     }
 
     public static void receiveData(){
         if (gameWorld == null) return;
         if (mainServer != null){
-            //String dataRead = mainServer.readData();
-            String dataRead = "";
+            System.out.println("Server Read Data");
+            String dataRead = mainServer.readData();
             if (!dataRead.equals("")){
-                //gameWorld.updateData(dataRead);
-            }
-        } else if (myClient != null){
-            System.out.println("Into read");
-            String dataRead = myClient.readData();
-            System.out.println("dataRead : " + dataRead);
-            if (!dataRead.equals("")){
+                System.out.println("Server Read:" + dataRead);
                 gameWorld.updateData(dataRead);
             }
-            System.out.println("Made out of recieve");
+        } else if (myClient != null){
+            System.out.println("Client Read Data");
+            String dataRead = myClient.readData();
+            if (!dataRead.equals("")){
+                System.out.println("Client Read:" + dataRead);
+                gameWorld.updateData(dataRead);
+            }
         }
     }
 
@@ -69,7 +70,7 @@ public class DataManager {
             gameWorld = null;
        } else {
             myClient.disconnect();
-            gameWorld.exitScreen();
+           gameWorld.exitScreen();
        }
     }
 

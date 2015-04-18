@@ -37,12 +37,12 @@ public class Client {
     public String readData(){
         String data = "";
         try {
-            if(socket != null) {
+            if(socket != null && in.available() > 0) {
                 in = new DataInputStream(socket.getInputStream());
                 data = in.readUTF();
                 System.out.println(data);
             } else {
-                JOptionPane.showMessageDialog(null, "HAHAHAHAHAHAAHAHA");
+                //JOptionPane.showMessageDialog(null, "HAHAHAHAHAHAAHAHA");
             }
         } catch(Exception exception){
         }
@@ -51,12 +51,10 @@ public class Client {
 
     public void sendData(String command) {
         try {
-            if(socket != null) {
-                System.out.println("Connection From: " + socket.getInetAddress());
+            if(socket != null && in.available() == 0) {
                 out = new DataOutputStream(socket.getOutputStream());
                 out.writeUTF(command);
                 out.flush();
-                System.out.println("Data has been sent");
             } else {
                 //If the server is null you have bigger problems than an empty else section... :P
             }

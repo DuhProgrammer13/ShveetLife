@@ -39,12 +39,16 @@ public class Server {
     public String readData(){
         String data = "";
         try {
-            if(clientSocket != null) {
+            if(clientSocket != null && in == null) {
+                System.out.println("Server Read Data Setup");
                 in = new DataInputStream(clientSocket.getInputStream());
+            }
+            if(clientSocket != null && in.available() > 0){
+                System.out.println("Server Read Data Actual");
                 data = in.readUTF();
-                System.out.println(data);
             }
         } catch(Exception exception){
+            System.out.println("Server Read Data Had An Exception");
         }
         return data;
     }
@@ -52,11 +56,13 @@ public class Server {
 
     public void sendData(String command, GameWorld gameWorld) {
         try {
-            if(clientSocket != null) {
+            if(clientSocket != null && in.available() == 0) {
+                System.out.println("Server Send Data Actual");
                 out = new DataOutputStream(clientSocket.getOutputStream());
                 out.writeUTF(command);
                 out.flush();
-            } else {
+            } else if (clientSocket == null){
+                System.out.println("Server Send Data Setup");
                 clientSocket = serverSocket.accept();
                 out = new DataOutputStream(clientSocket.getOutputStream());
                 out.writeUTF(gameWorld.getGameLoad());
