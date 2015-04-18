@@ -28,6 +28,7 @@ public class Assets {
     public static Texture waterTexture;
 
     public static Texture grassParticle;
+    public static Texture dirtParticle;
 
     public static Texture emptyTexture;
 
