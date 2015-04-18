@@ -28,9 +28,7 @@ public class Server {
 
     public void RunServer() {
         try {
-            System.out.println("Starting Server....");
             serverSocket = new ServerSocket(9001);
-            System.out.println("Server Started.");
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, "Server Start Failed");
         }
@@ -40,17 +38,12 @@ public class Server {
         String data = "";
         try {
             if(clientSocket != null && in == null) {
-                System.out.println("Server Read Data Setup");
                 in = new DataInputStream(clientSocket.getInputStream());
             }
             if(clientSocket != null && in.available() > 0){
-                System.out.println("Server Read Data Actual");
                 data = in.readUTF();
-                System.out.println("Server Read Data: " + data);
             }
-            System.out.println("No Data was Available for the Server");
         } catch(Exception exception){
-            System.out.println("Server Read Data Had An Exception");
         }
         return data;
     }
@@ -59,12 +52,10 @@ public class Server {
     public void sendData(String command, GameWorld gameWorld) {
         try {
             if(clientSocket != null) {
-                System.out.println("Server Send Data Actual: " + command);
                 out = new DataOutputStream(clientSocket.getOutputStream());
                 out.writeUTF(command);
                 out.flush();
             } else if (clientSocket == null){
-                System.out.println("Server Send Data Setup");
                 clientSocket = serverSocket.accept();
                 out = new DataOutputStream(clientSocket.getOutputStream());
                 out.writeUTF(gameWorld.getGameLoad());

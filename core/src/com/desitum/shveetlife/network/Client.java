@@ -21,12 +21,9 @@ public class Client {
 
     public String startClient(String wantedIP) {
         try {
-            System.out.println("Connecting...");
             socket = new Socket(wantedIP, 9001);
-            System.out.println("Connection Successful");
             in = new DataInputStream(socket.getInputStream());
             String data = in.readUTF();
-            System.out.println(data);
             return data;
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, "Problems with the Client");
@@ -40,7 +37,6 @@ public class Client {
             if(socket != null && in.available() > 0) {
                 in = new DataInputStream(socket.getInputStream());
                 data = in.readUTF();
-                System.out.println("Client Read Data: " + data);
             } else {
                 //JOptionPane.showMessageDialog(null, "HAHAHAHAHAHAAHAHA");
             }
@@ -52,7 +48,6 @@ public class Client {
     public void sendData(String command) {
         try {
             if(socket != null) {
-                System.out.println("Client Send Data Actual: " + command);
                 out = new DataOutputStream(socket.getOutputStream());
                 out.writeUTF(command);
                 out.flush();

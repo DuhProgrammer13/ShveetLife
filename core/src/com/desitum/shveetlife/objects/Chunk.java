@@ -52,12 +52,10 @@ public class Chunk {
         Rectangle boundingRect2 = new Rectangle(0, 0, 160, 160);
         String[] data1 = data.split("\\|");
         for (String str: data1){
-            System.out.println("Line -" + str);
         }
 
         String[] data2 = data1[0].split(" ");
         for (String str: data2){
-            System.out.println(str);
         }
         boundingRect2.setX(Float.parseFloat(data2[0]));
         boundingRect2.setY(Float.parseFloat(data2[1]));
@@ -79,7 +77,6 @@ public class Chunk {
                 if (gameObject != null){
                     gameObject.update(delta);
                 } else {
-                    System.out.println("Oh shoot");
                 }
             }
         }
@@ -155,8 +152,6 @@ public class Chunk {
                 separator = ";";
             }
         }
-
-        System.out.println(returnString);
 
         return returnString;
     }

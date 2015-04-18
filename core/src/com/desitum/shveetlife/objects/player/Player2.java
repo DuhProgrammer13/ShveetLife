@@ -53,8 +53,4 @@ public class Player2 extends Sprite {
     public String toString(){
         return "Name " + getX() + " " + getY() + " " + getWidth() + " " + getHeight();
     }
-
-    public String getUpdateString(){
-        return ProcessData.EDIT + " " + ProcessData.PLAYER + " " + getX() + " " + getY();
-    }
 }
