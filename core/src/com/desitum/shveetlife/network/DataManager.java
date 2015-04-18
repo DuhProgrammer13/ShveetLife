@@ -31,7 +31,7 @@ public class DataManager {
         if (mainServer != null){
             String data = gameWorld.getDataString();
             mainServer.sendData(data, gameWorld);
-        } else{
+        } else if(myClient != null){
             String data = gameWorld.getDataString();
             myClient.sendData(data);
         }
@@ -44,7 +44,7 @@ public class DataManager {
             if (!dataRead.equals("")){
                 gameWorld.updateData(dataRead);
             }
-        } else{
+        } else if (myClient != null){
             String dataRead = myClient.readData();
             if (!dataRead.equals("")){
                 gameWorld.updateData(dataRead);
@@ -59,13 +59,15 @@ public class DataManager {
     public static void exitGame(){
        if(connectionType == "localhost"){
             mainServer.disconnect();
-            myClient = null;
             mainServer = null;
+            myClient = null;
             gameWorld.exitScreen();
             gameWorld = null;
        } else {
-            myClient.disconnect();
+           myClient.disconnect();
+           myClient = null;
            gameWorld.exitScreen();
+           gameWorld = null;
        }
     }
 

@@ -69,7 +69,12 @@ public class Server {
 
     public void disconnect(){
         try {
+            clientSocket.shutdownInput();
+            clientSocket.shutdownOutput();
+            clientSocket.close();
+            clientSocket = null;
             serverSocket.close();
+            serverSocket = null;
         } catch(Exception exception){
             JOptionPane.showMessageDialog(null, "It had troubles closing the server?");
         }

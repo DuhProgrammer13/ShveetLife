@@ -13,7 +13,6 @@ public class Client {
     private static Socket socket;
     private static DataInputStream in;
     private static DataOutputStream out;
-    private ProcessData processor;
 
 
     public Client () {
@@ -38,7 +37,7 @@ public class Client {
                 in = new DataInputStream(socket.getInputStream());
                 data = in.readUTF();
             } else {
-                //JOptionPane.showMessageDialog(null, "HAHAHAHAHAHAAHAHA");
+
             }
         } catch(Exception exception){
         }
@@ -61,9 +60,12 @@ public class Client {
 
     public void disconnect(){
         try {
+            socket.shutdownInput();
+            socket.shutdownOutput();
             socket.close();
+            socket = null;
         } catch(Exception exception){
-            JOptionPane.showMessageDialog(null, "It had troubles closing the client socket?");
+            JOptionPane.showMessageDialog(null, "It had troubles closing the client socket");
         }
     }
 }
