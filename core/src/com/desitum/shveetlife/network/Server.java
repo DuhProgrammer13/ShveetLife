@@ -46,6 +46,7 @@ public class Server {
             if(clientSocket != null && in.available() > 0){
                 System.out.println("Server Read Data Actual");
                 data = in.readUTF();
+                System.out.println("Server Read Data: " + data);
             }
         } catch(Exception exception){
             System.out.println("Server Read Data Had An Exception");
@@ -57,7 +58,7 @@ public class Server {
     public void sendData(String command, GameWorld gameWorld) {
         try {
             if(clientSocket != null && in.available() == 0) {
-                System.out.println("Server Send Data Actual");
+                System.out.println("Server Send Data Actual: " + command);
                 out = new DataOutputStream(clientSocket.getOutputStream());
                 out.writeUTF(command);
                 out.flush();
