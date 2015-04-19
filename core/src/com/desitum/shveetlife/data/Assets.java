@@ -26,6 +26,7 @@ public class Assets {
     public static Texture grassTexture;
     public static Texture dirtTexture;
     public static Texture waterTexture;
+    public static Texture pathTexture;
 
     public static Texture grassParticle;
     //public static Texture dirtParticle;
@@ -66,6 +67,7 @@ public class Assets {
         grassTexture = new Texture("game/grass_land.png");
         dirtTexture = new Texture("game/tiles/dirt.png");
         waterTexture = new Texture("game/tiles/water.png");
+        pathTexture = new Texture("game/tiles/path.png");
         emptyTexture = new Texture("game/empty.png");
     }
 
@@ -80,5 +82,6 @@ public class Assets {
         connectButtonDown.dispose();
         settingsButtonUp.dispose();
         settingsButtonDown.dispose();
+        //Lots to add to this.....
     }
 }

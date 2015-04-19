@@ -57,18 +57,18 @@ public class DataManager {
     }
 
     public static void exitGame(){
-       if(connectionType == "localhost"){
+        if(connectionType == "localhost"){
             mainServer.disconnect();
             mainServer = null;
             myClient = null;
             gameWorld.exitScreen();
             gameWorld = null;
-       } else {
-           myClient.disconnect();
-           myClient = null;
-           gameWorld.exitScreen();
-           gameWorld = null;
-       }
+        } else {
+            myClient.disconnect();
+            myClient = null;
+            gameWorld.exitScreen();
+            gameWorld = null;
+        }
     }
 
     private static void setUpWorld(String data){
