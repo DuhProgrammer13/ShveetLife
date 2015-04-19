@@ -252,6 +252,7 @@ public class GameWorld implements GameInterface{
 
         loadData.add(player.toString());
     }
+
     public String getGameLoad(){
         String returnString = "";
 
