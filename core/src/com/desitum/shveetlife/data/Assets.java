@@ -26,9 +26,11 @@ public class Assets {
     public static Texture grassTexture;
     public static Texture dirtTexture;
     public static Texture waterTexture;
+    public static Texture fireTexture;
     public static Texture pathTexture;
 
     public static Texture grassParticle;
+    public static Texture fireParticle;
     //public static Texture dirtParticle;
 
     public static Texture emptyTexture;
@@ -67,12 +69,14 @@ public class Assets {
         grassTexture = new Texture("game/grass_land.png");
         dirtTexture = new Texture("game/tiles/dirt.png");
         waterTexture = new Texture("game/tiles/water.png");
+        fireTexture = new Texture("game/tiles/fire.png");
         pathTexture = new Texture("game/tiles/path.png");
         emptyTexture = new Texture("game/empty.png");
     }
 
     public static void loadGameParticles(){
         grassParticle = new Texture("game/particles/grass_particles.png");
+        fireParticle = new Texture("game/particles/fire_particles.png");
     }
 
     public static void dispose(){
