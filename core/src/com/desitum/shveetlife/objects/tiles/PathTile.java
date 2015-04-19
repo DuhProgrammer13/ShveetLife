@@ -37,6 +37,7 @@ public class PathTile extends TileObject {
             case Input.Keys.SPACE:
                 doDamage(player.getDamage(this.getClass()));
                 // TODO KODY needs particles :P Enjoy!!!
+                break;
         }
     }
 
@@ -54,4 +55,5 @@ public class PathTile extends TileObject {
             gi.changeTile(this, new GrassTile(gi, this.getX(), this.getY()));
         }
     }
+
 }

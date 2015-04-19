@@ -23,7 +23,7 @@ public class DirtTile extends TileObject {
      */
     public DirtTile(GameInterface gi, float x, float y){
         super(Assets.dirtTexture, 0, 0, Assets.dirtTexture.getWidth(), Assets.dirtTexture.getHeight());
-        health = 30;
+        health = 20;
 
         this.gi = gi;
 
