@@ -24,6 +24,7 @@ public class Colors {
         Colors.add(GAME_CIRCLE);
         Colors.add(DISABLED_CIRCLE);
         Colors.add(GREEN);
+        Colors.add(WHITE);
     }
 
 }
