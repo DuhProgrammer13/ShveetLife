@@ -10,6 +10,7 @@ public class TileData {
 
     public static final int GRASS = 0;
     public static final int DIRT = 1;
+    public static final int WATER = 2;
 
     public static final int POS_X = 2;
     public static final int POS_Y = 3;
@@ -25,6 +26,8 @@ public class TileData {
             return GRASS;
         } else if (c.equals(DirtTile.class)){
             return DIRT;
+        } else if (c.equals(WaterTile.class)){
+            return WATER;
         }
         return -1;
     }
@@ -34,6 +37,8 @@ public class TileData {
             return new GrassTile(gi, posX, posY);
         } else if (tileNum == DIRT){
             return new DirtTile(gi, posX, posY);
+        } else if (tileNum == WATER){
+            return new WaterTile(gi, posX, posY);
         }
         return null;
     }
@@ -46,6 +51,9 @@ public class TileData {
                     chunk.getY() + Integer.parseInt(info[POS_Y]) * TileData.HEIGHT);
         } else if (tileNum == DIRT){
             return new DirtTile(gi, chunk.getX() + Integer.parseInt(info[POS_X]) * TileData.WIDTH,
+                    chunk.getY() + Integer.parseInt(info[POS_Y]) * TileData.HEIGHT);
+        } else if (tileNum == WATER){
+            return new WaterTile(gi, chunk.getX() + Integer.parseInt(info[POS_X]) * TileData.WIDTH,
                     chunk.getY() + Integer.parseInt(info[POS_Y]) * TileData.HEIGHT);
         }
         return null;
