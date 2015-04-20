@@ -73,7 +73,7 @@ public class PopupMenu {
 
         updateAnimation();
     }
-
+//Kody is an idiot
     private void updateAnimation(){
         for (Animator animator: incomingAnimators){
             if (!animator.isRunning()) {
