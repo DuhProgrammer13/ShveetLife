@@ -95,5 +95,30 @@ public class ColorEffects implements Animator{
     public void setSprite(Sprite control, boolean x, boolean y){
         return; //TODO currently no effect
     }
+
+    @Override
+    public boolean updateY() {
+        return false;
+    }
+
+    @Override
+    public boolean updateX() {
+        return false;
+    }
+
+    @Override
+    public float getAmount() {
+        return 0;
+    }
+
+    @Override
+    public Animator duplicate() {
+        return new ColorEffects(new Color(startRed, startGreen, startBlue, 1), new Color(endRed, endGreen, endBlue, 1), duration);
+    }
+
+    @Override
+    public boolean isRunning(){
+        return transforming;
+    }
 }
 

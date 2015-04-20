@@ -124,6 +124,7 @@ public class MovementAnimator implements Animator {
         return false;
     }
 
+    @Override
     public boolean isRunning(){
         return running;
     }
@@ -151,5 +152,81 @@ public class MovementAnimator implements Animator {
         running = false;
         currentPosition = startPos;
         timeInAnimation = 0;
+    }
+
+    @Override
+    public boolean updateY() {
+        return controllingY;
+    }
+
+    @Override
+    public boolean updateX() {
+        return controllingX;
+    }
+
+    @Override
+    public float getAmount() {
+        return getCurrentPos();
+    }
+
+    @Override
+    public Animator duplicate() {
+        return new MovementAnimator(this.controllingSprite, this.startPos, this.endPos, this.duration, this.animationDelay, Interpolation.getInterpolatorNum(this.interpolator), this.controllingX, this.controllingY);
+    }
+
+    public float getStartPos() {
+        return startPos;
+    }
+
+    public void setStartPos(float startPos) {
+        this.startPos = startPos;
+    }
+
+    public float getEndPos() {
+        return endPos;
+    }
+
+    public void setEndPos(float endPos) {
+        this.endPos = endPos;
+    }
+
+    public float getDuration() {
+        return duration;
+    }
+
+    public void setDuration(float duration) {
+        this.duration = duration;
+    }
+
+    public float getCurrentDelay() {
+        return currentDelay;
+    }
+
+    public void setCurrentDelay(float currentDelay) {
+        this.currentDelay = currentDelay;
+    }
+
+    public boolean isControllingX() {
+        return controllingX;
+    }
+
+    public void setControllingX(boolean controllingX) {
+        this.controllingX = controllingX;
+    }
+
+    public boolean isControllingY() {
+        return controllingY;
+    }
+
+    public void setControllingY(boolean controllingY) {
+        this.controllingY = controllingY;
+    }
+
+    public Sprite getControllingSprite() {
+        return controllingSprite;
+    }
+
+    public void setControllingSprite(Sprite controllingSprite) {
+        this.controllingSprite = controllingSprite;
     }
 }

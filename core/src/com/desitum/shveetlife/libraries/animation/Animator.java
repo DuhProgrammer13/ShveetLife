@@ -9,4 +9,9 @@ public interface Animator {
     public void update(float delta);
     public void start(boolean isProtected);
     public void setSprite(Sprite control, boolean controlx, boolean controly);
+    public boolean updateY();
+    public boolean updateX();
+    public float getAmount();
+    public Animator duplicate();
+    public boolean isRunning();
 }

@@ -137,6 +137,21 @@ public class ScaleAnimator implements Animator {
         this.controllingY = controlY;
     }
 
+    @Override
+    public boolean updateY() {
+        return controllingY;
+    }
+
+    @Override
+    public boolean updateX() {
+        return controllingX;
+    }
+
+    @Override
+    public float getAmount() {
+        return getScaleSize();
+    }
+
     public float getScaleSize(){
         return scaleSize;
     }
@@ -161,6 +176,7 @@ public class ScaleAnimator implements Animator {
         return false;
     }
 
+    @Override
     public boolean isRunning(){
         return running;
     }
@@ -179,5 +195,10 @@ public class ScaleAnimator implements Animator {
         } else if (interpolator == Interpolation.BOUNCE_INTERPOLATOR){
             this.interpolator = BounceInterpolator.$();
         }
+    }
+
+    @Override
+    public Animator duplicate() {
+        return new ScaleAnimator(controllingSprite, duration, animationDelay, startScale, endScale, Interpolation.getInterpolatorNum(interpolator), controllingX, controllingY);
     }
 }

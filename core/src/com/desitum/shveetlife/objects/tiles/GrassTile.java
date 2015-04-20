@@ -61,7 +61,7 @@ public class GrassTile extends TileObject {
 
         gi.addParticles(new Particle(Assets.grassParticle, 0.4f, 5, 5, this.getX(), this.getY(), particleSettings));
         if (health <= 0){
-            gi.changeTile(this, new FireTile(gi, this.getX(), this.getY()));
+            gi.changeTile(this, new DirtTile(gi, this.getX(), this.getY()));
         }
     }
 }
