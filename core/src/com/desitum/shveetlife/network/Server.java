@@ -30,7 +30,7 @@ public class Server {
         try {
             serverSocket = new ServerSocket(9001);
         } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, "Server Start Failed");
+            //JOptionPane.showMessageDialog(null, "Server Start Failed");
         }
     }
 

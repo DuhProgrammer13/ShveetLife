@@ -7,6 +7,7 @@ import com.desitum.shveetlife.libraries.CollisionDetection;
 import com.desitum.shveetlife.network.DataManager;
 import com.desitum.shveetlife.network.ProcessData;
 import com.desitum.shveetlife.objects.Chunk;
+import com.desitum.shveetlife.objects.menu.PopupMenu;
 import com.desitum.shveetlife.objects.tiles.TileObject;
 import com.desitum.shveetlife.objects.particles.Particle;
 import com.desitum.shveetlife.objects.player.Player;
@@ -256,6 +257,8 @@ public class GameWorld implements GameInterface{
     public String getGameLoad(){
         String returnString = "";
 
+        createLoadString();
+
         String append = "";
         for (String s: loadData){
             returnString += append + s;
@@ -286,6 +289,7 @@ public class GameWorld implements GameInterface{
     }
 
     public void updateData(String info){
+        System.out.println(info);
         if (info.contains(";")) {
             for (String infoPiece : info.split(";")) {
                 String[] infoToUse = infoPiece.split(" ");

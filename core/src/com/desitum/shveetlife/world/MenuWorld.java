@@ -19,7 +19,6 @@ public class MenuWorld {
     private ArrayList<MenuButton> buttons;
 
     private MenuInterface menuInterface;
-    public TextField tf;
 
     private static final int PLAY = 0;
     private static final int CONNECT = 1;
@@ -27,11 +26,6 @@ public class MenuWorld {
 
     public MenuWorld(MenuInterface mi){
         menuInterface = mi;
-
-        tf = new TextField("", new TextField.TextFieldStyle(Assets.textFieldFont, Color.WHITE, Assets.textCursor, Assets.textSelection, Assets.textFieldBackground));
-        tf.setX(5);
-        tf.setY(5);
-        tf.setSize(20, 10);
 
         buttons = new ArrayList<MenuButton>();
 
@@ -62,30 +56,27 @@ public class MenuWorld {
         }
     }
 
-    public void updateClickDown(Vector3 clickPos){
-        for (MenuButton button: buttons){
-            if (CollisionDetection.pointInRectangle(button.getBoundingRectangle(), clickPos)){
+    public void updateTouchInput(Vector3 touchPos, boolean clickDown) {
+        for (MenuButton button : buttons) {
+            boolean clickInArea = CollisionDetection.pointInRectangle(button.getBoundingRectangle(), touchPos);
+            if (clickInArea && clickDown) {
                 button.onClickDown();
+            } else if (clickInArea) {
+                button.onClickUp(true);
+                useButtonCommand(button);
             } else {
-                button.resetState();
+                button.onClickUp(false);
             }
         }
     }
 
-    public void updateClickUp(Vector3 clickPos){
-        for (MenuButton button: buttons){
-            if (CollisionDetection.pointInRectangle(button.getBoundingRectangle(), clickPos)){
-                button.onClickUp(true);
-                if (button.getCommand() == PLAY){
-                    menuInterface.playGame();
-                } else if (button.getCommand() == CONNECT){
-                    menuInterface.connect();
-                } else if (button.getCommand() == SETTINGS){
-                    menuInterface.settings();
-                }
-            } else {
-                button.onClickUp(false);
-            }
+    public void useButtonCommand(MenuButton button){
+        if (button.getCommand() == PLAY){
+            menuInterface.playGame();
+        } else if (button.getCommand() == CONNECT){
+            menuInterface.connect();
+        } else if (button.getCommand() == SETTINGS){
+            menuInterface.settings();
         }
     }
 

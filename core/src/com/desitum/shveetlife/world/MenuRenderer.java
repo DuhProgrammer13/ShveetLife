@@ -20,7 +20,5 @@ public class MenuRenderer {
         for (MenuButton menuButton: menuWorld.getMenuButtons()){
             menuButton.draw(batch);
         }
-
-        menuWorld.tf.draw(batch, 0.5f);
     }
 }

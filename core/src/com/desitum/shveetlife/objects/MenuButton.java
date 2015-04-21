@@ -3,6 +3,7 @@ package com.desitum.shveetlife.objects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.desitum.shveetlife.libraries.animation.Animator;
+import com.desitum.shveetlife.objects.menu.PopupButtonListener;
 
 import java.util.ArrayList;
 
@@ -39,9 +40,7 @@ public class MenuButton extends Sprite {
     }
 
     public void onClickUp(boolean clicked){
-        if (!clicked){
-            this.setTexture(baseText);
-        }
+        this.setTexture(baseText);
     }
 
     public void resetState(){

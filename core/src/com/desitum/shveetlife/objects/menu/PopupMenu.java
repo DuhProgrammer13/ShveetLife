@@ -29,6 +29,8 @@ public class PopupMenu {
     private float width;
     private float height;
 
+    private int commandToSend;
+
     public PopupMenu(Texture background, float x, float y, float width, float height){
         widgets = new ArrayList<PopupWidget>();
         incomingAnimators = new ArrayList<Animator>();
@@ -55,10 +57,17 @@ public class PopupMenu {
     public void updateTouchInput(Vector3 touchPos, boolean clickDown){
         for (PopupWidget widget: widgets){
             boolean clickInArea = CollisionDetection.pointInRectangle(widget.getBoundingRectangle(), touchPos);
+            if (clickDown){
+                System.out.println("clickInArea: " + clickInArea);
+                System.out.println("touchPos: " + touchPos.x + ", " + touchPos.y);
+                System.out.println("rect: " + widget.getX() + ", " + widget.getY() + ", " + widget.getWidth() + ", " + widget.getHeight());
+            }
             if (widget.getClass().equals(PopupButton.class)){
                 PopupButton button = (PopupButton) widget;
                 if (clickInArea && clickDown){
                     button.onClickDown();
+                } else if (clickInArea) {
+                    button.onClickUp(true);
                 } else {
                     button.onClickUp(false);
                 }
@@ -71,13 +80,15 @@ public class PopupMenu {
             widget.update(delta);
         }
 
-        updateAnimation();
+        updateAnimation(delta);
     }
 //Kody is an idiot
-    private void updateAnimation(){
+    private void updateAnimation(float delta){
         for (Animator animator: incomingAnimators){
             if (!animator.isRunning()) {
                 continue;
+            } else {
+                animator.update(delta);
             }
             if (animator.getClass().equals(MovementAnimator.class)){
                 if (animator.updateY()){
@@ -97,6 +108,8 @@ public class PopupMenu {
         for (Animator animator: outgoingAnimators){
             if (!animator.isRunning()) {
                 continue;
+            } else {
+                animator.update(delta);
             }
             if (animator.getClass().equals(MovementAnimator.class)){
                 if (animator.updateY()){
@@ -130,11 +143,11 @@ public class PopupMenu {
             if (dupAnim.getClass().equals(MovementAnimator.class)){
                 MovementAnimator dupMov = (MovementAnimator) dupAnim;
                 if (dupMov.isControllingX()){
-                    dupMov.setStartPos(toAdd.getX() - dupMov.getStartPos());
-                    dupMov.setEndPos(toAdd.getX());
+                    dupMov.setStartPos(toAdd.getX() + dupMov.getStartPos());
+                    dupMov.setEndPos(toAdd.getX() + dupMov.getEndPos());
                 } if (dupMov.isControllingY()){
-                    dupMov.setStartPos(toAdd.getY() - dupMov.getStartPos());
-                    dupMov.setEndPos(toAdd.getY());
+                    dupMov.setStartPos(toAdd.getY() + dupMov.getStartPos());
+                    dupMov.setEndPos(toAdd.getY() + dupMov.getEndPos());
                 }
                 toAdd.addIncomingAnimator(dupMov);
             }
@@ -144,11 +157,11 @@ public class PopupMenu {
             if (dupAnim.getClass().equals(MovementAnimator.class)){
                 MovementAnimator dupMov = (MovementAnimator) dupAnim;
                 if (dupMov.isControllingX()){
-                    dupMov.setStartPos(toAdd.getX() - dupMov.getStartPos());
-                    dupMov.setEndPos(toAdd.getX());
+                    dupMov.setStartPos(toAdd.getX() + dupMov.getStartPos());
+                    dupMov.setEndPos(toAdd.getX() + dupMov.getEndPos());
                 } if (dupMov.isControllingY()){
-                    dupMov.setStartPos(toAdd.getY() - dupMov.getStartPos());
-                    dupMov.setEndPos(toAdd.getY());
+                    dupMov.setStartPos(toAdd.getY() + dupMov.getStartPos());
+                    dupMov.setEndPos(toAdd.getY() + dupMov.getEndPos());
                 }
                 toAdd.addOutgoingAnimator(dupMov);
             }

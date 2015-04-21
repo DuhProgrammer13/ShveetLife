@@ -19,6 +19,8 @@ public class PopupButton extends PopupWidget {
 
     private int command;
 
+    private PopupButtonListener buttonListener;
+
     public PopupButton(Texture upTexture, Texture downTexture, float x, float y, float width, float height, int command) {
         super(upTexture, width, height, x, y);
 
@@ -37,12 +39,13 @@ public class PopupButton extends PopupWidget {
     }
 
     public void onClickDown(){
-        this.setTexture(upTexture);
+        this.setTexture(downTexture);
     }
 
     public void onClickUp(boolean clicked){
-        if (!clicked){
-            this.setTexture(upTexture);
+        this.setTexture(upTexture);
+        if (buttonListener != null && clicked){
+            buttonListener.onClick();
         }
     }
 
@@ -62,26 +65,32 @@ public class PopupButton extends PopupWidget {
     }
 
     public void addIncomingAnimator(Animator anim){
+        anim.setSprite(this, anim.updateX(), anim.updateY());
         this.comingInAnimators.add(anim);
     }
 
     public void addOutgoingAnimator(Animator anim){
+        anim.setSprite(this, anim.updateX(), anim.updateY());
         this.goingOutAnimators.add(anim);
     }
 
     public void startIncomingAnimators(){
         for (Animator anim: comingInAnimators){
-            anim.start(false);
+            anim.start(true);
         }
     }
 
     public void startOutgoingAnimators(){
         for (Animator anim: goingOutAnimators){
-            anim.start(false);
+            anim.start(true);
         }
     }
 
     public int getCommand(){
         return command;
+    }
+
+    public void setButtonListener(PopupButtonListener buttonListener) {
+        this.buttonListener = buttonListener;
     }
 }
