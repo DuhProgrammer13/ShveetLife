@@ -17,7 +17,6 @@ public class ShveetLife extends Game {
             public void run() {
                 DataManager.sendData();
                 DataManager.receiveData();
-                JOptionPane.showMessageDialog(null, "POOP. Hahahaha Sucker");
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -35,4 +34,27 @@ public class ShveetLife extends Game {
 	public void render () {
         super.render();
 	}
+
+
+    //TODO Zack and Kody Checklist
+    //Connection Menu
+    //Pause Menu
+    //Game Items
+    //Game Objects (Buildings)
+    //Inventory
+    //Life
+    //Gold Shop Thingy
+    //Account Verification
+    //Save data/settings to Accounts
+    //Add Savegame and LoadGame
+    //Settings Menu
+
+    //OPTIONAL:
+    //Make Zack Food
+    //Fix Exitgame() command
+    //Add NPC Characters
+    //Add More Particles (Fireworks?)
+    //In Game Chat
+    //In Game Compass/Mini Map
+
 }
