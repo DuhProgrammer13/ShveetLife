@@ -57,7 +57,7 @@ public class GameWorld implements GameInterface{
             for (int count = 0; count < randomAmount; count++) {
                 int randomX = (int) (Math.random() * 10);
                 int randomY = (int) (Math.random() * 10);
-                npcController.addNPC(new NPC(this, 10, 10, randomX, randomY));
+                npcController.addNPC(new NPC(this, 10, 10, randomX, randomY, count));
             }
         }
 
@@ -326,6 +326,8 @@ public class GameWorld implements GameInterface{
                     workOnTile(infoToUse);
                 } else if (Integer.parseInt(infoToUse[1]) == ProcessData.PLAYER) {
                     editPlayer(infoToUse);
+                } else if (Integer.parseInt(infoToUse[1]) == ProcessData.NPC){
+                    npcController.updateString(infoToUse);
                 }
             }
         } else {
@@ -334,6 +336,8 @@ public class GameWorld implements GameInterface{
                 workOnTile(infoToUse);
             } else if (Integer.parseInt(infoToUse[1]) == ProcessData.PLAYER) {
                 editPlayer(infoToUse);
+            } else if (Integer.parseInt(infoToUse[1]) == ProcessData.NPC){
+                npcController.updateString(infoToUse);
             }
         }
     }

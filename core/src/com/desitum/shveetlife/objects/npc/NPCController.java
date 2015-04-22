@@ -1,5 +1,6 @@
 package com.desitum.shveetlife.objects.npc;
 
+import com.desitum.shveetlife.network.ProcessData;
 import com.desitum.shveetlife.world.GameInterface;
 
 import java.util.ArrayList;
@@ -30,6 +31,11 @@ public class NPCController {
             npc.update(delta);
         }
     }
+
+   public void updateString(String[] info){
+
+
+   }
 
     public ArrayList<NPC> getNPCs() {
         return npcs;
