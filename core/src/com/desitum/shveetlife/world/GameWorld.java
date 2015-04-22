@@ -52,11 +52,13 @@ public class GameWorld implements GameInterface{
 
         loadedChunks.add( new Chunk(0, 0, this));
 
-        int randomAmount = (int)(Math.random() * 10);
-        for(int count = 0; count < randomAmount; count++) {
-            int randomX = (int)(Math.random() * 10);
-            int randomY = (int)(Math.random() * 10);
-            npcController.addNPC(new NPC(this, 10, 10, randomX, randomY));
+        if(DataManager.mainServer != null) {
+            int randomAmount = (int) (Math.random() * 10);
+            for (int count = 0; count < randomAmount; count++) {
+                int randomX = (int) (Math.random() * 10);
+                int randomY = (int) (Math.random() * 10);
+                npcController.addNPC(new NPC(this, 10, 10, randomX, randomY));
+            }
         }
 
         allChunks.add(loadedChunks.get(0));

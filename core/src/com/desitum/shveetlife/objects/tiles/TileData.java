@@ -69,7 +69,7 @@ public class TileData {
             return new PathTile(gi, chunk.getX() + Integer.parseInt(info[POS_X]) * TileData.WIDTH,
                     chunk.getY() + Integer.parseInt(info[POS_Y]) * TileData.HEIGHT);
         } else if (tileNum == FIRE){
-            return new PathTile(gi, chunk.getX() + Integer.parseInt(info[POS_X]) * TileData.WIDTH,
+            return new FireTile(gi, chunk.getX() + Integer.parseInt(info[POS_X]) * TileData.WIDTH,
                     chunk.getY() + Integer.parseInt(info[POS_Y]) * TileData.HEIGHT);
         }
         return null;
