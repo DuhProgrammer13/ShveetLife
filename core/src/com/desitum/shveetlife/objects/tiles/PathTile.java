@@ -52,7 +52,7 @@ public class PathTile extends TileObject {
 
         //gi.addParticles(new Particle(Assets.dirtTexture, 0.4f, 5, 5, this.getX(), this.getY(), particleSettings));
         if (health <= 0){
-            gi.changeTile(this, new GrassTile(gi, this.getX(), this.getY()));
+            gi.changeTile(this, new FireTile(gi, this.getX(), this.getY()));
         }
     }
 

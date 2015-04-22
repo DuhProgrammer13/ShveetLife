@@ -52,5 +52,8 @@ public class WaterTile extends TileObject {
 
     private void doDamage(float amount){
         health -= amount;
+        if (health <= 0){
+            gi.changeTile(this, new PathTile(gi, this.getX(), this.getY()));
+        }
     }
 }
