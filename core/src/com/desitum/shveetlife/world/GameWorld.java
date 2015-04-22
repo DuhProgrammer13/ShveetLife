@@ -159,7 +159,8 @@ public class GameWorld implements GameInterface{
         return getChunkAt(pos).getTileAt(pos);
     }
 
-    private Chunk getChunkAt(Vector3 pos){
+    @Override
+    public Chunk getChunkAt(Vector3 pos){
         Chunk returnChunk = null;
         for (Chunk chunk: loadedChunks){
             if (CollisionDetection.pointInRectangle(chunk.getBoundingRect(), pos)){

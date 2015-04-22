@@ -16,6 +16,9 @@ public class NPC extends Sprite {
     private int direction;
     private boolean moving;
 
+    private float duration;
+    private float time;
+
     private float speed;
 
     public static final float WIDTH = 10;
@@ -40,35 +43,38 @@ public class NPC extends Sprite {
 
         this.setOriginCenter();
         this.speed = 30;
+        this.duration = 0;
 
         this.gameInterface = gi;
     }
 
     public void update(float delta){
-        float duration = (float)(Math.random() * 8000);
-        if(duration <= 1000){
-            duration += 1000;
-        }
-        float time = 0;
         if (time <= duration){
-        if (moving) {
-            if (direction == RIGHT) {
-                setX(getX() + speed * delta);
-            } else if (direction == LEFT) {
-                setX(getX() - speed * delta);
-            } else if (direction == UP) {
-                setY(getY() + speed * delta);
-            } else if (direction == DOWN) {
-                setY(getY() - speed * delta);
+            if (moving) {
+                if (direction == RIGHT) {
+                    setX(getX() + speed * delta);
+                } else if (direction == LEFT) {
+                    setX(getX() - speed * delta);
+                } else if (direction == UP) {
+                    setY(getY() + speed * delta);
+                } else if (direction == DOWN) {
+                    setY(getY() - speed * delta);
+                }
+                updateSpeed();
+                time += delta;
             }
-            updateSpeed();
-            time += delta;
-        }
+        } else {
+            moving = false;
         }
     }
 
     public void wantsToMove(){
-        int randomChoice = (int)(Math.random() * 3);
+        time = 0;
+        duration = (float)(Math.random() * 3.0);
+        if(duration <= 1){
+            duration += 1;
+        }
+        int randomChoice = (int)(Math.random() * 400);
         if (randomChoice == 0){
             direction = RIGHT;
             moving = true;
@@ -126,7 +132,7 @@ public class NPC extends Sprite {
     }
 
     private void updateSpeed(){
-        speed = gameInterface.getTile(new Vector3(getOriginX(), getOriginY(), 0)).getPlayerSpeed();
+        speed = gameInterface.getTile(new Vector3(getOriginX(), getOriginY(), 0)).getPlayerSpeed()/2;
     }
 
     public boolean isMoving(){

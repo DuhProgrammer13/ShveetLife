@@ -25,8 +25,7 @@ public class NPCController {
 
     public void update(float delta){
         for(NPC npc: npcs){
-            int moveChance = (int)(Math.random() * 6); //Small chance to move each NPC each update
-            if(moveChance == 1 && !npc.isMoving()) {
+            if(!npc.isMoving()) {
                 npc.wantsToMove();
             }
             npc.update(delta);
