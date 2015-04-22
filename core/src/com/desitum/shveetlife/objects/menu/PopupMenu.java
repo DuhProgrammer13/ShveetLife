@@ -57,11 +57,6 @@ public class PopupMenu {
     public void updateTouchInput(Vector3 touchPos, boolean clickDown){
         for (PopupWidget widget: widgets){
             boolean clickInArea = CollisionDetection.pointInRectangle(widget.getBoundingRectangle(), touchPos);
-            if (clickDown){
-                System.out.println("clickInArea: " + clickInArea);
-                System.out.println("touchPos: " + touchPos.x + ", " + touchPos.y);
-                System.out.println("rect: " + widget.getX() + ", " + widget.getY() + ", " + widget.getWidth() + ", " + widget.getHeight());
-            }
             if (widget.getClass().equals(PopupButton.class)){
                 PopupButton button = (PopupButton) widget;
                 if (clickInArea && clickDown){
@@ -70,6 +65,15 @@ public class PopupMenu {
                     button.onClickUp(true);
                 } else {
                     button.onClickUp(false);
+                }
+            } else if (widget.getClass().equals(PopupSlider.class)){
+                PopupSlider slider = (PopupSlider) widget;
+                if (clickInArea && clickDown){
+                    slider.onClickDown(touchPos);
+                } else if (clickInArea) {
+                    slider.onClickUp();
+                } else {
+                    slider.onClickUp(); // handles if not in area
                 }
             }
         }

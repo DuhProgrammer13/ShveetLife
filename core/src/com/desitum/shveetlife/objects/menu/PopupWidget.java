@@ -2,6 +2,7 @@ package com.desitum.shveetlife.objects.menu;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.desitum.shveetlife.libraries.animation.Animator;
 
 /**
@@ -27,4 +28,8 @@ public abstract class PopupWidget extends Sprite {
     public abstract void startIncomingAnimators();
 
     public abstract void startOutgoingAnimators();
+
+    public void draw(SpriteBatch batch){
+        super.draw(batch);
+    }
 }

@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * Created by Zmyth97 on 4/3/2015.
@@ -19,9 +17,9 @@ public class Assets {
     public static Texture settingsButtonUp;
     public static Texture settingsButtonDown;
 
-    public static TextureRegionDrawable textCursor;
-    public static TextureRegionDrawable textSelection;
-    public static TextureRegionDrawable textFieldBackground;
+    public static Texture textCursor;
+    public static Texture textSelection;
+    public static Texture textFieldBackground;
 
     public static Texture grassTexture;
     public static Texture dirtTexture;
@@ -49,9 +47,9 @@ public class Assets {
         settingsButtonUp = new Texture("menu/settings_button_up.png");
         settingsButtonDown = new Texture("menu/settings_button_down.png");
 
-        textCursor = new TextureRegionDrawable(new TextureRegion(new Texture("menu/cursor.png")));
-        textSelection = new TextureRegionDrawable(new TextureRegion(new Texture("menu/highlight.png")));
-        textFieldBackground = new TextureRegionDrawable(new TextureRegion(new Texture("menu/textFieldBackground.png")));
+        textCursor = new Texture("menu/cursor.png");
+        textSelection = new Texture("menu/highlight.png");
+        textFieldBackground = new Texture("menu/textFieldBackground.png");
 
         textFieldFont = new BitmapFont(Gdx.files.internal("font/cartoon.fnt"), Gdx.files.internal("font/cartoon.png"), false);
         textFieldFont.setScale(0.15f);

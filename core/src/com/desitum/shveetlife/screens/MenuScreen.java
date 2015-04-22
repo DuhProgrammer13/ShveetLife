@@ -19,6 +19,8 @@ import com.desitum.shveetlife.objects.MenuButton;
 import com.desitum.shveetlife.objects.menu.PopupButton;
 import com.desitum.shveetlife.objects.menu.PopupButtonListener;
 import com.desitum.shveetlife.objects.menu.PopupMenu;
+import com.desitum.shveetlife.objects.menu.PopupSlider;
+import com.desitum.shveetlife.objects.menu.PopupSliderListener;
 import com.desitum.shveetlife.world.MenuInterface;
 import com.desitum.shveetlife.world.MenuRenderer;
 import com.desitum.shveetlife.world.MenuWorld;
@@ -78,24 +80,34 @@ public class MenuScreen implements Screen, MenuInterface {
 
         touchPoint = new Vector3(0, 0, 0);
 
-        popupMenu = new PopupMenu(Assets.fireTexture, 10, -50, 80, 50);
-        MovementAnimator yAnimator = new MovementAnimator(-50, 10, 1, Interpolation.DECELERATE_INTERPOLATOR);
+        popupMenu = new PopupMenu(Assets.fireTexture, 10, -130, 130, 80);
+        MovementAnimator yAnimator = new MovementAnimator(-130, 10, 1, Interpolation.DECELERATE_INTERPOLATOR);
         yAnimator.setControllingY(true);
         popupMenu.addIncomingAnimator(yAnimator);
-        MovementAnimator yAnimator2 = new MovementAnimator(10, -50, 1, Interpolation.ANTICIPATE_INTERPOLATOR);
+        MovementAnimator yAnimator2 = new MovementAnimator(10, -130, 1, Interpolation.ANTICIPATE_INTERPOLATOR);
         yAnimator2.setControllingY(true);
         popupMenu.addOutgoingAnimator(yAnimator2);
 
-        PopupButton cancelButton = new PopupButton(Assets.connectButtonUp, Assets.connectButtonDown, 5, 5, 30, 10, 1);
+        PopupButton cancelButton = new PopupButton(Assets.connectButtonUp, Assets.connectButtonDown, 65, 5, 60, 15, 1);
         cancelButton.setButtonListener(new PopupButtonListener() {
             @Override
             public void onClick() {
                 popupMenu.moveOut();
                 state = MAIN_MENU;
+                System.out.println("Here's when");
 
             }
         });
         popupMenu.addPopupWidget(cancelButton);
+
+        PopupSlider volumeSlider = new PopupSlider(Assets.pathTexture, Assets.textFieldBackground, 5, 60, 120, 5, 3, 10);
+        volumeSlider.setSliderListener(new PopupSliderListener() {
+            @Override
+            public void onChange(float pos) {
+                System.out.println(pos);
+            }
+        });
+        popupMenu.addPopupWidget(volumeSlider);
     }
 
     @Override
