@@ -26,7 +26,6 @@ public class Player extends Sprite {
     public static final int Y = 3;
 
     public Player (GameInterface gi, float width, float height, float x, float y){
-        //super(texture, 0, 0, texture.getWidth(), texture.getHeight());
         super(Assets.player, 0, 0, Assets.player.getWidth(), Assets.player.getHeight());
 
         this.setSize(width, height);
@@ -77,7 +76,7 @@ public class Player extends Sprite {
     }
 
     public float getDamage(Class c){
-        return 1; //TODO should be directly related to the item held and object being attacked
+        return 1;
     }
 
     public Vector3 getPositionInFront(){

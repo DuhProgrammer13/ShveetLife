@@ -50,7 +50,7 @@ public class ShveetLife extends Game {
     //Settings Menu
 
     //OPTIONAL:
-    //Make Zack Food
+    //Make Zack Food (Preferably No-Bake Cookies...)
     //Fix Exitgame() command
     //Add NPC Characters
     //Add More Particles (Fireworks?)

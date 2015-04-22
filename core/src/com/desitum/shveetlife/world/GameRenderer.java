@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.desitum.shveetlife.data.Assets;
 import com.desitum.shveetlife.objects.Chunk;
+import com.desitum.shveetlife.objects.npc.NPC;
 import com.desitum.shveetlife.objects.tiles.TileObject;
 import com.desitum.shveetlife.objects.particles.Particle;
 import com.desitum.shveetlife.objects.tiles.GrassTile;
@@ -31,9 +32,16 @@ public class GameRenderer {
         gameCam.update();
         gameBatch.setProjectionMatrix(gameCam.combined);
 
+        drawNPC();
         drawChunks();
         drawParticles();
         drawPlayer();
+    }
+
+    private void drawNPC(){
+        for (NPC npc: world.getNPCs()) {
+            npc.draw(gameBatch);
+        }
     }
 
     private void drawChunks(){

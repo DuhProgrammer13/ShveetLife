@@ -33,16 +33,9 @@ public class GameScreen implements Screen {
     private OrthographicCamera cam;
     private SpriteBatch batch;
 
-    private MenuButton myButton;
-
-    private Server myServer;
-    private Client myClient;
 
     private GameWorld gameWorld;
     private GameRenderer gameRenderer;
-
-    private boolean isTouched;
-    private Vector3 touchPoint;
 
     private ArrayList<Integer> directionalKeys;
     private ArrayList<Integer> commandKeys;

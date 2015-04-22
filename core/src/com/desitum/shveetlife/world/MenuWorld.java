@@ -1,8 +1,6 @@
 package com.desitum.shveetlife.world;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.desitum.shveetlife.data.Assets;
 import com.desitum.shveetlife.libraries.CollisionDetection;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
@@ -10,6 +8,7 @@ import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 import com.desitum.shveetlife.objects.MenuButton;
 
 import java.util.ArrayList;
+
 
 /**
  * Created by Zmyth97 on 4/3/2015.
@@ -23,6 +22,7 @@ public class MenuWorld {
     private static final int PLAY = 0;
     private static final int CONNECT = 1;
     private static final int SETTINGS = 2;
+
 
     public MenuWorld(MenuInterface mi){
         menuInterface = mi;
@@ -79,6 +79,7 @@ public class MenuWorld {
             menuInterface.settings();
         }
     }
+
 
     public ArrayList<MenuButton> getMenuButtons(){
         return this.buttons;

@@ -8,6 +8,7 @@ import com.desitum.shveetlife.network.DataManager;
 import com.desitum.shveetlife.network.ProcessData;
 import com.desitum.shveetlife.objects.Chunk;
 import com.desitum.shveetlife.objects.menu.PopupMenu;
+import com.desitum.shveetlife.objects.npc.NPC;
 import com.desitum.shveetlife.objects.tiles.TileObject;
 import com.desitum.shveetlife.objects.particles.Particle;
 import com.desitum.shveetlife.objects.player.Player;
@@ -26,6 +27,7 @@ public class GameWorld implements GameInterface{
 
     private Player player;
     private Player2 player2;
+    private ArrayList<NPC> npcs;
     private ArrayList<Chunk> loadedChunks;
     private ArrayList<Chunk> allChunks;
 
@@ -41,12 +43,21 @@ public class GameWorld implements GameInterface{
         player = new Player(this, 10, 10, 20, 10);
         player2 = new Player2(this, 10, 10, 10, 10);
 
+        npcs = new ArrayList<NPC>();
         loadedChunks = new ArrayList<Chunk>();
         allChunks = new ArrayList<Chunk>();
         particles = new ArrayList<Particle>();
         data = new ArrayList<String>();
 
         loadedChunks.add( new Chunk(0, 0, this));
+
+        int randomAmount = (int)(Math.random() * 10);
+        for(int count = 0; count < randomAmount; count++) {
+            int randomX = (int)(Math.random() * 10);
+            int randomY = (int)(Math.random() * 10);
+            npcs.add(new NPC(this, 10, 10, randomX, randomY));
+        }
+
         allChunks.add(loadedChunks.get(0));
 
         createLoadString();
@@ -54,16 +65,18 @@ public class GameWorld implements GameInterface{
         DataManager.setGameWorld(this);
     }
 
-    public GameWorld(ShveetLife sl, ArrayList<Chunk> chunks, Player p, Player2 p2){
+    public GameWorld(ShveetLife sl, ArrayList<Chunk> chunks, Player p, Player2 p2, ArrayList<NPC> npcs){
         player = p;
         player2 = p2;
 
+        this.npcs = npcs;
         loadedChunks = new ArrayList<Chunk>();
         allChunks = new ArrayList<Chunk>();
         particles = new ArrayList<Particle>();
         data = new ArrayList<String>();
 
         loadedChunks.add( new Chunk(0, 0, this));
+
         allChunks.add(loadedChunks.get(0));
 
         createLoadString();
@@ -77,6 +90,13 @@ public class GameWorld implements GameInterface{
 
         for (Chunk chunk: loadedChunks){
             chunk.update(delta);
+        }
+
+        for(NPC npc: npcs){
+            int moveChance = (int)(Math.random() * 6); //Small chance to move each NPC each update
+            if(moveChance == 1) {
+                npc.update(delta);
+            }
         }
 
         Iterator<Particle> iter = particles.iterator();
@@ -130,6 +150,10 @@ public class GameWorld implements GameInterface{
 
     public ArrayList<Particle> getParticles(){
         return particles;
+    }
+
+    public ArrayList<NPC> getNPCs() {
+        return npcs;
     }
 
     public void changeTile(TileObject from, TileObject to){
@@ -233,6 +257,7 @@ public class GameWorld implements GameInterface{
         }
     }
 
+
     public ArrayList<String> getData(){
         return data;
     }
@@ -252,6 +277,15 @@ public class GameWorld implements GameInterface{
         loadData.add(player2.toString());
 
         loadData.add(player.toString());
+
+        String npcAppend = "";
+        String npcString = "";
+        for(NPC npc: npcs){
+            npcString += npcAppend;
+            npcString += npc.toString();
+            npcAppend = "/";
+        }
+        loadData.add(npcString);
     }
 
     public String getGameLoad(){
@@ -273,10 +307,15 @@ public class GameWorld implements GameInterface{
 
         ArrayList<Chunk> newWorldChunks = new ArrayList<Chunk>();
         String[] loadStrings = loadString.split(":");
+        ArrayList<NPC> newNPCs = new ArrayList<NPC>();
 
         String[] chunkStrings = loadStrings[0].split("/");
         for (String chunkString: chunkStrings){
             newWorldChunks.add(Chunk.loadFromString(chunkString, newWorld));
+        }
+        String[] npcStrings = loadStrings[3].split("/");
+        for(String npcString: npcStrings){
+            newNPCs.add(NPC.loadFromString(npcString, newWorld));
         }
 
         Player2 otherPlayer = Player2.loadFromString(loadStrings[1], newWorld);
@@ -284,7 +323,7 @@ public class GameWorld implements GameInterface{
 
         Player myNewPlayer = Player.loadFromString(loadStrings[2], newWorld);
 
-        newWorld = new GameWorld(sl, newWorldChunks, myNewPlayer, otherPlayer);
+        newWorld = new GameWorld(sl, newWorldChunks, myNewPlayer, otherPlayer, newNPCs);
         return newWorld;
     }
 

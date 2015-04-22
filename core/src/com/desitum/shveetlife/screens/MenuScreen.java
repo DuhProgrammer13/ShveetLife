@@ -92,8 +92,7 @@ public class MenuScreen implements Screen, MenuInterface {
             public void onClick() {
                 popupMenu.moveOut();
                 state = MAIN_MENU;
-                System.out.println("Hey it worked");
-                System.out.println(state);
+
             }
         });
         popupMenu.addPopupWidget(cancelButton);
@@ -115,8 +114,6 @@ public class MenuScreen implements Screen, MenuInterface {
         if (Gdx.input.isTouched()) {
             cam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
         }
-
-        System.out.println(state);
 
         if (state == SETTINGS_MENU) {
             popupMenu.updateTouchInput(touchPoint, Gdx.input.isTouched());
