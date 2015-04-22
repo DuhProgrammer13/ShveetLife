@@ -32,14 +32,14 @@ public class GameRenderer {
         gameCam.update();
         gameBatch.setProjectionMatrix(gameCam.combined);
 
-        drawNPC();
         drawChunks();
         drawParticles();
+        drawNPC();
         drawPlayer();
     }
 
     private void drawNPC(){
-        for (NPC npc: world.getNPCs()) {
+        for (NPC npc: world.getNpcController().getNPCs()) {
             npc.draw(gameBatch);
         }
     }

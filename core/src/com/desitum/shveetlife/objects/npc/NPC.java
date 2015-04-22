@@ -126,6 +126,10 @@ public class NPC extends Sprite {
     }
 
     private void updateSpeed(){
-        speed = gameInterface.getTile(new Vector3(getX() + getWidth()/2, getY() + getHeight()/2, 0)).getPlayerSpeed();
+        speed = gameInterface.getTile(new Vector3(getOriginX(), getOriginY(), 0)).getPlayerSpeed();
+    }
+
+    public boolean isMoving(){
+        return moving;
     }
 }
