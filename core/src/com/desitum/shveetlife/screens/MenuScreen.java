@@ -159,9 +159,9 @@ public class MenuScreen implements Screen, MenuInterface {
 
     @Override
     public void connect() {
-        GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("10.228.7.220", "10.228.7.220"));
+        //GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("10.228.7.220", "10.228.7.220"));
         //GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("192.168.1.4", "192.168.1.4"));
-        //GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("10.228.7.220", "localhost"));
+        GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("10.228.7.220", "localhost"));
 
         DataManager.receiveData();
         shveetLife.setScreen(new GameScreen(shveetLife));

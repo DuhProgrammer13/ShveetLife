@@ -273,7 +273,6 @@ public class GameWorld implements GameInterface{
 
         loadData.add(player.toString());
 
-
         loadData.add(npcController.toString());
     }
 
@@ -294,6 +293,7 @@ public class GameWorld implements GameInterface{
     public static GameWorld loadGameFromString(String loadString, ShveetLife sl){
         GameWorld newWorld = null;
 
+        System.out.println(loadString);
         ArrayList<Chunk> newWorldChunks = new ArrayList<Chunk>();
         String[] loadStrings = loadString.split(":");
         NPCController newNPCs = new NPCController(newWorld);

@@ -33,7 +33,7 @@ public class FireTile extends TileObject {
 
     @Override
     public void update(float delta) {
-        gi.addParticles(new Particle(Assets.grassParticle, 0.4f, 5, 5, this.getX(), this.getY(), particleSettings));
+        //gi.addParticles(new Particle(Assets.grassParticle, 0.4f, 5, 5, this.getX(), this.getY(), particleSettings));
         //return; //No need, it's a grass tile, doesn't do anything
     }
 
