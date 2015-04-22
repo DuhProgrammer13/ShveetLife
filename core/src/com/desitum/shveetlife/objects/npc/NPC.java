@@ -32,6 +32,8 @@ public class NPC extends Sprite {
     public final float X;
     public final float Y;
 
+    private Vector3 centerPos;
+
     public NPC (GameInterface gi, float width, float height, float x, float y){
         super(Assets.npc, 0, 0, Assets.npc.getWidth(), Assets.npc.getHeight());
 
@@ -45,10 +47,16 @@ public class NPC extends Sprite {
         this.speed = 30;
         this.duration = 0;
 
+        centerPos = new Vector3(getOriginX(), getOriginY(), 0);
+
         this.gameInterface = gi;
     }
 
     public void update(float delta){
+        centerPos.set(getOriginX(), getOriginY(), 0);
+        if (gameInterface.getChunkAt(centerPos) == null){
+            return;
+        }
         if (time <= duration){
             if (moving) {
                 if (direction == RIGHT) {
@@ -69,6 +77,7 @@ public class NPC extends Sprite {
     }
 
     public void wantsToMove(){
+
         time = 0;
         duration = (float)(Math.random() * 3.0);
         if(duration <= 1){

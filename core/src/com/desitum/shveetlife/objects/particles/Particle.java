@@ -3,7 +3,6 @@ package com.desitum.shveetlife.objects.particles;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.desitum.shveetlife.libraries.animation.Animator;
-import com.desitum.shveetlife.objects.player.Player;
 
 import java.util.ArrayList;
 
@@ -49,15 +48,6 @@ public class Particle extends Sprite {
 
     public float getLifetime(){
         return lifetime;
-    }
-
-
-    public void useKey(int key, Player p) {
-        return; // YOU CAN't INTERACT WITH PARTICLES
-    }
-
-    public void addAnimator(Animator anim){
-        this.animators.add(anim);
     }
 
     public void startAllAnimators(){
