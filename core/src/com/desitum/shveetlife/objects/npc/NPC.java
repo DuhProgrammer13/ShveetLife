@@ -29,8 +29,9 @@ public class NPC extends Sprite {
     private final int UP = 3;
     private final int DOWN = 4;
 
-    public final float X;
-    public final float Y;
+    public static final int ID = 2;
+    public static final int X = 3;
+    public static final int Y = 4;
 
     private int id;
 
@@ -38,9 +39,6 @@ public class NPC extends Sprite {
 
     public NPC (GameInterface gi, float width, float height, float x, float y, int id){
         super(Assets.npc, 0, 0, Assets.npc.getWidth(), Assets.npc.getHeight());
-
-        this.X = x;
-        this.Y = y;
 
         this.id = id;
 
@@ -142,7 +140,7 @@ public class NPC extends Sprite {
     }
 
     public String getUpdateString(){ //BLERGGGGGG
-        return ProcessData.EDIT + " " + ProcessData.NPC + " " + getX() + " " + getY();
+        return ProcessData.EDIT + " " + ProcessData.NPC + " " + id + " " + getX() + " " + getY();
     }
     private void updateSpeed(){
         speed = gameInterface.getTile(new Vector3(getOriginX(), getOriginY(), 0)).getPlayerSpeed()/2;
@@ -150,5 +148,9 @@ public class NPC extends Sprite {
 
     public boolean isMoving(){
         return moving;
+    }
+
+    public int getId(){
+        return id;
     }
 }

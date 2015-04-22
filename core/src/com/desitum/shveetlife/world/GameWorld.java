@@ -91,7 +91,7 @@ public class GameWorld implements GameInterface{
         player.update(delta);
         player2.update(delta, "");
 
-        npcController.update(delta);
+        if (DataManager.mainServer != null) npcController.update(delta);
 
         for (Chunk chunk: loadedChunks){
             chunk.update(delta);

@@ -33,8 +33,16 @@ public class NPCController {
     }
 
    public void updateString(String[] info){
-
-
+        for (String infoPiece: info){
+            String[] npcInfo = infoPiece.split(" ");
+            int id = Integer.parseInt(npcInfo[NPC.ID]);
+            for (NPC npc: npcs){
+                if (id == npc.getId()){
+                    npc.setX(Float.parseFloat(npcInfo[NPC.X]));
+                    npc.setY(Float.parseFloat(npcInfo[NPC.Y]));
+                }
+            }
+        }
    }
 
     public ArrayList<NPC> getNPCs() {
