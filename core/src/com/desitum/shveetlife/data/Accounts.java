@@ -3,72 +3,102 @@ package com.desitum.shveetlife.data;
 import com.desitum.shveetlife.network.Client;
 import com.desitum.shveetlife.network.Server;
 
+import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * Created by Zmyth97 on 4/7/2015.
  */
 public class Accounts {
 
-    private String username;
-    private String password;
-    private String ipAddress;
+    public String wantedUsername;
+    public String wantedPassword;
+    public String wantedIpAddress;
 
     public boolean isValid;
-    private Server myServer;
-    private Client myClient;
+    public boolean tryAgain;
 
     private ArrayList<String> accounts;
     private ArrayList<String> passwords;
 
-    public Accounts(String username, String password, String ipAddress) {
-        this.username = username;
-        this.password = password;
-        this.ipAddress = ipAddress;
-
+    public Accounts() {
         isValid = false;
-
-        myServer = new Server();
+        tryAgain = false;
 
         accounts = new ArrayList<String>();
         passwords = new ArrayList<String>();
-
-        checkExisting(username, password, ipAddress);
-    }
-
-    private void checkExisting(String username, String password, String ipAddress){
         accounts.add("Zmyth97");
         passwords.add("Pass");
         accounts.add("Kody");
         passwords.add("Pass");
-        System.out.println(passwords.get(0) + passwords.get(1));
+    }
+
+    public void checkExisting(String username, String password, String ipAddress){
 
         if(accounts.contains(username)){
             verifyPassword(password, username, ipAddress);
         } else {
-            promptNewAccount(username);
+            makeAccountCheck(username, ipAddress);
+            if(!tryAgain) {
+                promptNewAccount(username, ipAddress);
+            }
         }
     }
 
     private void verifyPassword(String password, String username, String ipAddress){
         int userID = accounts.indexOf(username);
-        System.out.println(userID);
-        System.out.println(passwords.get(userID) + password);
         if(passwords.get(userID).equals(password)){
-            myClient.startClient(ipAddress);
+            wantedIpAddress = ipAddress;
+            wantedPassword = password;
+            wantedUsername = username;
             isValid = true;
         } else {
             JOptionPane.showMessageDialog(null, "Wrong password!");
-            //TODO Tell the user their password/username is incorrect
         }
     }
 
-    private void promptNewAccount(String username){
-        JOptionPane.showMessageDialog(null, "Username doesn't exist!");
-        //TODO Something user interface with prompting to make a new account password using the username given?
-        //Make sure to add the new password and username to the ArrayList of Passwords so they match up with new usernames.
-        //If you can think of a better way than this go for it, but this is the first to pop into my head!
+    private void makeAccountCheck(String username, String ipAddress){
+        int result = JOptionPane.showConfirmDialog(null, "That Username doesn't exist, would you like to make a new account?", "Make New Account", JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.YES_OPTION){
+            promptNewAccount(username, ipAddress);
+        } else {
+            tryAgain = true;
+        }
+    }
+    private void promptNewAccount(String username, String ipAddress){
+        JTextField userField = new JTextField(username);
+        JTextField passField = new JTextField(20);
+
+        JPanel myPanel = new JPanel(new GridLayout(10, 10));
+        myPanel.add(new JLabel("New Username:"));
+        myPanel.add(userField);
+        myPanel.add(new JLabel("New Password:"));
+        myPanel.add(passField);
+
+        int result = JOptionPane.showConfirmDialog(null, myPanel, "Make an Account", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            if(!accounts.contains(userField.getText())) {
+                if (userField.getText().length() > 0 && passField.getText().length() > 0) {
+                    accounts.add(userField.getText());
+                    passwords.add(passField.getText());
+                    wantedPassword = passField.getText();
+                    wantedUsername = userField.getText();
+                    wantedIpAddress = ipAddress;
+                    isValid = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "You must fill out both fields!");
+                    promptNewAccount(username, ipAddress);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "That username is taken!");
+                promptNewAccount(username, ipAddress);
+            }
+        }
+
     }
 }

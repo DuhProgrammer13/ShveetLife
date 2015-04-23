@@ -30,7 +30,7 @@ public class Server {
         try {
             serverSocket = new ServerSocket(9001);
         } catch (Exception exception) {
-            //JOptionPane.showMessageDialog(null, "Server Start Failed");
+
         }
     }
 
@@ -76,7 +76,7 @@ public class Server {
             serverSocket.close();
             serverSocket = null;
         } catch(Exception exception){
-            JOptionPane.showMessageDialog(null, "It had troubles closing the server?");
+
         }
     }
 

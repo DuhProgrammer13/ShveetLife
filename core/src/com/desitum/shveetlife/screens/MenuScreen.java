@@ -25,6 +25,17 @@ import com.desitum.shveetlife.world.MenuInterface;
 import com.desitum.shveetlife.world.MenuRenderer;
 import com.desitum.shveetlife.world.MenuWorld;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+
+import javax.swing.Box;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 /**
  * Created by dvan6234 on 4/3/2015.
  */
@@ -77,6 +88,8 @@ public class MenuScreen implements Screen, MenuInterface {
         cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         cam.position.set(FRUSTUM_WIDTH/2, FRUSTUM_HEIGHT/2, 0);
         viewport = new FitViewport(FRUSTUM_WIDTH, FRUSTUM_HEIGHT, cam);
+
+        accounts = new Accounts();
 
         touchPoint = new Vector3(0, 0, 0);
 
@@ -159,13 +172,42 @@ public class MenuScreen implements Screen, MenuInterface {
 
     @Override
     public void connect() {
-        //GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("10.228.7.220", "10.228.7.220"));
-        //GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("192.168.1.4", "192.168.1.4"));
-        GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("10.228.7.220", "localhost"));
+            JTextField userField = new JTextField(20);
+            JTextField passField = new JTextField(20);
+            JTextField ipField = new JTextField(16);
 
-        DataManager.receiveData();
-        shveetLife.setScreen(new GameScreen(shveetLife));
-    }
+            JPanel myPanel = new JPanel(new GridLayout(10, 10));
+            myPanel.add(new JLabel("Username:"));
+            myPanel.add(userField);
+            myPanel.add(new JLabel("Password:"));
+            myPanel.add(passField);
+            myPanel.add(new JLabel("IP Address:"));
+            myPanel.add(ipField);
+
+            int result = JOptionPane.showConfirmDialog(null, myPanel, "Connect To Server", JOptionPane.OK_CANCEL_OPTION);
+            if (result == JOptionPane.OK_OPTION) {
+                String user = userField.getText();
+                String pass = passField.getText();
+                String ip = ipField.getText();
+                if (user.length() > 0 && pass.length() > 0 && ip.length() > 0) {
+                    accounts.checkExisting(user, pass, ip);
+                    if(accounts.isValid){
+                        GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager(accounts.wantedUsername, accounts.wantedIpAddress));
+                        DataManager.receiveData();
+                        shveetLife.setScreen(new GameScreen(shveetLife));
+                    } else if(accounts.tryAgain){
+                        connect();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "You must fill out all 3 textfields!");
+                }
+            }
+            //GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("10.228.7.220", "localhost"));
+            //GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("10.228.7.220", "10.228.7.220"));
+            //GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("192.168.1.4", "192.168.1.4"));
+
+
+        }
 
     @Override
     public void settings() {

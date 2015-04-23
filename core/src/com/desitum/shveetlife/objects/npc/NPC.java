@@ -62,13 +62,21 @@ public class NPC extends Sprite {
         if (time <= duration){
             if (moving) {
                 if (direction == RIGHT) {
-                    setX(getX() + speed * delta);
+                    if(gameInterface.getChunkAt(new Vector3(getX() + speed * delta, getY(), 0))!= null) {
+                        setX(getX() + speed * delta);
+                    }
                 } else if (direction == LEFT) {
-                    setX(getX() - speed * delta);
+                    if(gameInterface.getChunkAt(new Vector3(getX() - speed * delta, getY(), 0))!= null) {
+                        setX(getX() - speed * delta);
+                    }
                 } else if (direction == UP) {
-                    setY(getY() + speed * delta);
+                    if(gameInterface.getChunkAt(new Vector3(getX(), getY() + speed * delta, 0))!= null) {
+                        setY(getY() + speed * delta);
+                    }
                 } else if (direction == DOWN) {
-                    setY(getY() - speed * delta);
+                    if(gameInterface.getChunkAt(new Vector3(getX(), getY() - speed * delta, 0))!= null) {
+                        setY(getY() - speed * delta);
+                    }
                 }
                 updateSpeed();
                 time += delta;
@@ -133,15 +141,15 @@ public class NPC extends Sprite {
         return new NPC(gi, width, height, x, y, id);
     }
 
-
-    @Override
-    public String toString(){ //HAhahaHA WHAT NOW?
-        return "NPC " + getX() + " " + getY() + " " + getWidth() + " " + getHeight();
-    }
-
-    public String getUpdateString(){ //BLERGGGGGG
+    public String getUpdateString(){
         return ProcessData.EDIT + " " + ProcessData.NPC + " " + id + " " + getX() + " " + getY();
     }
+
+    @Override
+    public String toString(){
+        return "NPC " + getX() + " " + getY() + " " + getWidth() + " " + getHeight() + " " + id;
+    }
+
     private void updateSpeed(){
         speed = gameInterface.getTile(new Vector3(getOriginX(), getOriginY(), 0)).getPlayerSpeed()/2;
     }
