@@ -176,8 +176,32 @@ public class MenuScreen implements Screen, MenuInterface {
 
     @Override
     public void playGame() {
-        DataManager.startManager("localhost", "localhost");
-        shveetLife.setScreen(new GameScreen(shveetLife));
+        JTextField userField = new JTextField(20);
+        JTextField passField = new JTextField(20);
+
+        JPanel myPanel = new JPanel(new GridLayout(10, 10));
+        myPanel.add(new JLabel("Username:"));
+        myPanel.add(userField);
+        myPanel.add(new JLabel("Password:"));
+        myPanel.add(passField);
+
+        int result = JOptionPane.showConfirmDialog(null, myPanel, "Connect To Server", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            String user = userField.getText();
+            String pass = passField.getText();
+            if (user.length() > 0 && pass.length() > 0) {
+                accounts.checkExisting(user, pass, "localhost");
+                if(accounts.isValid){
+                    GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("localhost", accounts.wantedIpAddress));
+                    DataManager.receiveData();
+                    shveetLife.setScreen(new GameScreen(shveetLife));
+                } else if(accounts.tryAgain){
+                    connect();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "You must fill out all 3 textfields!");
+            }
+        }
     }
 
     @Override

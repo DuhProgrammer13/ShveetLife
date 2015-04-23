@@ -34,7 +34,10 @@ public class ShveetLife extends Game {
         super.render();
 	}
 
-
+    public void exitScreen(){
+        Screen splashScreen = new SplashScreen(this);
+        this.setScreen(splashScreen);
+    }
     //TODO Zack and Kody Checklist
     //Pause Menu
     //Game Items

@@ -27,6 +27,8 @@ import com.desitum.shveetlife.screens.MenuScreen;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.JOptionPane;
+
 /**
  * Created by Zmyth97 on 4/3/2015.
  */
@@ -162,6 +164,14 @@ public class GameWorld implements GameInterface{
         Chunk chunk = getChunkAt(player.getPositionInFront());
         int[] position = chunk.changeTile(from, to);
         data.add(ProcessData.EDIT + " " + ProcessData.TILE + " " + position[0] + " " + position[1] + " " + TileData.getTile(to.getClass()) + " " + chunk.getX() + " " + chunk.getY());
+    }
+
+    public void exitGame() {
+        if(shveetLife != null) {
+            shveetLife.exitScreen();
+        } else{
+            JOptionPane.showMessageDialog(null, "Hahaha, it was null");
+        }
     }
 
     @Override

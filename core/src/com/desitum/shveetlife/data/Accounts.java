@@ -53,10 +53,10 @@ public class Accounts {
     private void verifyPassword(String password, String username, String ipAddress){
         int userID = accounts.indexOf(username);
         if(passwords.get(userID).equals(password)){
-            wantedIpAddress = ipAddress;
-            wantedPassword = password;
-            wantedUsername = username;
-            isValid = true;
+                wantedIpAddress = ipAddress;
+                wantedPassword = password;
+                wantedUsername = username;
+                isValid = true;
         } else {
             JOptionPane.showMessageDialog(null, "Wrong password!");
         }
