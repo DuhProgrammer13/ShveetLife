@@ -15,6 +15,7 @@ public class NPC extends Sprite {
 
     private int direction;
     private boolean moving;
+    private boolean needToUpdate;
 
     private float duration;
     private float time;
@@ -48,6 +49,7 @@ public class NPC extends Sprite {
         this.setOriginCenter();
         this.speed = 30;
         this.duration = 0;
+        this.needToUpdate = false;
 
         centerPos = new Vector3(getOriginX(), getOriginY(), 0);
 
@@ -58,6 +60,8 @@ public class NPC extends Sprite {
         centerPos.set(getOriginX(), getOriginY(), 0);
         if (gameInterface.getChunkAt(centerPos) == null){
             return;
+        }else {
+            needToUpdate = true;
         }
         if (time <= duration){
             if (moving) {
@@ -141,13 +145,18 @@ public class NPC extends Sprite {
         return new NPC(gi, width, height, x, y, id);
     }
 
-    public String getUpdateString(){
-        return ProcessData.EDIT + " " + ProcessData.NPC + " " + id + " " + getX() + " " + getY();
-    }
 
     @Override
     public String toString(){
         return "NPC " + getX() + " " + getY() + " " + getWidth() + " " + getHeight() + " " + id;
+    }
+
+    public String getUpdateString(){
+        String returnString = null;
+        if (needToUpdate) {
+            returnString = ProcessData.EDIT + " " + ProcessData.NPC + " " + id + " " + getX() + " " + getY();
+        }
+        return returnString;
     }
 
     private void updateSpeed(){
@@ -160,5 +169,9 @@ public class NPC extends Sprite {
 
     public int getId(){
         return id;
+    }
+
+    public boolean needsUpdate(){
+        return needToUpdate;
     }
 }

@@ -1,6 +1,5 @@
 package com.desitum.shveetlife.objects.npc;
 
-import com.desitum.shveetlife.network.ProcessData;
 import com.desitum.shveetlife.world.GameInterface;
 
 import java.util.ArrayList;
@@ -14,6 +13,8 @@ public class NPCController {
     private ArrayList<NPC> npcs;
 
     public NPCController(GameInterface gi){
+
+        System.out.println("Created new NPCController");
         this.gameInterface = gi;
 
         npcs = new ArrayList<NPC>();
@@ -21,6 +22,7 @@ public class NPCController {
 
     public void addNPC(NPC npc){
         npcs.add(npc);
+        System.out.println(npc.toString());
     }
 
     public void update(float delta){
@@ -32,18 +34,15 @@ public class NPCController {
         }
     }
 
-   public void updateString(String[] info){
-        for (String infoPiece: info){
-            String[] npcInfo = infoPiece.split(" ");
-            int id = Integer.parseInt(npcInfo[NPC.ID]);
-            for (NPC npc: npcs){
-                if (id == npc.getId()){
-                    npc.setX(Float.parseFloat(npcInfo[NPC.X]));
-                    npc.setY(Float.parseFloat(npcInfo[NPC.Y]));
-                }
+    public void updateFromString(String[] npcInfo){
+        int id = Integer.parseInt(npcInfo[NPC.ID]);
+        for (NPC npc: npcs) {
+            if (id == npc.getId()) {
+                npc.setX(Float.parseFloat(npcInfo[NPC.X]));
+                npc.setY(Float.parseFloat(npcInfo[NPC.Y]));
             }
         }
-   }
+    }
 
     public ArrayList<NPC> getNPCs() {
         return npcs;
@@ -59,5 +58,16 @@ public class NPCController {
             npcAppend = "/";
         }
         return npcString;
+    }
+
+    public String getUpdateString(){
+        String returnString = "";
+        for (NPC npc: npcs){
+            if (npc.needsUpdate()) {
+                returnString += ";";
+                returnString += npc.getUpdateString();
+            }
+        }
+        return returnString;
     }
 }

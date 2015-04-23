@@ -69,6 +69,8 @@ public class Chunk {
             }
         }
 
+        returnChunk = new Chunk(chunkObjects2, boundingRect2, gameInterface);
+
         return returnChunk;
     }
 

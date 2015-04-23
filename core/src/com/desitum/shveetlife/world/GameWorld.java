@@ -39,12 +39,12 @@ public class GameWorld implements GameInterface{
     private ArrayList<Particle> particles;
 
     public GameWorld(ShveetLife sl){
+        System.out.println("Comes in here");
         this.shveetLife = sl;
 
         player = new Player(this, 10, 10, 20, 10);
         player2 = new Player2(this, 10, 10, 10, 10);
 
-        npcController = new NPCController(this);
         loadedChunks = new ArrayList<Chunk>();
         allChunks = new ArrayList<Chunk>();
         particles = new ArrayList<Particle>();
@@ -52,13 +52,12 @@ public class GameWorld implements GameInterface{
 
         loadedChunks.add( new Chunk(0, 0, this));
 
-        if(DataManager.mainServer != null) {
-            int randomAmount = (int) (Math.random() * 10);
-            for (int count = 0; count < randomAmount; count++) {
-                int randomX = (int) (Math.random() * 10);
-                int randomY = (int) (Math.random() * 10);
-                npcController.addNPC(new NPC(this, 10, 10, randomX, randomY, count));
-            }
+        npcController = new NPCController(this);
+        int randomAmount = (int) (Math.random() * 10);
+        for (int count = 0; count < randomAmount; count++) {
+            int randomX = (int) (Math.random() * 10);
+            int randomY = (int) (Math.random() * 10);
+            npcController.addNPC(new NPC(this, 10, 10, randomX, randomY, count));
         }
 
         allChunks.add(loadedChunks.get(0));
@@ -73,6 +72,8 @@ public class GameWorld implements GameInterface{
         player2 = p2;
         this.npcController = npcController;
 
+        System.out.println(npcController.toString());
+
         loadedChunks = new ArrayList<Chunk>();
         allChunks = new ArrayList<Chunk>();
         particles = new ArrayList<Particle>();
@@ -85,6 +86,8 @@ public class GameWorld implements GameInterface{
         createLoadString();
 
         DataManager.setGameWorld(this);
+
+        System.out.println("Out of here");
     }
 
     public void update(float delta){
@@ -185,6 +188,10 @@ public class GameWorld implements GameInterface{
             separator = ";";
         }
 
+        if (DataManager.mainServer != null){
+            returnString += npcController.getUpdateString();
+        }
+
         data = new ArrayList<String>();
         return returnString;
     }
@@ -252,7 +259,6 @@ public class GameWorld implements GameInterface{
         }
     }
 
-
     public ArrayList<String> getData(){
         return data;
     }
@@ -291,34 +297,44 @@ public class GameWorld implements GameInterface{
     }
 
     public static GameWorld loadGameFromString(String loadString, ShveetLife sl){
-        GameWorld newWorld = null;
+        //GameWorld newWorld = newWorld = new GameWorld(sl, newWorldChunks, myNewPlayer, otherPlayer, newNPCs);
+        GameWorld newWorld = new GameWorld(sl);
 
         System.out.println(loadString);
         ArrayList<Chunk> newWorldChunks = new ArrayList<Chunk>();
         String[] loadStrings = loadString.split(":");
-        NPCController newNPCs = new NPCController(newWorld);
 
         String[] chunkStrings = loadStrings[0].split("/");
         for (String chunkString: chunkStrings){
-            newWorldChunks.add(Chunk.loadFromString(chunkString, newWorld));
+            Chunk chunkToAdd = Chunk.loadFromString(chunkString, newWorld);
+            if (chunkToAdd == null){
+                System.out.println("FETCH!!!!!");
+            } else {
+                newWorldChunks.add(chunkToAdd);
+            }
         }
+        newWorld.setAllChunks(newWorldChunks);
 
         Player2 otherPlayer = Player2.loadFromString(loadStrings[1], newWorld);
+        newWorld.setPlayer2(otherPlayer);
 
 
         Player myNewPlayer = Player.loadFromString(loadStrings[2], newWorld);
+        newWorld.setPlayer(myNewPlayer);
 
-        String[] npcStrings = loadStrings[3].split("/");
-        for(String npcString: npcStrings){
-            newNPCs.addNPC(NPC.loadFromString(npcString, newWorld));
+        NPCController newNPCs = new NPCController(newWorld);
+        if (loadStrings.length == 4 && loadStrings[3] != null) {
+            String[] npcStrings = loadStrings[3].split("/");
+            for (String npcString : npcStrings) {
+                newNPCs.addNPC(NPC.loadFromString(npcString, newWorld));
+            }
         }
+        newWorld.setNpcController(newNPCs);
 
-        newWorld = new GameWorld(sl, newWorldChunks, myNewPlayer, otherPlayer, newNPCs);
         return newWorld;
     }
 
     public void updateData(String info){
-        System.out.println(info);
         if (info.contains(";")) {
             for (String infoPiece : info.split(";")) {
                 String[] infoToUse = infoPiece.split(" ");
@@ -327,7 +343,7 @@ public class GameWorld implements GameInterface{
                 } else if (Integer.parseInt(infoToUse[1]) == ProcessData.PLAYER) {
                     editPlayer(infoToUse);
                 } else if (Integer.parseInt(infoToUse[1]) == ProcessData.NPC){
-                    npcController.updateString(infoToUse);
+                    npcController.updateFromString(infoToUse);
                 }
             }
         } else {
@@ -337,7 +353,7 @@ public class GameWorld implements GameInterface{
             } else if (Integer.parseInt(infoToUse[1]) == ProcessData.PLAYER) {
                 editPlayer(infoToUse);
             } else if (Integer.parseInt(infoToUse[1]) == ProcessData.NPC){
-                npcController.updateString(infoToUse);
+                npcController.updateFromString(infoToUse);
             }
         }
     }
@@ -377,5 +393,22 @@ public class GameWorld implements GameInterface{
 
     public NPCController getNpcController(){
         return npcController;
+    }
+
+    public void setAllChunks(ArrayList<Chunk> chunksToSet){
+        this.allChunks = chunksToSet;
+        updateLoadedChunks();
+    }
+
+    public void setPlayer(Player p){
+        this.player = p;
+    }
+
+    public void setPlayer2(Player2 p2){
+        this.player2 = p2;
+    }
+
+    public void setNpcController(NPCController npcc){
+        this.npcController = npcc;
     }
 }

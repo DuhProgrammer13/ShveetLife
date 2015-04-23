@@ -6,14 +6,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.desitum.shveetlife.ShveetLife;
-import com.desitum.shveetlife.network.Client;
 import com.desitum.shveetlife.network.DataManager;
-import com.desitum.shveetlife.network.Server;
-import com.desitum.shveetlife.objects.MenuButton;
 import com.desitum.shveetlife.world.GameRenderer;
 import com.desitum.shveetlife.world.GameWorld;
 
@@ -41,6 +37,7 @@ public class GameScreen implements Screen {
     private ArrayList<Integer> commandKeys;
 
     public GameScreen(ShveetLife sl) {
+
         batch = new SpriteBatch();
 
         cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
@@ -48,6 +45,7 @@ public class GameScreen implements Screen {
         viewport = new FitViewport(FRUSTUM_WIDTH, FRUSTUM_HEIGHT, cam);
 
         gameWorld = new GameWorld(sl);
+
         gameRenderer = new GameRenderer(gameWorld, batch);
 
         directionalKeys = new ArrayList<Integer>();

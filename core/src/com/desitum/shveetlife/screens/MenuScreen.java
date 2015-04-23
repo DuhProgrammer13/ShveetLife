@@ -107,7 +107,6 @@ public class MenuScreen implements Screen, MenuInterface {
             public void onClick() {
                 popupMenu.moveOut();
                 state = MAIN_MENU;
-                System.out.println("Here's when");
 
             }
         });
@@ -194,7 +193,7 @@ public class MenuScreen implements Screen, MenuInterface {
                     if(accounts.isValid){
                         GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager(accounts.wantedUsername, accounts.wantedIpAddress));
                         DataManager.receiveData();
-                        shveetLife.setScreen(new GameScreen(shveetLife));
+                        shveetLife.setScreen(myGameScreen);
                     } else if(accounts.tryAgain){
                         connect();
                     }
