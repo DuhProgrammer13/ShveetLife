@@ -95,7 +95,7 @@ public class Accounts {
                     promptNewAccount(username, ipAddress);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "That username is taken!");
+                JOptionPane.showMessageDialog(null, "That username is taken");
                 promptNewAccount(username, ipAddress);
             }
         }
