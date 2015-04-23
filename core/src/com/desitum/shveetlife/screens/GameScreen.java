@@ -81,6 +81,8 @@ public class GameScreen implements Screen {
         commandKeys = new ArrayList<Integer>();
         commandKeys.add(Input.Keys.SPACE);
         commandKeys.add(Input.Keys.ESCAPE);
+
+        touchPoint = new Vector3(0, 0, 0);
     }
 
     @Override
