@@ -36,22 +36,17 @@ public class ShveetLife extends Game {
 
 
     //TODO Zack and Kody Checklist
-    //Connection Menu
     //Pause Menu
     //Game Items
     //Game Objects (Buildings)
     //Inventory
     //Life
     //Gold Shop Thingy
-    //Account Verification
     //Save data/settings to Accounts
     //Add Savegame and LoadGame
-    //Settings Menu
 
     //OPTIONAL:
-    //Make Zack Food (Preferably No-Bake Cookies...)
     //Fix Exitgame() command
-    //Add NPC Characters
     //Add More Particles (Fireworks?)
     //In Game Chat
     //In Game Compass/Mini Map

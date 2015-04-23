@@ -382,11 +382,6 @@ public class GameWorld implements GameInterface{
         player2.setY(Float.parseFloat(info[Player.Y]));
     }
 
-    public void exitScreen(){
-        shveetLife.setScreen(new MenuScreen(shveetLife));
-
-    }
-
     public Chunk getChunkAtPos(float x, float y){
         for (Chunk chunk: allChunks){
             if (CollisionDetection.pointInRectangle(chunk.getBoundingRect(), new Vector3(x, y, 0))){

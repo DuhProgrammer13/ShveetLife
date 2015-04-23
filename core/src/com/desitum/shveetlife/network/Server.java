@@ -73,8 +73,10 @@ public class Server {
             clientSocket.shutdownOutput();
             clientSocket.close();
             clientSocket = null;
+            serverSocket.setReuseAddress(true);
             serverSocket.close();
             serverSocket = null;
+            serverStarted = false;
         } catch(Exception exception){
 
         }

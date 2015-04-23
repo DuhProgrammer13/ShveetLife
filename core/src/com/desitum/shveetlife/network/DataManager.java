@@ -61,12 +61,12 @@ public class DataManager {
             mainServer.disconnect();
             mainServer = null;
             myClient = null;
-            gameWorld.exitScreen();
+            //gameWorld.exitScreen();
             gameWorld = null;
         } else {
             myClient.disconnect();
             myClient = null;
-            gameWorld.exitScreen();
+            //gameWorld.exitScreen();
             gameWorld = null;
         }
     }
