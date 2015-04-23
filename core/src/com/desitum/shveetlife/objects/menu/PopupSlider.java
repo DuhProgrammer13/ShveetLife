@@ -85,13 +85,13 @@ public class PopupSlider extends PopupWidget {
 
     public void startIncomingAnimators(){
         for (Animator anim: comingInAnimators){
-            anim.start(true);
+            anim.start(false);
         }
     }
 
     public void startOutgoingAnimators(){
         for (Animator anim: goingOutAnimators){
-            anim.start(true);
+            anim.start(false);
         }
     }
 

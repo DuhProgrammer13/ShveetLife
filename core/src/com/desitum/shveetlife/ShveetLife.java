@@ -5,8 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.desitum.shveetlife.network.DataManager;
 import com.desitum.shveetlife.screens.SplashScreen;
 
-import javax.swing.JOptionPane;
-
 public class ShveetLife extends Game {
 	
 	@Override
@@ -15,14 +13,15 @@ public class ShveetLife extends Game {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DataManager.sendData();
-                DataManager.receiveData();
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                while (true) {
+                    DataManager.sendData();
+                    DataManager.receiveData();
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-                run();
             }
         }).start();
 

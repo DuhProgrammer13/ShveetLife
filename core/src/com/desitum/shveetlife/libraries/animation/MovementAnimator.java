@@ -106,6 +106,7 @@ public class MovementAnimator implements Animator {
 
     public void start(boolean isProtected){
         this.currentDelay = 0;
+        this.timeInAnimation = 0;
         if (isProtected && !ran){
             running = true;
         } else if (!isProtected) {

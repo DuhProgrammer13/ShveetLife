@@ -6,6 +6,7 @@ import com.desitum.shveetlife.libraries.CollisionDetection;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
 import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 import com.desitum.shveetlife.objects.MenuButton;
+import com.desitum.shveetlife.objects.MenuButtonOnClickListener;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,10 @@ public class MenuWorld {
     private static final int CONNECT = 1;
     private static final int SETTINGS = 2;
 
+    private MenuButton playButton;
+    private MenuButton connectButton;
+    private MenuButton settingsButton;
+
 
     public MenuWorld(MenuInterface mi){
         menuInterface = mi;
@@ -30,9 +35,9 @@ public class MenuWorld {
         buttons = new ArrayList<MenuButton>();
 
         //Create the Menu Buttons
-        MenuButton playButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, PLAY, 10, 0, 25, 10);
-        MenuButton connectButton = new MenuButton(Assets.connectButtonUp, Assets.connectButtonDown, CONNECT, 10, 0, 25, 10);
-        MenuButton settingsButton = new MenuButton(Assets.settingsButtonUp, Assets.settingsButtonDown, SETTINGS, 10, 0, 25, 10);
+        playButton = new MenuButton(Assets.playButtonUp, Assets.playButtonDown, PLAY, 10, 0, 25, 10);
+        connectButton = new MenuButton(Assets.connectButtonUp, Assets.connectButtonDown, CONNECT, 10, 0, 25, 10);
+        settingsButton = new MenuButton(Assets.settingsButtonUp, Assets.settingsButtonDown, SETTINGS, 10, 0, 25, 10);
 
         //Animate/Add Play Button
         playButton.addAnimator(new MovementAnimator(playButton, -playButton.getHeight(), 60, 0.8f, 0, Interpolation.DECELERATE_INTERPOLATOR, false, true));
@@ -47,7 +52,7 @@ public class MenuWorld {
         settingsButton.startAllAnimators();
         buttons.add(settingsButton);
 
-
+        setupOnClickListeners();
     }
 
     public void update(float delta){
@@ -63,23 +68,32 @@ public class MenuWorld {
                 button.onClickDown();
             } else if (clickInArea) {
                 button.onClickUp(true);
-                useButtonCommand(button);
             } else {
                 button.onClickUp(false);
             }
         }
     }
 
-    public void useButtonCommand(MenuButton button){
-        if (button.getCommand() == PLAY){
-            menuInterface.playGame();
-        } else if (button.getCommand() == CONNECT){
-            menuInterface.connect();
-        } else if (button.getCommand() == SETTINGS){
-            menuInterface.settings();
-        }
+    private void setupOnClickListeners(){
+        playButton.setOnClickListener(new MenuButtonOnClickListener() {
+            @Override
+            public void onClick() {
+                menuInterface.playGame();
+            }
+        });
+        connectButton.setOnClickListener(new MenuButtonOnClickListener() {
+            @Override
+            public void onClick() {
+                menuInterface.connect();
+            }
+        });
+        settingsButton.setOnClickListener(new MenuButtonOnClickListener() {
+            @Override
+            public void onClick() {
+                menuInterface.settings();
+            }
+        });
     }
-
 
     public ArrayList<MenuButton> getMenuButtons(){
         return this.buttons;

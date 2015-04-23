@@ -6,10 +6,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.desitum.shveetlife.ShveetLife;
-import com.desitum.shveetlife.network.DataManager;
 import com.desitum.shveetlife.world.GameRenderer;
 import com.desitum.shveetlife.world.GameWorld;
 
@@ -36,8 +36,9 @@ public class GameScreen implements Screen {
     private ArrayList<Integer> directionalKeys;
     private ArrayList<Integer> commandKeys;
 
-    public GameScreen(ShveetLife sl) {
+    private Vector3 touchPoint;
 
+    public GameScreen(ShveetLife sl) {
         batch = new SpriteBatch();
 
         cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
@@ -57,6 +58,8 @@ public class GameScreen implements Screen {
         commandKeys = new ArrayList<Integer>();
         commandKeys.add(Input.Keys.SPACE);
         commandKeys.add(Input.Keys.ESCAPE);
+
+        touchPoint = new Vector3(0, 0, 0);
     }
 
     public GameScreen(ShveetLife sl, String loadString){
@@ -100,11 +103,17 @@ public class GameScreen implements Screen {
         for (int key: commandKeys){
             if (Gdx.input.isKeyPressed(key)){
                 if(key == Input.Keys.ESCAPE){
-                    DataManager.exitGame();
+                    gameWorld.pauseGame();
                 }
                 gameWorld.updateKeys(key);
             }
         }
+
+        if (Gdx.input.isTouched()) {
+            cam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+        }
+
+        gameWorld.updateTouch(touchPoint, Gdx.input.isTouched());
     }
 
     public void update(float delta){
@@ -117,6 +126,8 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
         gameRenderer.draw();
+        batch.setProjectionMatrix(cam.combined);
+        gameWorld.getSettingsMenu().draw(batch);
         batch.end();
     }
 

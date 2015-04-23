@@ -13,8 +13,6 @@ public class NPCController {
     private ArrayList<NPC> npcs;
 
     public NPCController(GameInterface gi){
-
-        System.out.println("Created new NPCController");
         this.gameInterface = gi;
 
         npcs = new ArrayList<NPC>();
@@ -22,7 +20,6 @@ public class NPCController {
 
     public void addNPC(NPC npc){
         npcs.add(npc);
-        System.out.println(npc.toString());
     }
 
     public void update(float delta){

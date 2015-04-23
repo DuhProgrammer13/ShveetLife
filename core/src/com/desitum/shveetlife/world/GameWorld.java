@@ -3,10 +3,17 @@ package com.desitum.shveetlife.world;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3;
 import com.desitum.shveetlife.ShveetLife;
+import com.desitum.shveetlife.data.Assets;
 import com.desitum.shveetlife.libraries.CollisionDetection;
+import com.desitum.shveetlife.libraries.animation.MovementAnimator;
+import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 import com.desitum.shveetlife.network.DataManager;
 import com.desitum.shveetlife.network.ProcessData;
 import com.desitum.shveetlife.objects.Chunk;
+import com.desitum.shveetlife.objects.menu.PopupButton;
+import com.desitum.shveetlife.objects.menu.PopupButtonListener;
+import com.desitum.shveetlife.objects.menu.PopupMenu;
+import com.desitum.shveetlife.objects.menu.PopupSlider;
 import com.desitum.shveetlife.objects.npc.NPC;
 import com.desitum.shveetlife.objects.npc.NPCController;
 import com.desitum.shveetlife.objects.particles.Particle;
@@ -38,8 +45,15 @@ public class GameWorld implements GameInterface{
 
     private ArrayList<Particle> particles;
 
+    private PopupMenu settingsMenu;
+    private PopupSlider volumeSlider;
+
+    public static final int RUNNING = 0;
+    public static final int PAUSED = 1;
+
+    private int state = RUNNING;
+
     public GameWorld(ShveetLife sl){
-        System.out.println("Comes in here");
         this.shveetLife = sl;
 
         player = new Player(this, 10, 10, 20, 10);
@@ -65,32 +79,13 @@ public class GameWorld implements GameInterface{
         createLoadString();
 
         DataManager.setGameWorld(this);
-    }
 
-    public GameWorld(ShveetLife sl, ArrayList<Chunk> chunks, Player p, Player2 p2, NPCController npcController){
-        player = p;
-        player2 = p2;
-        this.npcController = npcController;
-
-        System.out.println(npcController.toString());
-
-        loadedChunks = new ArrayList<Chunk>();
-        allChunks = new ArrayList<Chunk>();
-        particles = new ArrayList<Particle>();
-        data = new ArrayList<String>();
-
-        loadedChunks.add( new Chunk(0, 0, this));
-
-        allChunks.add(loadedChunks.get(0));
-
-        createLoadString();
-
-        DataManager.setGameWorld(this);
-
-        System.out.println("Out of here");
+        setupPopupMenu();
     }
 
     public void update(float delta){
+        settingsMenu.update(delta);
+
         player.update(delta);
         player2.update(delta, "");
 
@@ -111,29 +106,39 @@ public class GameWorld implements GameInterface{
     }
 
     public void updateDirectionalKey(int key){
-        player.useDirectionalKey(key);
+        if (state == RUNNING){
+            player.useDirectionalKey(key);
+        }
     }
 
     public void updateKeys(int key){
-        Chunk affectedChunk = null;
-        for (Chunk loadedChunk: loadedChunks){
-            if (CollisionDetection.pointInRectangle(loadedChunk.getBoundingRect(), player.getPositionInFront())){
-                affectedChunk = loadedChunk;
+        if (state == RUNNING) {
+            Chunk affectedChunk = null;
+            for (Chunk loadedChunk : loadedChunks) {
+                if (CollisionDetection.pointInRectangle(loadedChunk.getBoundingRect(), player.getPositionInFront())) {
+                    affectedChunk = loadedChunk;
+                }
+            }
+            if (affectedChunk == null) {
+                return;
+            }
+
+            TileObject affectedObject = affectedChunk.getTileAt(player.getPositionInFront());
+            if (affectedObject == null) {
+                return;
+            }
+
+            switch (key) {
+                case Input.Keys.SPACE:
+                    affectedObject.useKey(key, player);
+                    break;
             }
         }
-        if (affectedChunk == null){
-            return;
-        }
+    }
 
-        TileObject affectedObject = affectedChunk.getTileAt(player.getPositionInFront());
-        if (affectedObject == null){
-            return;
-        }
-
-        switch (key){
-            case Input.Keys.SPACE:
-                affectedObject.useKey(key, player);
-                break;
+    public void updateTouch(Vector3 touchPoint, boolean isTouched){
+        if (state == PAUSED){
+            settingsMenu.updateTouchInput(touchPoint, isTouched);
         }
     }
     @Override
@@ -410,5 +415,69 @@ public class GameWorld implements GameInterface{
 
     public void setNpcController(NPCController npcc){
         this.npcController = npcc;
+    }
+
+    private void setupPopupMenu(){
+        float POPUP_WIDTH = 50;
+        float POPUP_HEIGHT = GameScreen.FRUSTUM_HEIGHT - 20;
+        settingsMenu = new PopupMenu(Assets.menuBackground, 50f,
+                -POPUP_HEIGHT, POPUP_WIDTH, POPUP_HEIGHT);
+        MovementAnimator moveInAnimator1 = new MovementAnimator(-POPUP_HEIGHT, 10, 1, Interpolation.DECELERATE_INTERPOLATOR);
+        moveInAnimator1.setControllingY(true);
+        MovementAnimator moveOutAnimator1 = new MovementAnimator(10, -POPUP_HEIGHT, 1, Interpolation.ANTICIPATE_INTERPOLATOR);
+        moveOutAnimator1.setControllingY(true);
+        settingsMenu.addIncomingAnimator(moveInAnimator1);
+        settingsMenu.addOutgoingAnimator(moveOutAnimator1);
+
+        volumeSlider = new PopupSlider(Assets.pathTexture, Assets.textFieldBackground, 5, POPUP_HEIGHT-15,
+                POPUP_WIDTH-10, 5, 3, 10);
+
+        PopupButton cancelButton = new PopupButton(Assets.cancelButtonUp, Assets.cancelButtonDown, 5,
+                5, POPUP_WIDTH - 10, (POPUP_WIDTH-10)/3);
+
+        PopupButton saveButton = new PopupButton(Assets.saveButtonUp, Assets.saveButtonDown, 5,
+                cancelButton.getY() + cancelButton.getHeight() + 5, POPUP_WIDTH - 10, (POPUP_WIDTH-10)/3);
+
+        PopupButton exitButton = new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 5,
+                saveButton.getY() + saveButton.getHeight() + 5, POPUP_WIDTH - 10, (POPUP_WIDTH-10)/3);
+
+        settingsMenu.addPopupWidget(volumeSlider);
+        settingsMenu.addPopupWidget(cancelButton);
+        settingsMenu.addPopupWidget(saveButton);
+        settingsMenu.addPopupWidget(exitButton);
+
+
+        cancelButton.setButtonListener(new PopupButtonListener() {
+            @Override
+            public void onClick() {
+                settingsMenu.moveOut();
+                state = RUNNING;
+            }
+        });
+
+        saveButton.setButtonListener(new PopupButtonListener() {
+            @Override
+            public void onClick() {
+                settingsMenu.moveOut();
+                state = RUNNING;
+            }
+        });
+
+        exitButton.setButtonListener(new PopupButtonListener() {
+            @Override
+            public void onClick() {
+                DataManager.exitGame();
+            }
+        });
+    }
+
+    public void pauseGame(){
+        settingsMenu.moveIn();
+        player.pause();
+        state = PAUSED;
+    }
+
+    public PopupMenu getSettingsMenu(){
+        return settingsMenu;
     }
 }

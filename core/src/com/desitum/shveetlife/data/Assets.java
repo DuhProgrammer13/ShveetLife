@@ -16,10 +16,19 @@ public class Assets {
     public static Texture connectButtonDown;
     public static Texture settingsButtonUp;
     public static Texture settingsButtonDown;
+    public static Texture cancelButtonUp;
+    public static Texture cancelButtonDown;
+    public static Texture okButtonUp;
+    public static Texture okButtonDown;
+    public static Texture saveButtonUp;
+    public static Texture saveButtonDown;
+    public static Texture exitButtonUp;
+    public static Texture exitButtonDown;
 
     public static Texture textCursor;
     public static Texture textSelection;
     public static Texture textFieldBackground;
+    public static Texture menuBackground;
 
     public static Texture grassTexture;
     public static Texture dirtTexture;
@@ -46,10 +55,19 @@ public class Assets {
         connectButtonDown = new Texture("menu/connect_button_down.png");
         settingsButtonUp = new Texture("menu/settings_button_up.png");
         settingsButtonDown = new Texture("menu/settings_button_down.png");
+        cancelButtonUp = new Texture("menu/cancel_button_up.png");
+        cancelButtonDown = new Texture("menu/cancel_button_down.png");
+        okButtonUp = new Texture("menu/ok_button_up.png");
+        okButtonDown = new Texture("menu/ok_button_down.png");
+        saveButtonUp = new Texture("menu/save_button_up.png");
+        saveButtonDown = new Texture("menu/save_button_down.png");
+        exitButtonUp = new Texture("menu/exit_button_up.png");
+        exitButtonDown = new Texture("menu/exit_button_down.png");
 
         textCursor = new Texture("menu/cursor.png");
         textSelection = new Texture("menu/highlight.png");
         textFieldBackground = new Texture("menu/textFieldBackground.png");
+        menuBackground = new Texture("menu/menu_bg.png");
 
         textFieldFont = new BitmapFont(Gdx.files.internal("font/cartoon.fnt"), Gdx.files.internal("font/cartoon.png"), false);
         textFieldFont.setScale(0.15f);

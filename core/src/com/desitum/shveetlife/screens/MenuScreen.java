@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -12,10 +11,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.desitum.shveetlife.ShveetLife;
 import com.desitum.shveetlife.data.Accounts;
 import com.desitum.shveetlife.data.Assets;
+import com.desitum.shveetlife.data.Settings;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
 import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 import com.desitum.shveetlife.network.DataManager;
-import com.desitum.shveetlife.objects.MenuButton;
 import com.desitum.shveetlife.objects.menu.PopupButton;
 import com.desitum.shveetlife.objects.menu.PopupButtonListener;
 import com.desitum.shveetlife.objects.menu.PopupMenu;
@@ -25,16 +24,12 @@ import com.desitum.shveetlife.world.MenuInterface;
 import com.desitum.shveetlife.world.MenuRenderer;
 import com.desitum.shveetlife.world.MenuWorld;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 
-import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 /**
  * Created by dvan6234 on 4/3/2015.
@@ -58,18 +53,13 @@ public class MenuScreen implements Screen, MenuInterface {
     private Viewport viewport;
     private OrthographicCamera cam;
 
-    private MenuButton myButton;
-
     private MenuWorld menuWorld;
     private MenuRenderer menuRenderer;
 
-    private boolean isTouched;
     private Vector3 touchPoint;
+    private float lastClick;
 
     SpriteBatch batch;
-    Texture background;
-
-
 
     private PopupMenu popupMenu;
 
@@ -83,8 +73,6 @@ public class MenuScreen implements Screen, MenuInterface {
         menuWorld = new MenuWorld(this);
         menuRenderer = new MenuRenderer(batch, menuWorld);
 
-        background = new Texture("menu/menu_bg.png");
-
         cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
         cam.position.set(FRUSTUM_WIDTH/2, FRUSTUM_HEIGHT/2, 0);
         viewport = new FitViewport(FRUSTUM_WIDTH, FRUSTUM_HEIGHT, cam);
@@ -93,6 +81,10 @@ public class MenuScreen implements Screen, MenuInterface {
 
         touchPoint = new Vector3(0, 0, 0);
 
+        lastClick = 0;
+
+        // code to create the settings menu
+        // do not delete or edit without permission first
         popupMenu = new PopupMenu(Assets.fireTexture, 10, -130, 130, 80);
         MovementAnimator yAnimator = new MovementAnimator(-130, 10, 1, Interpolation.DECELERATE_INTERPOLATOR);
         yAnimator.setControllingY(true);
@@ -101,10 +93,11 @@ public class MenuScreen implements Screen, MenuInterface {
         yAnimator2.setControllingY(true);
         popupMenu.addOutgoingAnimator(yAnimator2);
 
-        PopupButton cancelButton = new PopupButton(Assets.connectButtonUp, Assets.connectButtonDown, 65, 5, 60, 15, 1);
+        PopupButton cancelButton = new PopupButton(Assets.cancelButtonUp, Assets.cancelButtonDown, 5, 5, 57.5f, 15);
         cancelButton.setButtonListener(new PopupButtonListener() {
             @Override
             public void onClick() {
+                System.out.println("WHY?!?");
                 popupMenu.moveOut();
                 state = MAIN_MENU;
 
@@ -112,7 +105,7 @@ public class MenuScreen implements Screen, MenuInterface {
         });
         popupMenu.addPopupWidget(cancelButton);
 
-        PopupSlider volumeSlider = new PopupSlider(Assets.pathTexture, Assets.textFieldBackground, 5, 60, 120, 5, 3, 10);
+        final PopupSlider volumeSlider = new PopupSlider(Assets.pathTexture, Assets.textFieldBackground, 5, 60, 120, 5, 3, 10);
         volumeSlider.setSliderListener(new PopupSliderListener() {
             @Override
             public void onChange(float pos) {
@@ -120,6 +113,19 @@ public class MenuScreen implements Screen, MenuInterface {
             }
         });
         popupMenu.addPopupWidget(volumeSlider);
+
+        PopupButton okButton = new PopupButton(Assets.okButtonUp, Assets.okButtonDown, 67.5f, 5, 57.5f, 15);
+        okButton.setButtonListener(new PopupButtonListener() {
+            @Override
+            public void onClick() {
+                System.out.println("WHY?!?");
+                Settings.setVolume(volumeSlider.getPosition());
+                popupMenu.moveOut();
+                state = MAIN_MENU;
+
+            }
+        });
+        popupMenu.addPopupWidget(okButton);
     }
 
     @Override
@@ -135,8 +141,12 @@ public class MenuScreen implements Screen, MenuInterface {
     }
 
     private void updateInput(){
+        if (lastClick > 0){
+            return;
+        }
         if (Gdx.input.isTouched()) {
             cam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+            lastClick = 0.2f;
         }
 
         if (state == SETTINGS_MENU) {
@@ -149,6 +159,7 @@ public class MenuScreen implements Screen, MenuInterface {
     private void update(float delta){
         menuWorld.update(delta);
         popupMenu.update(delta);
+        lastClick -= delta;
     }
 
     private void draw(){
@@ -156,7 +167,7 @@ public class MenuScreen implements Screen, MenuInterface {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        batch.draw(background, 0, 0, 160, 160);
+        batch.draw(Assets.menuBackground, 0, 0, 160, 160);
         menuRenderer.draw();
         popupMenu.draw(batch);
         batch.end();

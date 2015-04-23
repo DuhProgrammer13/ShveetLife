@@ -109,4 +109,8 @@ public class Player extends Sprite {
     private void updateSpeed(){
         speed = gameInterface.getTile(new Vector3(getX() + getWidth()/2, getY() + getHeight()/2, 0)).getPlayerSpeed();
     }
+
+    public void pause(){
+        moving = false;
+    }
 }

@@ -193,4 +193,8 @@ public class PopupMenu {
             anim.start(false);
         }
     }
+
+    public float getY(){
+        return y;
+    }
 }

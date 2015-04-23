@@ -2,7 +2,6 @@ package com.desitum.shveetlife.data;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.desitum.shveetlife.objects.player.Player;
 
 import java.util.ArrayList;
 
@@ -39,5 +38,7 @@ public class Settings {
         getSound();
     }
 
-
+    public static void setVolume(float volume){
+        //TODO need to actually do something
+    }
 }

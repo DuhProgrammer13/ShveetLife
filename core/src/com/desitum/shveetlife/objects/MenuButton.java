@@ -3,7 +3,6 @@ package com.desitum.shveetlife.objects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.desitum.shveetlife.libraries.animation.Animator;
-import com.desitum.shveetlife.objects.menu.PopupButtonListener;
 
 import java.util.ArrayList;
 
@@ -17,11 +16,15 @@ public class MenuButton extends Sprite {
 
     private int command;
 
+    private boolean beenDown;
+
     private ArrayList<Animator> animators;
+    private MenuButtonOnClickListener onClickListener;
 
     public MenuButton(Texture texture, Texture clickText, int command, float x, float y, float width, float height){
         super(texture, 0, 0, texture.getWidth(), texture.getHeight());
 
+        this.onClickListener = null;
         this.baseText = texture;
         this.clickText = clickText;
 
@@ -37,10 +40,15 @@ public class MenuButton extends Sprite {
 
     public void onClickDown(){
         this.setTexture(clickText);
+        beenDown = true;
     }
 
     public void onClickUp(boolean clicked){
         this.setTexture(baseText);
+        if (onClickListener != null && clicked && beenDown){
+            onClickListener.onClick();
+        }
+        beenDown = false;
     }
 
     public void resetState(){
@@ -65,5 +73,9 @@ public class MenuButton extends Sprite {
 
     public int getCommand(){
         return command;
+    }
+
+    public void setOnClickListener(MenuButtonOnClickListener listener){
+        this.onClickListener = listener;
     }
 }
