@@ -64,6 +64,8 @@ public class Client {
             socket.shutdownOutput();
             socket.close();
             socket = null;
+            in = null;
+            out = null;
         } catch(Exception exception){
             JOptionPane.showMessageDialog(null, "It had troubles closing the client socket");
         }
