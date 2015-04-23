@@ -2,6 +2,7 @@ package com.desitum.shveetlife.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by dvan6234 on 4/3/2015.
  */
-public class GameScreen implements Screen {
+public class GameScreen implements Screen, InputProcessor {
 
     public static final float FRUSTUM_WIDTH = 150;
     public static final float FRUSTUM_HEIGHT = 100;
@@ -60,13 +61,15 @@ public class GameScreen implements Screen {
         commandKeys.add(Input.Keys.ESCAPE);
 
         touchPoint = new Vector3(0, 0, 0);
+
+        Gdx.input.setInputProcessor(this);
     }
 
-    public GameScreen(ShveetLife sl, String loadString){
+    public GameScreen(ShveetLife sl, String loadString) {
         batch = new SpriteBatch();
 
         cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-        cam.position.set(FRUSTUM_WIDTH/2, FRUSTUM_HEIGHT/2, 0);
+        cam.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
         viewport = new FitViewport(FRUSTUM_WIDTH, FRUSTUM_HEIGHT, cam);
 
         gameWorld = GameWorld.loadGameFromString(loadString, shveetLife);
@@ -83,6 +86,8 @@ public class GameScreen implements Screen {
         commandKeys.add(Input.Keys.ESCAPE);
 
         touchPoint = new Vector3(0, 0, 0);
+
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -110,12 +115,6 @@ public class GameScreen implements Screen {
                 gameWorld.updateKeys(key);
             }
         }
-
-        if (Gdx.input.isTouched()) {
-            cam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-        }
-
-        gameWorld.updateTouch(touchPoint, Gdx.input.isTouched());
     }
 
     public void update(float delta){
@@ -164,5 +163,55 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        cam.unproject(touchPoint.set(screenX, screenY, 0));
+
+        gameWorld.updateTouch(touchPoint, true);
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        cam.unproject(touchPoint.set(screenX, screenY, 0));
+
+        gameWorld.updateTouch(touchPoint, false);
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        cam.unproject(touchPoint.set(screenX, screenY, 0));
+
+        gameWorld.updateTouch(touchPoint, true);
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        gameWorld.updateScroll(amount);
+        return false;
     }
 }

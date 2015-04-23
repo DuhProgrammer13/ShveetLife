@@ -63,22 +63,26 @@ public class PopupButton extends PopupWidget {
         }
     }
 
+    @Override
     public void addIncomingAnimator(Animator anim){
         anim.setSprite(this, anim.updateX(), anim.updateY());
         this.comingInAnimators.add(anim);
     }
 
+    @Override
     public void addOutgoingAnimator(Animator anim){
         anim.setSprite(this, anim.updateX(), anim.updateY());
         this.goingOutAnimators.add(anim);
     }
 
+    @Override
     public void startIncomingAnimators(){
         for (Animator anim: comingInAnimators){
             anim.start(false);
         }
     }
 
+    @Override
     public void startOutgoingAnimators(){
         for (Animator anim: goingOutAnimators){
             anim.start(false);

@@ -143,6 +143,10 @@ public class GameWorld implements GameInterface{
             settingsMenu.updateTouchInput(touchPoint, isTouched);
         }
     }
+
+    public void updateScroll(int amount){
+
+    }
     @Override
     public void addParticles(Particle p) {
         particles.add(p);

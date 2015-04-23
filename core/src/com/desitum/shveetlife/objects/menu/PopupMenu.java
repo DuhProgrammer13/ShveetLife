@@ -75,6 +75,26 @@ public class PopupMenu {
                 } else {
                     slider.onClickUp(); // handles if not in area
                 }
+            } else if (widget.getClass().equals(PopupScrollArea.class)){
+                PopupScrollArea popupScrollArea = (PopupScrollArea) widget;
+                popupScrollArea.updateTouchInput(touchPos, clickDown);
+            }
+        }
+    }
+
+    public void udpateScrollInput(int amount, Vector3 mousePos, boolean posMatters){
+        for (PopupWidget widget: widgets){
+            if (!widget.getClass().equals(PopupScrollArea.class)){
+                continue;
+            }
+            if (posMatters){
+                if (CollisionDetection.pointInRectangle(widget.getBoundingRectangle(), mousePos)){
+                    PopupScrollArea scrollArea = (PopupScrollArea) widget;
+                    scrollArea.updateScrollInput(amount);
+                }
+            } else {
+                PopupScrollArea scrollArea = (PopupScrollArea) widget;
+                scrollArea.updateScrollInput(amount);
             }
         }
     }
