@@ -192,7 +192,8 @@ public class MenuScreen implements Screen, MenuInterface {
             if (user.length() > 0 && pass.length() > 0) {
                 accounts.checkExisting(user, pass, "localhost");
                 if(accounts.isValid){
-                    GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("localhost", accounts.wantedIpAddress));
+                    DataManager.startManager("localhost", accounts.wantedIpAddress);
+                    GameScreen myGameScreen = new GameScreen(shveetLife);
                     DataManager.receiveData();
                     shveetLife.setScreen(new GameScreen(shveetLife));
                 } else if(accounts.tryAgain){
