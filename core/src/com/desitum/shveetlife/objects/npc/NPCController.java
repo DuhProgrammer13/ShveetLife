@@ -9,12 +9,14 @@ import java.util.ArrayList;
  */
 public class NPCController {
     private GameInterface gameInterface;
+    private NPCActions npcActions;
 
     private ArrayList<NPC> npcs;
 
     public NPCController(GameInterface gi){
         this.gameInterface = gi;
 
+        npcActions = new NPCActions(this);
         npcs = new ArrayList<NPC>();
     }
 
