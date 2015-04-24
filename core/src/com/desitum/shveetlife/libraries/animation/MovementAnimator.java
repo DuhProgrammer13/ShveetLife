@@ -231,4 +231,8 @@ public class MovementAnimator implements Animator {
     public void setControllingSprite(Sprite controllingSprite) {
         this.controllingSprite = controllingSprite;
     }
+
+    public float getDistance(){
+        return travelDistance;
+    }
 }

@@ -129,6 +129,7 @@ public class GameScreen implements Screen, InputProcessor {
         gameRenderer.draw();
         batch.setProjectionMatrix(cam.combined);
         gameWorld.getSettingsMenu().draw(batch);
+        gameWorld.getItemsMenu().draw(batch);
         batch.end();
     }
 
@@ -212,6 +213,7 @@ public class GameScreen implements Screen, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         gameWorld.updateScroll(amount);
+        System.out.println(amount);
         return false;
     }
 }

@@ -13,6 +13,7 @@ import com.desitum.shveetlife.objects.Chunk;
 import com.desitum.shveetlife.objects.menu.PopupButton;
 import com.desitum.shveetlife.objects.menu.PopupButtonListener;
 import com.desitum.shveetlife.objects.menu.PopupMenu;
+import com.desitum.shveetlife.objects.menu.PopupScrollArea;
 import com.desitum.shveetlife.objects.menu.PopupSlider;
 import com.desitum.shveetlife.objects.npc.NPC;
 import com.desitum.shveetlife.objects.npc.NPCController;
@@ -22,7 +23,6 @@ import com.desitum.shveetlife.objects.player.Player2;
 import com.desitum.shveetlife.objects.tiles.TileData;
 import com.desitum.shveetlife.objects.tiles.TileObject;
 import com.desitum.shveetlife.screens.GameScreen;
-import com.desitum.shveetlife.screens.MenuScreen;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -49,6 +49,8 @@ public class GameWorld implements GameInterface{
 
     private PopupMenu settingsMenu;
     private PopupSlider volumeSlider;
+
+    private PopupMenu itemsMenu;
 
     public static final int RUNNING = 0;
     public static final int PAUSED = 1;
@@ -83,10 +85,12 @@ public class GameWorld implements GameInterface{
         DataManager.setGameWorld(this);
 
         setupPopupMenu();
+        setupItemsMenu();
     }
 
     public void update(float delta){
         settingsMenu.update(delta);
+        itemsMenu.update(delta);
 
         player.update(delta);
         player2.update(delta, "");
@@ -145,7 +149,7 @@ public class GameWorld implements GameInterface{
     }
 
     public void updateScroll(int amount){
-
+        itemsMenu.udpateScrollInput(amount, null, false);
     }
     @Override
     public void addParticles(Particle p) {
@@ -488,5 +492,21 @@ public class GameWorld implements GameInterface{
 
     public PopupMenu getSettingsMenu(){
         return settingsMenu;
+    }
+
+    public void setupItemsMenu(){
+        itemsMenu = new PopupMenu(Assets.menuBackground, 10, 0, 130, 20);
+
+        PopupScrollArea itemsScrollArea = new PopupScrollArea(Assets.textSelection, 5, 5, 90, 10, 90, 10, PopupScrollArea.HORIZONTAL, 1, 5, 10);
+        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
+        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
+        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
+        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
+
+        itemsMenu.addPopupWidget(itemsScrollArea);
+    }
+
+    public PopupMenu getItemsMenu(){
+        return itemsMenu;
     }
 }

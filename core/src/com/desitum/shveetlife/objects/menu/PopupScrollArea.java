@@ -3,7 +3,6 @@ package com.desitum.shveetlife.objects.menu;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.desitum.shveetlife.libraries.CollisionDetection;
 import com.desitum.shveetlife.libraries.animation.Animator;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
@@ -28,9 +27,12 @@ public class PopupScrollArea extends PopupWidget {
     private float scrollAmount;
     private int scrollDirection;
     private int columns;
+    private float widgetSize;
     private float spacing;
+    private float activeWidth;
+    private float activeHeight;
 
-    public PopupScrollArea (Texture background, float x, float y, float width, float height, float activeWidth, float activeHeight, int scrollDirection, int columns, float spacing){
+    public PopupScrollArea (Texture background, float x, float y, float width, float height, float activeWidth, float activeHeight, int scrollDirection, int columns, float spacing, float widgetSize){
         super(background, width, height, x, y);
 
         comingInAnimators = new ArrayList<Animator>();
@@ -38,15 +40,21 @@ public class PopupScrollArea extends PopupWidget {
         comingInAnimatorsToAdd = new ArrayList<Animator>();
         goingOutAnimatorsToAdd = new ArrayList<Animator>();
 
+        widgets = new ArrayList<PopupWidget>();
+
         scrollAmount = 0;
+        this.scrollDirection = scrollDirection;
+        this.columns = columns;
+        this.widgetSize = widgetSize;
+        this.spacing = spacing;
+        this.activeWidth = activeWidth;
+        this.activeHeight = activeHeight;
     }
 
     public void updateScrollInput(float amount){
         scrollAmount += amount;
 
-        for (PopupWidget widget: widgets){
-
-        }
+        updateWidgets();
     }
 
     public void updateTouchInput(Vector3 touchPos, boolean clickDown){
@@ -113,18 +121,49 @@ public class PopupScrollArea extends PopupWidget {
         }
     }
 
+    public void updateWidgets(){
+        for (int widgetNum = 0;widgetNum < widgets.size(); widgetNum++){
+            PopupWidget widget = widgets.get(widgetNum);
+
+            if (scrollDirection == HORIZONTAL){
+                widget.setX(getX() + getWidth()/2 + (widgetNum / columns) * (widgetSize + spacing) + scrollAmount);
+                float widgetDistanceFromCenter = (getX() + getWidth()/2 - widget.getX() - widget.getWidth()/2) / activeWidth/2;
+                widgetDistanceFromCenter *= 4;
+                System.out.println(widgetDistanceFromCenter);
+                if (widgetDistanceFromCenter < 0) widgetDistanceFromCenter *= -1;
+                if (widgetDistanceFromCenter > 1) widgetDistanceFromCenter = 1;
+                widget.setAlpha(1 - widgetDistanceFromCenter);
+                widget.setScale(1 - widgetDistanceFromCenter, 1);
+            } else {
+                widget.setY(getY() + getWidth()/2 + (widgetNum / columns) * (widgetSize + spacing) + scrollAmount);
+                float widgetDistanceFromCenter = (getY() + getHeight()/2 - widget.getY()) / activeWidth/2;
+                if (widgetDistanceFromCenter < 0) widgetDistanceFromCenter *= -1;
+                if (widgetDistanceFromCenter > 1) widgetDistanceFromCenter = 1;
+                widget.setAlpha(1 - widgetDistanceFromCenter);
+                widget.setScale(1 - widgetDistanceFromCenter, 1);
+            }
+        }
+    }
+
     public void addWidget(PopupWidget toAdd){
+        toAdd.setSize(widgetSize, widgetSize);
+
+        if (scrollDirection == HORIZONTAL) {
+            toAdd.setX(getX() + getWidth()/2 + (widgets.size() / columns) * (widgetSize + spacing));
+            toAdd.setY(getY() + toAdd.getY() + (widgets.size() % columns) * (widgetSize + spacing));
+        }
+
         if (scrollDirection == HORIZONTAL){
             for (Animator anim: comingInAnimatorsToAdd){
                 Animator dupAnim = anim.duplicate();
                 if (dupAnim.getClass().equals(MovementAnimator.class)){
                     MovementAnimator dupMov = (MovementAnimator) dupAnim;
                     if (dupMov.isControllingX()){
-                        dupMov.setStartPos(toAdd.getX() + dupMov.getStartPos());
-                        dupMov.setEndPos(toAdd.getX() + dupMov.getEndPos());
+                        dupMov.setStartPos(toAdd.getX() - dupMov.getDistance());
+                        dupMov.setEndPos(toAdd.getX());
                     } if (dupMov.isControllingY()){
-                        dupMov.setStartPos(toAdd.getY() + dupMov.getStartPos());
-                        dupMov.setEndPos(toAdd.getY() + dupMov.getEndPos());
+                        dupMov.setStartPos(toAdd.getY() - dupMov.getStartPos());
+                        dupMov.setEndPos(toAdd.getY());
                     }
                     toAdd.addIncomingAnimator(dupMov);
                 }
@@ -134,19 +173,18 @@ public class PopupScrollArea extends PopupWidget {
                 if (dupAnim.getClass().equals(MovementAnimator.class)){
                     MovementAnimator dupMov = (MovementAnimator) dupAnim;
                     if (dupMov.isControllingX()){
-                        dupMov.setStartPos(toAdd.getX() + dupMov.getStartPos());
-                        dupMov.setEndPos(toAdd.getX() + dupMov.getEndPos());
+                        dupMov.setStartPos(toAdd.getX() - dupMov.getDistance());
+                        dupMov.setEndPos(toAdd.getX());
                     } if (dupMov.isControllingY()){
-                        dupMov.setStartPos(toAdd.getY() + dupMov.getStartPos());
-                        dupMov.setEndPos(toAdd.getY() + dupMov.getEndPos());
+                        dupMov.setStartPos(toAdd.getY() - dupMov.getDistance());
+                        dupMov.setEndPos(toAdd.getY());
                     }
                     toAdd.addOutgoingAnimator(dupMov);
                 }
             }
 
-            toAdd.setX(getX() + toAdd.getX());
-            toAdd.setY(getY() + toAdd.getY());
             widgets.add(toAdd);
+            updateWidgets();
         }
     }
 }
