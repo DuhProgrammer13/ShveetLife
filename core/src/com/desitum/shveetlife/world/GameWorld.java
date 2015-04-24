@@ -34,6 +34,7 @@ import javax.swing.JOptionPane;
  */
 public class GameWorld implements GameInterface{
 
+    //region data members
     private Player player;
     private Player2 player2;
     private ArrayList<Chunk> loadedChunks;
@@ -56,6 +57,7 @@ public class GameWorld implements GameInterface{
     public static final int PAUSED = 1;
 
     private int state = RUNNING;
+    //endregion
 
     public GameWorld(ShveetLife sl){
         this.shveetLife = sl;
@@ -88,6 +90,7 @@ public class GameWorld implements GameInterface{
         setupItemsMenu();
     }
 
+    //region updateMethods
     public void update(float delta){
         settingsMenu.update(delta);
         itemsMenu.update(delta);
@@ -138,6 +141,9 @@ public class GameWorld implements GameInterface{
                 case Input.Keys.SPACE:
                     affectedObject.useKey(key, player);
                     break;
+                case Input.Keys.A:
+                    player.useKey(key);
+                    break;
             }
         }
     }
@@ -151,72 +157,29 @@ public class GameWorld implements GameInterface{
     public void updateScroll(int amount){
         itemsMenu.udpateScrollInput(amount, null, false);
     }
-    @Override
-    public void addParticles(Particle p) {
-        particles.add(p);
-    }
 
-    public Player getPlayer(){
-        return player;
-    }
-
-    public ArrayList<Chunk> getChunks(){
-        return loadedChunks;
-    }
-
-    public ArrayList<Particle> getParticles(){
-        return particles;
-    }
-
-    public void changeTile(TileObject from, TileObject to){
-        Chunk chunk = getChunkAt(player.getPositionInFront());
-        int[] position = chunk.changeTile(from, to);
-        data.add(ProcessData.EDIT + " " + ProcessData.TILE + " " + position[0] + " " + position[1] + " " + TileData.getTile(to.getClass()) + " " + chunk.getX() + " " + chunk.getY());
-    }
-
-    public void exitGame() {
-        if(shveetLife != null) {
-            shveetLife.exitScreen();
-        } else{
-            JOptionPane.showMessageDialog(null, "Hahaha, it was null");
-        }
-    }
-
-    @Override
-    public TileObject getTile(Vector3 pos) {
-        return getChunkAt(pos).getTileAt(pos);
-    }
-
-    @Override
-    public Chunk getChunkAt(Vector3 pos){
-        Chunk returnChunk = null;
-        for (Chunk chunk: loadedChunks){
-            if (CollisionDetection.pointInRectangle(chunk.getBoundingRect(), pos)){
-                returnChunk = chunk;
-                break;
+    public void updateData(String info){
+        if (info.contains(";")) {
+            for (String infoPiece : info.split(";")) {
+                String[] infoToUse = infoPiece.split(" ");
+                if (Integer.parseInt(infoToUse[1]) == ProcessData.TILE) {
+                    workOnTile(infoToUse);
+                } else if (Integer.parseInt(infoToUse[1]) == ProcessData.PLAYER) {
+                    editPlayer(infoToUse);
+                } else if (Integer.parseInt(infoToUse[1]) == ProcessData.NPC){
+                    npcController.updateFromString(infoToUse);
+                }
+            }
+        } else {
+            String[] infoToUse = info.split(" ");
+            if (Integer.parseInt(infoToUse[1]) == ProcessData.TILE) {
+                workOnTile(infoToUse);
+            } else if (Integer.parseInt(infoToUse[1]) == ProcessData.PLAYER) {
+                editPlayer(infoToUse);
+            } else if (Integer.parseInt(infoToUse[1]) == ProcessData.NPC){
+                npcController.updateFromString(infoToUse);
             }
         }
-        return returnChunk;
-    }
-
-    public String getDataString(){
-        String returnString = "";
-
-        data.add(player.getUpdateString());
-
-        String separator = "";
-        for (String item: data){
-            returnString += separator;
-            returnString += item;
-            separator = ";";
-        }
-
-        if (DataManager.mainServer != null){
-            returnString += npcController.getUpdateString();
-        }
-
-        data = new ArrayList<String>();
-        return returnString;
     }
 
     private void updateLoadedChunks(){
@@ -281,11 +244,54 @@ public class GameWorld implements GameInterface{
             }
         }
     }
+    //endregion
 
-    public ArrayList<String> getData(){
-        return data;
+    //region GameInterface methods
+    @Override
+    public TileObject getTile(Vector3 pos) {
+        return getChunkAt(pos).getTileAt(pos);
     }
 
+    @Override
+    public Chunk getChunkAt(Vector3 pos){
+        Chunk returnChunk = null;
+        for (Chunk chunk: loadedChunks){
+            if (CollisionDetection.pointInRectangle(chunk.getBoundingRect(), pos)){
+                returnChunk = chunk;
+                break;
+            }
+        }
+        return returnChunk;
+    }
+
+    @Override
+    public void addParticles(Particle p) {
+        particles.add(p);
+    }
+
+    @Override
+    public void changeTile(TileObject from, TileObject to){
+        Chunk chunk = getChunkAt(player.getPositionInFront());
+        int[] position = chunk.changeTile(from, to);
+        data.add(ProcessData.EDIT + " " + ProcessData.TILE + " " + position[0] + " " + position[1] + " " + TileData.getTile(to.getClass()) + " " + chunk.getX() + " " + chunk.getY());
+    }
+
+    @Override
+    public void placeTileInFrontOfPlayer(TileObject to){
+        Chunk chunk = getChunkAt(player.getPositionInFront());
+        TileObject from = chunk.getTileAt(player.getPositionInFront());
+        int[] position = chunk.changeTile(from, to);
+        data.add(ProcessData.EDIT + " " + ProcessData.TILE + " " + position[0] + " " + position[1] + " " + TileData.getTile(to.getClass()) + " " + chunk.getX() + " " + chunk.getY());
+        System.out.println(data.get(data.size()-1));
+    }
+
+    @Override
+    public void givePlayerItem(int type, int thing, int amount){
+        player.giveItem(type, thing, amount);
+    }
+    //endregion
+
+    //region loadGame
     private void createLoadString(){
         String chunkAppend = "";
         String chunkString = "";
@@ -303,20 +309,6 @@ public class GameWorld implements GameInterface{
         loadData.add(player.toString());
 
         loadData.add(npcController.toString());
-    }
-
-    public String getGameLoad(){
-        String returnString = "";
-
-        createLoadString();
-
-        String append = "";
-        for (String s: loadData){
-            returnString += append + s;
-            append = ":";
-        }
-
-        return returnString;
     }
 
     public static GameWorld loadGameFromString(String loadString, ShveetLife sl){
@@ -357,62 +349,20 @@ public class GameWorld implements GameInterface{
         return newWorld;
     }
 
-    public void updateData(String info){
-        if (info.contains(";")) {
-            for (String infoPiece : info.split(";")) {
-                String[] infoToUse = infoPiece.split(" ");
-                if (Integer.parseInt(infoToUse[1]) == ProcessData.TILE) {
-                    workOnTile(infoToUse);
-                } else if (Integer.parseInt(infoToUse[1]) == ProcessData.PLAYER) {
-                    editPlayer(infoToUse);
-                } else if (Integer.parseInt(infoToUse[1]) == ProcessData.NPC){
-                    npcController.updateFromString(infoToUse);
-                }
-            }
-        } else {
-            String[] infoToUse = info.split(" ");
-            if (Integer.parseInt(infoToUse[1]) == ProcessData.TILE) {
-                workOnTile(infoToUse);
-            } else if (Integer.parseInt(infoToUse[1]) == ProcessData.PLAYER) {
-                editPlayer(infoToUse);
-            } else if (Integer.parseInt(infoToUse[1]) == ProcessData.NPC){
-                npcController.updateFromString(infoToUse);
-            }
-        }
-    }
+    public void setupItemsMenu(){
+        itemsMenu = new PopupMenu(Assets.menuBackground, 10, 0, 130, 20);
 
-    private void workOnTile(String[] info){
-        for (Chunk chunk: allChunks){
-            if (chunk.getX() == Float.parseFloat(info[TileData.CHUNK_X]) &&
-                    chunk.getY() == Float.parseFloat(info[TileData.CHUNK_Y])){
-                int[] tilePos = {Integer.parseInt(info[TileData.POS_X]), Integer.parseInt(info[TileData.POS_Y])};
-                chunk.changeTileAtPosition(tilePos, TileData.buildTileFromString(info, chunk, this));
-            }
-        }
-    }
+        PopupScrollArea itemsScrollArea = new PopupScrollArea(Assets.textSelection, 5, 5, 90, 10, 90, 10, PopupScrollArea.HORIZONTAL, 1, 5, 10);
+        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
+        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
+        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
+        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
 
-    public Player2 getPlayer2(){
-        return player2;
+        itemsMenu.addPopupWidget(itemsScrollArea);
     }
+    //endregion
 
-    private void editPlayer(String[] info){
-        player2.setX(Float.parseFloat(info[Player.X]));
-        player2.setY(Float.parseFloat(info[Player.Y]));
-    }
-
-    public Chunk getChunkAtPos(float x, float y){
-        for (Chunk chunk: allChunks){
-            if (CollisionDetection.pointInRectangle(chunk.getBoundingRect(), new Vector3(x, y, 0))){
-                return chunk;
-            }
-        }
-        return null;
-    }
-
-    public NPCController getNpcController(){
-        return npcController;
-    }
-
+    //region setters
     public void setAllChunks(ArrayList<Chunk> chunksToSet){
         this.allChunks = chunksToSet;
         updateLoadedChunks();
@@ -483,30 +433,111 @@ public class GameWorld implements GameInterface{
             }
         });
     }
+    //endregion
 
-    public void pauseGame(){
-        settingsMenu.moveIn();
-        player.pause();
-        state = PAUSED;
+    //region getters
+    public Player2 getPlayer2(){
+        return player2;
+    }
+
+    public PopupMenu getItemsMenu(){
+        return itemsMenu;
+    }
+
+    public Player getPlayer(){
+        return player;
+    }
+
+    public ArrayList<Chunk> getChunks(){
+        return loadedChunks;
+    }
+
+    public ArrayList<Particle> getParticles(){
+        return particles;
+    }
+
+    public String getDataString(){
+        String returnString = "";
+
+        data.add(player.getUpdateString());
+
+        String separator = "";
+        for (String item: data){
+            returnString += separator;
+            returnString += item;
+            separator = ";";
+        }
+
+        if (DataManager.mainServer != null){
+            returnString += npcController.getUpdateString();
+        }
+
+        data = new ArrayList<String>();
+        return returnString;
+    }
+
+    public ArrayList<String> getData(){
+        return data;
     }
 
     public PopupMenu getSettingsMenu(){
         return settingsMenu;
     }
 
-    public void setupItemsMenu(){
-        itemsMenu = new PopupMenu(Assets.menuBackground, 10, 0, 130, 20);
-
-        PopupScrollArea itemsScrollArea = new PopupScrollArea(Assets.textSelection, 5, 5, 90, 10, 90, 10, PopupScrollArea.HORIZONTAL, 1, 5, 10);
-        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
-        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
-        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
-        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
-
-        itemsMenu.addPopupWidget(itemsScrollArea);
+    public Chunk getChunkAtPos(float x, float y){
+        for (Chunk chunk: allChunks){
+            if (CollisionDetection.pointInRectangle(chunk.getBoundingRect(), new Vector3(x, y, 0))){
+                return chunk;
+            }
+        }
+        return null;
     }
 
-    public PopupMenu getItemsMenu(){
-        return itemsMenu;
+    public String getGameLoad(){
+        String returnString = "";
+
+        createLoadString();
+
+        String append = "";
+        for (String s: loadData){
+            returnString += append + s;
+            append = ":";
+        }
+
+        return returnString;
+    }
+
+    public NPCController getNpcController(){
+        return npcController;
+    }
+    //endregion
+
+    public void exitGame() {
+        if(shveetLife != null) {
+            shveetLife.exitScreen();
+        } else{
+            JOptionPane.showMessageDialog(null, "Hahaha, it was null");
+        }
+    }
+
+    private void workOnTile(String[] info){
+        for (Chunk chunk: allChunks){
+            if (chunk.getX() == Float.parseFloat(info[TileData.CHUNK_X]) &&
+                    chunk.getY() == Float.parseFloat(info[TileData.CHUNK_Y])){
+                int[] tilePos = {Integer.parseInt(info[TileData.POS_X]), Integer.parseInt(info[TileData.POS_Y])};
+                chunk.changeTileAtPosition(tilePos, TileData.buildTileFromString(info, chunk, this));
+            }
+        }
+    }
+
+    private void editPlayer(String[] info){
+        player2.setX(Float.parseFloat(info[Player.X]));
+        player2.setY(Float.parseFloat(info[Player.Y]));
+    }
+
+    public void pauseGame(){
+        settingsMenu.moveIn();
+        player.pause();
+        state = PAUSED;
     }
 }

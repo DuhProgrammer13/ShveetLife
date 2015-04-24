@@ -15,4 +15,6 @@ public interface GameInterface {
     public void changeTile(TileObject from, TileObject to);
     public TileObject getTile(Vector3 pos);
     public Chunk getChunkAt(Vector3 pos);
+    public void placeTileInFrontOfPlayer(TileObject to);
+    public void givePlayerItem(int type, int thing, int amounts);
 }

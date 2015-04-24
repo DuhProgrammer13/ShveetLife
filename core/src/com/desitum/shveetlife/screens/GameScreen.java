@@ -84,6 +84,7 @@ public class GameScreen implements Screen, InputProcessor {
         commandKeys = new ArrayList<Integer>();
         commandKeys.add(Input.Keys.SPACE);
         commandKeys.add(Input.Keys.ESCAPE);
+        commandKeys.add(Input.Keys.A);
 
         touchPoint = new Vector3(0, 0, 0);
 
@@ -173,11 +174,14 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
+        System.out.println(keycode);
+        gameWorld.updateKeys(keycode);
         return false;
     }
 
     @Override
     public boolean keyTyped(char character) {
+        System.out.println(character);
         return false;
     }
 

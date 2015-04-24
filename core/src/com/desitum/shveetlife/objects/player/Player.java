@@ -16,6 +16,7 @@ public class Player extends Sprite {
 
     private GameInterface gameInterface;
     private PlayerAnimator playerAnimator;
+    private PlayerInventory inventory;
 
     private int direction;
     private boolean moving;
@@ -35,6 +36,8 @@ public class Player extends Sprite {
         this.speed = 30;
 
         this.gameInterface = gi;
+
+        this.inventory = new PlayerInventory(gi, this);
     }
 
     public void update(float delta){
@@ -54,6 +57,8 @@ public class Player extends Sprite {
 
     public void useKey(int key){
         switch (key){
+            case Input.Keys.A:
+                inventory.placeItem();
         }
     }
 
@@ -112,5 +117,9 @@ public class Player extends Sprite {
 
     public void pause(){
         moving = false;
+    }
+
+    public void giveItem(int type, int thing, int amount){
+        inventory.addItem(type, thing, amount);
     }
 }
