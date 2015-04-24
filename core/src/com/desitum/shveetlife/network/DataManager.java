@@ -71,10 +71,6 @@ public class DataManager {
         }
     }
 
-    private static void setUpWorld(String data){
-
-    }
-
     String setup = "CHUNK:PLAYER:YOURSELF:GAMEOBJECTS";
     String setup2 = "x y|0 0 0; 0 0 1; 0 0 2/0 0 0;0 0 1;0 0 2;0 0 3:NAME x y texture/inventory:NAME x y texture/inventory:GAMEOBJECT# x y/inventory";
 }

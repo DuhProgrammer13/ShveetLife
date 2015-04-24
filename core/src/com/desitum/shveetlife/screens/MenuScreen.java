@@ -176,67 +176,69 @@ public class MenuScreen implements Screen, MenuInterface {
 
     @Override
     public void playGame() {
-        JTextField userField = new JTextField(20);
-        JTextField passField = new JTextField(20);
-
-        JPanel myPanel = new JPanel(new GridLayout(10, 10));
-        myPanel.add(new JLabel("Username:"));
-        myPanel.add(userField);
-        myPanel.add(new JLabel("Password:"));
-        myPanel.add(passField);
-
-        int result = JOptionPane.showConfirmDialog(null, myPanel, "Connect To Server", JOptionPane.OK_CANCEL_OPTION);
-        if (result == JOptionPane.OK_OPTION) {
-            String user = userField.getText();
-            String pass = passField.getText();
-            if (user.length() > 0 && pass.length() > 0) {
-                accounts.checkExisting(user, pass, "localhost");
-                if(accounts.isValid){
-                    DataManager.startManager("localhost", accounts.wantedIpAddress);
+//        JTextField userField = new JTextField(20);
+//        JTextField passField = new JTextField(20);
+//
+//        JPanel myPanel = new JPanel(new GridLayout(10, 10));
+//        myPanel.add(new JLabel("Username:"));
+//        myPanel.add(userField);
+//        myPanel.add(new JLabel("Password:"));
+//        myPanel.add(passField);
+//
+//        int result = JOptionPane.showConfirmDialog(null, myPanel, "Connect To Server", JOptionPane.OK_CANCEL_OPTION);
+//        if (result == JOptionPane.OK_OPTION) {
+//            String user = userField.getText();
+//            String pass = passField.getText();
+//            if (user.length() > 0 && pass.length() > 0) {
+//                accounts.checkExisting(user, pass, "localhost");
+//                if(accounts.isValid){
+//                    DataManager.startManager("localhost", accounts.wantedIpAddress);
+                    DataManager.startManager("localhost", "localhost");
                     GameScreen myGameScreen = new GameScreen(shveetLife);
                     DataManager.receiveData();
                     shveetLife.setScreen(new GameScreen(shveetLife));
-                } else if(accounts.tryAgain){
-                    connect();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "You must fill out all 3 textfields!");
-            }
-        }
+//                } else if(accounts.tryAgain){
+//                    connect();
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(null, "You must fill out all 3 textfields!");
+//            }
+//        }
     }
 
     @Override
     public void connect() {
-            JTextField userField = new JTextField(20);
-            JTextField passField = new JTextField(20);
-            JTextField ipField = new JTextField(16);
-
-            JPanel myPanel = new JPanel(new GridLayout(10, 10));
-            myPanel.add(new JLabel("Username:"));
-            myPanel.add(userField);
-            myPanel.add(new JLabel("Password:"));
-            myPanel.add(passField);
-            myPanel.add(new JLabel("IP Address:"));
-            myPanel.add(ipField);
-
-            int result = JOptionPane.showConfirmDialog(null, myPanel, "Connect To Server", JOptionPane.OK_CANCEL_OPTION);
-            if (result == JOptionPane.OK_OPTION) {
-                String user = userField.getText();
-                String pass = passField.getText();
-                String ip = ipField.getText();
-                if (user.length() > 0 && pass.length() > 0 && ip.length() > 0) {
-                    accounts.checkExisting(user, pass, ip);
-                    if(accounts.isValid){
-                        GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager(accounts.wantedUsername, accounts.wantedIpAddress));
+//            JTextField userField = new JTextField(20);
+//            JTextField passField = new JTextField(20);
+//            JTextField ipField = new JTextField(16);
+//
+//            JPanel myPanel = new JPanel(new GridLayout(10, 10));
+//            myPanel.add(new JLabel("Username:"));
+//            myPanel.add(userField);
+//            myPanel.add(new JLabel("Password:"));
+//            myPanel.add(passField);
+//            myPanel.add(new JLabel("IP Address:"));
+//            myPanel.add(ipField);
+//
+//            int result = JOptionPane.showConfirmDialog(null, myPanel, "Connect To Server", JOptionPane.OK_CANCEL_OPTION);
+//            if (result == JOptionPane.OK_OPTION) {
+//                String user = userField.getText();
+//                String pass = passField.getText();
+//                String ip = ipField.getText();
+//                if (user.length() > 0 && pass.length() > 0 && ip.length() > 0) {
+//                    accounts.checkExisting(user, pass, ip);
+//                    if(accounts.isValid){
+//                        GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager(accounts.wantedUsername, accounts.wantedIpAddress));
+                        GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("10.228.7.220", "localhost"));
                         DataManager.receiveData();
                         shveetLife.setScreen(myGameScreen);
-                    } else if(accounts.tryAgain){
-                        connect();
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "You must fill out all 3 textfields!");
-                }
-            }
+//                    } else if(accounts.tryAgain){
+//                        connect();
+//                    }
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "You must fill out all 3 textfields!");
+//                }
+//            }
             //GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("10.228.7.220", "localhost"));
             //GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("10.228.7.220", "10.228.7.220"));
             //GameScreen myGameScreen = new GameScreen(shveetLife, DataManager.startManager("192.168.1.4", "192.168.1.4"));

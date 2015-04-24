@@ -39,7 +39,6 @@ public class ShveetLife extends Game {
         this.setScreen(splashScreen);
     }
     //TODO Zack and Kody Checklist
-    //Pause Menu
     //Game Items
     //Game Objects (Buildings)
     //Inventory
