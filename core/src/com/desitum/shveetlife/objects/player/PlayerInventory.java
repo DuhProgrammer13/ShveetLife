@@ -6,6 +6,7 @@ import com.desitum.shveetlife.objects.tiles.TileObject;
 import com.desitum.shveetlife.world.GameInterface;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by dvan6234 on 4/23/2015.
@@ -57,6 +58,18 @@ public class PlayerInventory {
                 TileObject tileFrom = gameInterface.getTile(player.getPositionInFront());
                 gameInterface.placeTileInFrontOfPlayer(TileData.createTile(itemSelected[THING], tileFrom.getX(), tileFrom.getY(), gameInterface));
                 itemSelected[AMOUNT] -= 1;
+                updateItems();
+            }
+        }
+    }
+
+    private void updateItems(){
+        Iterator<int[]> iter = inventory.iterator();
+        while (iter.hasNext()){
+            int[] item = iter.next();
+            if (item[AMOUNT] == 0){
+                iter.remove();
+                itemSelected = null;
             }
         }
     }
