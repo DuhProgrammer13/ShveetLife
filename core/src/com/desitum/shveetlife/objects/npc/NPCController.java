@@ -1,5 +1,6 @@
 package com.desitum.shveetlife.objects.npc;
 
+import com.badlogic.gdx.math.Vector3;
 import com.desitum.shveetlife.world.GameInterface;
 
 import java.util.ArrayList;
@@ -16,8 +17,8 @@ public class NPCController {
     public NPCController(GameInterface gi){
         this.gameInterface = gi;
 
-        npcActions = new NPCActions(this);
         npcs = new ArrayList<NPC>();
+        npcActions = new NPCActions(this);
     }
 
     public void addNPC(NPC npc){
@@ -26,11 +27,14 @@ public class NPCController {
 
     public void update(float delta){
         for(NPC npc: npcs){
-            if(!npc.isMoving()) {
-                npc.wantsToMove();
+            if(!npc.doingAction()) {
+                if (!npc.isMoving()) {
+                    npc.wantsToMove();
+                }
             }
             npc.update(delta);
         }
+        npcActions.update(delta);
     }
 
     public void updateFromString(String[] npcInfo){
@@ -69,4 +73,18 @@ public class NPCController {
         }
         return returnString;
     }
+
+    public Vector3 playerPosition(){
+        return gameInterface.getPlayerPosition();
+    }
+
+    public boolean isPlayerMoving(){
+        return gameInterface.isPlayerMoving();
+    }
+
+    public Vector3 npcPosition(NPC npc){
+        Vector3 location = npc.getNPCPosition();
+        return location;
+    }
+
 }

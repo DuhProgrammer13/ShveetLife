@@ -215,7 +215,7 @@ public class GameScreen implements Screen, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         gameWorld.updateScroll(amount);
-        System.out.println(amount);
+
         return false;
     }
 }
