@@ -187,7 +187,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        cam.unproject(touchPoint.set(screenX, screenY, 0));
+        viewport.unproject(touchPoint.set(screenX, screenY, 0));
 
         gameWorld.updateTouch(touchPoint, true);
         return false;
@@ -195,7 +195,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        cam.unproject(touchPoint.set(screenX, screenY, 0));
+        viewport.unproject(touchPoint.set(screenX, screenY, 0));
 
         gameWorld.updateTouch(touchPoint, false);
         return false;
@@ -203,7 +203,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        cam.unproject(touchPoint.set(screenX, screenY, 0));
+        viewport.unproject(touchPoint.set(screenX, screenY, 0));
 
         gameWorld.updateTouch(touchPoint, true);
         return false;

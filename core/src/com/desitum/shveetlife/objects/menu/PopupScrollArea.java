@@ -150,7 +150,7 @@ public class PopupScrollArea extends PopupWidget {
 
         if (scrollDirection == HORIZONTAL) {
             toAdd.setX(getX() + getWidth()/2 + (widgets.size() / columns) * (widgetSize + spacing));
-            toAdd.setY(getY() + toAdd.getY() + (widgets.size() % columns) * (widgetSize + spacing));
+            toAdd.setY(getY() + (widgets.size() % columns) * (widgetSize + spacing));
         }
 
         if (scrollDirection == HORIZONTAL){
@@ -186,5 +186,13 @@ public class PopupScrollArea extends PopupWidget {
             widgets.add(toAdd);
             updateWidgets();
         }
+    }
+
+    public void setWidgets(ArrayList<PopupWidget> widgetsToSet){
+        this.widgets = new ArrayList<PopupWidget>();
+        for (PopupWidget widget: widgetsToSet){
+            addWidget(widget);
+        }
+        updateWidgets();
     }
 }

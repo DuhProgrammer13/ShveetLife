@@ -2,6 +2,7 @@ package com.desitum.shveetlife.objects.tiles;
 
 import com.badlogic.gdx.Input;
 import com.desitum.shveetlife.data.Assets;
+import com.desitum.shveetlife.network.ProcessData;
 import com.desitum.shveetlife.objects.particles.Particle;
 import com.desitum.shveetlife.objects.particles.ParticleSettings;
 import com.desitum.shveetlife.objects.player.Player;
@@ -58,6 +59,7 @@ public class DirtTile extends TileObject {
         gi.addParticles(new Particle(Assets.dirtTexture, 0.4f, 5, 5, this.getX(), this.getY(), particleSettings));
         if (health <= 0){
             gi.changeTile(this, new WaterTile(gi, this.getX(), this.getY()));
+            gi.givePlayerItem(ProcessData.TILE, TileData.DIRT, 1);
         }
     }
 }

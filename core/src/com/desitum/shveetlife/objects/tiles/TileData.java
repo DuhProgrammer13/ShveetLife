@@ -1,5 +1,7 @@
 package com.desitum.shveetlife.objects.tiles;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.desitum.shveetlife.data.Assets;
 import com.desitum.shveetlife.objects.Chunk;
 import com.desitum.shveetlife.world.GameInterface;
 
@@ -77,5 +79,27 @@ public class TileData {
 
     public int getConnectingTileNum(Class c){
         return 0;
+    }
+
+    public static Texture getTileTexture(int tileNum){
+        Texture returnTexture = null;
+        switch (tileNum){
+            case GRASS:
+                returnTexture = Assets.grassTexture;
+                break;
+            case DIRT:
+                returnTexture = Assets.dirtTexture;
+                break;
+            case PATH:
+                returnTexture = Assets.pathTexture;
+                break;
+            case FIRE:
+                returnTexture = Assets.fireTexture;
+                break;
+            case WATER:
+                returnTexture = Assets.waterTexture;
+                break;
+        }
+        return returnTexture;
     }
 }

@@ -52,6 +52,7 @@ public class GameWorld implements GameInterface{
     private PopupSlider volumeSlider;
 
     private PopupMenu itemsMenu;
+    private PopupScrollArea itemsScrollArea;
 
     public static final int RUNNING = 0;
     public static final int PAUSED = 1;
@@ -93,6 +94,7 @@ public class GameWorld implements GameInterface{
     //region updateMethods
     public void update(float delta){
         settingsMenu.update(delta);
+        if (player.inventoryUINeedsUpdate()) itemsScrollArea.setWidgets(player.getInventory().getPopupWidgets());
         itemsMenu.update(delta);
 
         player.update(delta);
@@ -151,6 +153,8 @@ public class GameWorld implements GameInterface{
     public void updateTouch(Vector3 touchPoint, boolean isTouched){
         if (state == PAUSED){
             settingsMenu.updateTouchInput(touchPoint, isTouched);
+        } else if (state == RUNNING){
+            itemsMenu.updateTouchInput(touchPoint, isTouched);
         }
     }
 
@@ -289,6 +293,11 @@ public class GameWorld implements GameInterface{
     public void givePlayerItem(int type, int thing, int amount){
         player.giveItem(type, thing, amount);
     }
+
+    @Override
+    public void updateInventoryUI(){
+
+    }
     //endregion
 
     //region loadGame
@@ -352,7 +361,7 @@ public class GameWorld implements GameInterface{
     public void setupItemsMenu(){
         itemsMenu = new PopupMenu(Assets.menuBackground, 10, 0, 130, 20);
 
-        PopupScrollArea itemsScrollArea = new PopupScrollArea(Assets.textSelection, 5, 5, 90, 10, 90, 10, PopupScrollArea.HORIZONTAL, 1, 5, 10);
+        itemsScrollArea = new PopupScrollArea(Assets.textSelection, 5, 5, 90, 10, 90, 10, PopupScrollArea.HORIZONTAL, 1, 5, 10);
         itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
         itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
         itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));

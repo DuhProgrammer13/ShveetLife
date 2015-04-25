@@ -17,4 +17,6 @@ public interface GameInterface {
     public Chunk getChunkAt(Vector3 pos);
     public void placeTileInFrontOfPlayer(TileObject to);
     public void givePlayerItem(int type, int thing, int amounts);
+    public void updateInventoryUI();
+
 }

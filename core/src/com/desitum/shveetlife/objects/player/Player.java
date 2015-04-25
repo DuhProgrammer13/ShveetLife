@@ -122,4 +122,12 @@ public class Player extends Sprite {
     public void giveItem(int type, int thing, int amount){
         inventory.addItem(type, thing, amount);
     }
+
+    public boolean inventoryUINeedsUpdate(){
+        return inventory.needsUpdate();
+    }
+
+    public PlayerInventory getInventory(){
+        return inventory;
+    }
 }
