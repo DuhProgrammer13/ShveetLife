@@ -54,6 +54,16 @@ public class PopupScrollArea extends PopupWidget {
     public void updateScrollInput(float amount){
         scrollAmount += amount;
 
+        if (scrollAmount > 0){
+            scrollAmount = 0;
+        } else if (scrollAmount < -(widgets.size() - 1) * (widgetSize + spacing)){
+            scrollAmount = -(widgets.size() - 1) * (widgetSize + spacing);
+        }
+
+        System.out.println(scrollAmount);
+        System.out.println(widgets.size());
+        System.out.println(widgetSize);
+        System.out.println(-(widgets.size() + spacing) * widgetSize + "\n----------------");
         updateWidgets();
     }
 
@@ -129,7 +139,6 @@ public class PopupScrollArea extends PopupWidget {
                 widget.setX(getX() + getWidth()/2 + (widgetNum / columns) * (widgetSize + spacing) + scrollAmount);
                 float widgetDistanceFromCenter = (getX() + getWidth()/2 - widget.getX() - widget.getWidth()/2) / activeWidth/2;
                 widgetDistanceFromCenter *= 4;
-                System.out.println(widgetDistanceFromCenter);
                 if (widgetDistanceFromCenter < 0) widgetDistanceFromCenter *= -1;
                 if (widgetDistanceFromCenter > 1) widgetDistanceFromCenter = 1;
                 widget.setAlpha(1 - widgetDistanceFromCenter);
@@ -194,5 +203,9 @@ public class PopupScrollArea extends PopupWidget {
             addWidget(widget);
         }
         updateWidgets();
+    }
+
+    public void goToWidget(int widgetNum){
+        scrollAmount = -(widgetNum / columns) * (widgetSize + spacing);
     }
 }

@@ -96,6 +96,9 @@ public class PlayerInventory {
                 popupWidgetArrayList.add(new PopupImage(TileData.getTileTexture(item[THING]), highlight, 0,0,10,10, false));
             }
         }
+
+        needUpdate = false;
+
         return popupWidgetArrayList;
     }
 }

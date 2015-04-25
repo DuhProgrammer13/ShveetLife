@@ -94,7 +94,10 @@ public class GameWorld implements GameInterface{
     //region updateMethods
     public void update(float delta){
         settingsMenu.update(delta);
-        if (player.inventoryUINeedsUpdate()) itemsScrollArea.setWidgets(player.getInventory().getPopupWidgets());
+        if (player.inventoryUINeedsUpdate()){
+            itemsScrollArea.setWidgets(player.getInventory().getPopupWidgets());
+            itemsScrollArea.goToWidget(player.getInventory().getPopupWidgets().size() - 1);
+        }
         itemsMenu.update(delta);
 
         player.update(delta);
