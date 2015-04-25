@@ -174,14 +174,12 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        System.out.println(keycode);
         gameWorld.updateKeys(keycode);
         return false;
     }
 
     @Override
     public boolean keyTyped(char character) {
-        System.out.println(character);
         return false;
     }
 
@@ -217,7 +215,7 @@ public class GameScreen implements Screen, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         gameWorld.updateScroll(amount);
-        System.out.println(amount);
+
         return false;
     }
 }

@@ -16,19 +16,18 @@ public class NPC extends Sprite {
     private int direction;
     private boolean moving;
     private boolean needToUpdate;
+    private boolean doingAction;
 
-    private float duration;
-    private float time;
+    public float duration;
+    public float timer;
 
     private float speed;
 
-    public static final float WIDTH = 10;
-    public static final float HEIGHT = 10;
 
-    private final int RIGHT = 1;
-    private final int LEFT = 2;
-    private final int UP = 3;
-    private final int DOWN = 4;
+    public static final int RIGHT = 1;
+    public static final int LEFT = 2;
+    public static final int UP = 3;
+    public static final int DOWN = 4;
 
     public static final int ID = 2;
     public static final int X = 3;
@@ -47,9 +46,12 @@ public class NPC extends Sprite {
         this.setPosition(x, y);
 
         this.setOriginCenter();
-        this.speed = 30;
+        this.speed = 20;
         this.duration = 0;
+        this.timer = 0;
+        this.moving = false;
         this.needToUpdate = false;
+        this.doingAction = false;
 
         centerPos = new Vector3(getOriginX(), getOriginY(), 0);
 
@@ -63,8 +65,9 @@ public class NPC extends Sprite {
         }else {
             needToUpdate = true;
         }
-        if (time <= duration){
-            if (moving) {
+
+        if (timer <= duration){
+             if (moving) {
                 if (direction == RIGHT) {
                     if(gameInterface.getChunkAt(new Vector3(getX() + speed * delta, getY(), 0))!= null) {
                         setX(getX() + speed * delta);
@@ -83,7 +86,7 @@ public class NPC extends Sprite {
                     }
                 }
                 updateSpeed();
-                time += delta;
+                timer += delta;
             }
         } else {
             moving = false;
@@ -91,8 +94,7 @@ public class NPC extends Sprite {
     }
 
     public void wantsToMove(){
-
-        time = 0;
+        timer = 0;
         duration = (float)(Math.random() * 3.0);
         if(duration <= 1){
             duration += 1;
@@ -119,7 +121,7 @@ public class NPC extends Sprite {
         return 1;
     }
 
-    public Vector3 getPositionInFront(){ //NOT USED YET, BUT WILL FOR CONTROLLER LATER
+    public Vector3 getNPCPosition(){
         if (direction == RIGHT){
             return new Vector3(getX() + getWidth() + 1, getY() + (getHeight()/2), 0);
         } else if (direction == LEFT){
@@ -160,7 +162,7 @@ public class NPC extends Sprite {
     }
 
     private void updateSpeed(){
-        speed = gameInterface.getTile(new Vector3(getOriginX(), getOriginY(), 0)).getPlayerSpeed()/2;
+        speed = gameInterface.getTile(new Vector3(getOriginX(), getOriginY(), 0)).getPlayerSpeed()/3;
     }
 
     public boolean isMoving(){
@@ -174,4 +176,25 @@ public class NPC extends Sprite {
     public boolean needsUpdate(){
         return needToUpdate;
     }
+
+    public boolean doingAction() {
+        return doingAction;
+    }
+
+    public void setDoingAction(boolean action){
+        this.doingAction = action;
+    }
+
+    public void setNPCDirection(int direction){
+        this.direction = direction;
+    }
+
+    public void setNPCMoving(boolean moving){
+        this.moving = moving;
+    }
+
+    public void setDuration(float time){
+        this.duration = time;
+    }
+
 }

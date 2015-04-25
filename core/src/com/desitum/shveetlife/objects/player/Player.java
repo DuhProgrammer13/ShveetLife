@@ -123,6 +123,10 @@ public class Player extends Sprite {
         inventory.addItem(type, thing, amount);
     }
 
+    public boolean isPlayerMoving(){
+        return moving;
+    }
+
     public boolean inventoryUINeedsUpdate(){
         return inventory.needsUpdate();
     }

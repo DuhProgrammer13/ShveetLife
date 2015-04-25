@@ -129,7 +129,6 @@ public class PopupScrollArea extends PopupWidget {
                 widget.setX(getX() + getWidth()/2 + (widgetNum / columns) * (widgetSize + spacing) + scrollAmount);
                 float widgetDistanceFromCenter = (getX() + getWidth()/2 - widget.getX() - widget.getWidth()/2) / activeWidth/2;
                 widgetDistanceFromCenter *= 4;
-                System.out.println(widgetDistanceFromCenter);
                 if (widgetDistanceFromCenter < 0) widgetDistanceFromCenter *= -1;
                 if (widgetDistanceFromCenter > 1) widgetDistanceFromCenter = 1;
                 widget.setAlpha(1 - widgetDistanceFromCenter);

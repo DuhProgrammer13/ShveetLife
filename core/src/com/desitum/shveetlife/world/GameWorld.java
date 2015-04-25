@@ -75,6 +75,9 @@ public class GameWorld implements GameInterface{
 
         npcController = new NPCController(this);
         int randomAmount = (int) (Math.random() * 10);
+        if(randomAmount < 1){
+            randomAmount =+ 1;
+        }
         for (int count = 0; count < randomAmount; count++) {
             int randomX = (int) (Math.random() * 10);
             int randomY = (int) (Math.random() * 10);
@@ -286,12 +289,19 @@ public class GameWorld implements GameInterface{
         TileObject from = chunk.getTileAt(player.getPositionInFront());
         int[] position = chunk.changeTile(from, to);
         data.add(ProcessData.EDIT + " " + ProcessData.TILE + " " + position[0] + " " + position[1] + " " + TileData.getTile(to.getClass()) + " " + chunk.getX() + " " + chunk.getY());
-        System.out.println(data.get(data.size()-1));
     }
 
     @Override
     public void givePlayerItem(int type, int thing, int amount){
         player.giveItem(type, thing, amount);
+    }
+
+    public Vector3 getPlayerPosition(){
+        return player.getPositionInFront();
+    }
+
+    public boolean isPlayerMoving(){
+        return player.isPlayerMoving();
     }
 
     @Override
@@ -324,7 +334,6 @@ public class GameWorld implements GameInterface{
         //GameWorld newWorld = newWorld = new GameWorld(sl, newWorldChunks, myNewPlayer, otherPlayer, newNPCs);
         GameWorld newWorld = new GameWorld(sl);
 
-        System.out.println(loadString);
         ArrayList<Chunk> newWorldChunks = new ArrayList<Chunk>();
         String[] loadStrings = loadString.split(":");
 
@@ -332,7 +341,6 @@ public class GameWorld implements GameInterface{
         for (String chunkString: chunkStrings){
             Chunk chunkToAdd = Chunk.loadFromString(chunkString, newWorld);
             if (chunkToAdd == null){
-                System.out.println("FETCH!!!!!");
             } else {
                 newWorldChunks.add(chunkToAdd);
             }

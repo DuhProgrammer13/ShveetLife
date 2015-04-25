@@ -19,4 +19,6 @@ public interface GameInterface {
     public void givePlayerItem(int type, int thing, int amounts);
     public void updateInventoryUI();
 
+    public Vector3 getPlayerPosition();
+    public boolean isPlayerMoving();
 }

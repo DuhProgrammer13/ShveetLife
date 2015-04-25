@@ -41,8 +41,9 @@ public class ShveetLife extends Game {
     //TODO Zack and Kody Checklist
     //Game Items
     //Game Objects (Buildings)
-    //Inventory
+    //Inventory (Whats left)
     //Life
+    //Gold Currency
     //Gold Shop Thingy
     //Save data/settings to Accounts
     //Add Savegame and LoadGame
