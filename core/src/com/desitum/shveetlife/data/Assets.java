@@ -44,6 +44,7 @@ public class Assets {
 
     public static Texture player;
     public static Texture player2;
+    public static Texture kingNPC;
     public static Texture npc;
 
     public static BitmapFont textFieldFont;
@@ -78,6 +79,7 @@ public class Assets {
         player = new Texture("game/player/player_square.png");
         player2 = new Texture("game/player/player_square_two.png");
         npc = new Texture("game/player/npc_square.png");
+        kingNPC = new Texture("game/player/king_npc.png");
 
         loadGameParticles();
         loadGameTiles();

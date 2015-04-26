@@ -13,7 +13,6 @@ public class NPCActions {
     private NPCController npcController;
 
     private boolean actionInProgress;
-    private boolean actionToggle;
     private int amountOfActions;
     private int currentAction;
     private int npcAmount;
@@ -31,7 +30,6 @@ public class NPCActions {
         ////////////////////////////////////////////////////
 
         actionInProgress = false;
-        actionToggle = false;
 
         currentAction = 0;
         npcAmount = 0;
@@ -46,11 +44,13 @@ public class NPCActions {
     }
     public void fillDurationList(){
         //PUT HOW LONG YOU WANT EACH ACTION TO LAST HERE
-        durationList.add(10f); //Follow Action
+
+        durationList.add(30f); //Follow King Action
         durationList.add(5f); //Build Farm Action
     }
     public void fillWantedNPCList(){
         //PUT HOW MANY NPC'S YOU WANT TO DO EACH ACTION HERE
+
         wantedNPCList.add(5); //Follow Action
         wantedNPCList.add(2); //Build Farm Action
     }
@@ -58,7 +58,7 @@ public class NPCActions {
     public void getAction(int actionID, NPC currentNPC){
         //FOR EACH ACTION YOU ADD, PUT IT HERE
         if(actionID == 0){
-            followAction(currentNPC);
+            followKingAction(currentNPC);
         } else if(actionID == 1){
             buildFarmAction(currentNPC);
         }
@@ -73,8 +73,8 @@ public class NPCActions {
                 currentAction = (int) (Math.random() * amountOfActions);
                 actionDuration = durationList.get(currentAction);
                 npcAmount = wantedNPCList.get(currentAction);
-                if(npcAmount > npcList.size()){
-                    npcAmount = npcList.size();
+                if(npcAmount >= npcList.size()){
+                    npcAmount = (npcList.size() - 1);
                 }
                 actionInProgress = true;
             } else {
@@ -82,7 +82,7 @@ public class NPCActions {
             }
         } else if(actionInProgress){
 
-            for(int npcCount = 0; npcCount < npcAmount; npcCount++){
+            for(int npcCount = 1; npcCount < (npcAmount + 1); npcCount++){
                 NPC currentNPC = npcList.get(npcCount);
 
                 if(!currentNPC.doingAction()){
@@ -105,8 +105,9 @@ public class NPCActions {
     }
 
 
-    public void followAction(NPC currentNPC){
-        Vector3 playerLocation = npcController.playerPosition();
+    public void followKingAction(NPC currentNPC){
+        //Vector3 playerLocation = npcController.playerPosition();
+        Vector3 kingLocation = npcController.npcPosition(npcList.get(0));
         Vector3 npcLocation = npcController.npcPosition(currentNPC);
 
         int randomDifference1 = (int)(Math.random() * 4);
@@ -114,10 +115,10 @@ public class NPCActions {
             randomDifference1++;
         }
 
-        float endXLeft = (playerLocation.x - randomDifference1);
-        float endXRight = (playerLocation.x + randomDifference1);
-        float endYTop = (playerLocation.y + randomDifference1);
-        float endYBottom = (playerLocation.y - randomDifference1);
+        float endXLeft = (kingLocation.x - randomDifference1);
+        float endXRight = (kingLocation.x + randomDifference1);
+        float endYTop = (kingLocation.y + randomDifference1);
+        float endYBottom = (kingLocation.y - randomDifference1);
 
         if(npcLocation.x < (endXLeft - 2) || npcLocation.x > (endXRight + 2)){
             if(npcLocation.x < (endXLeft - 1)){
@@ -145,7 +146,7 @@ public class NPCActions {
     }
 
     public void buildFarmAction(NPC currentNPC){
-            followAction(currentNPC);
+            followKingAction(currentNPC);
     }
 
 }

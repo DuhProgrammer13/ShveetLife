@@ -29,7 +29,7 @@ public class NPCController {
         for(NPC npc: npcs){
             if(!npc.doingAction()) {
                 if (!npc.isMoving()) {
-                    npc.wantsToMove();
+                    npc.idleMove();
                 }
             }
             npc.update(delta);
@@ -78,13 +78,8 @@ public class NPCController {
         return gameInterface.getPlayerPosition();
     }
 
-    public boolean isPlayerMoving(){
-        return gameInterface.isPlayerMoving();
-    }
-
     public Vector3 npcPosition(NPC npc){
-        Vector3 location = npc.getNPCPosition();
-        return location;
+        return npc.getNPCPosition();
     }
 
 }

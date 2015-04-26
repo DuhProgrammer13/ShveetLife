@@ -20,9 +20,7 @@ public class NPC extends Sprite {
 
     public float duration;
     public float timer;
-
     private float speed;
-
 
     public static final int RIGHT = 1;
     public static final int LEFT = 2;
@@ -41,6 +39,9 @@ public class NPC extends Sprite {
         super(Assets.npc, 0, 0, Assets.npc.getWidth(), Assets.npc.getHeight());
 
         this.id = id;
+        if(id == 0){
+            this.setTexture(Assets.kingNPC);
+        }
 
         this.setSize(width, height);
         this.setPosition(x, y);
@@ -93,7 +94,7 @@ public class NPC extends Sprite {
         }
     }
 
-    public void wantsToMove(){
+    public void idleMove(){
         timer = 0;
         duration = (float)(Math.random() * 3.0);
         if(duration <= 1){
