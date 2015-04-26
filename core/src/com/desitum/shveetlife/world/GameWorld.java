@@ -99,7 +99,8 @@ public class GameWorld implements GameInterface{
         settingsMenu.update(delta);
         if (player.inventoryUINeedsUpdate()){
             itemsScrollArea.setWidgets(player.getInventory().getPopupWidgets());
-            itemsScrollArea.goToWidget(player.getInventory().getPopupWidgets().size() - 1);
+            itemsScrollArea.goToWidget(player.getInventory().getSelectedItemPos());
+            itemsScrollArea.selectWidget(player.getInventory().getSelectedItemPos(), true);
         }
         itemsMenu.update(delta);
 
@@ -150,6 +151,12 @@ public class GameWorld implements GameInterface{
                     affectedObject.useKey(key, player);
                     break;
                 case Input.Keys.A:
+                    player.useKey(key);
+                    break;
+                case Input.Keys.D:
+                    player.useKey(key);
+                    break;
+                case Input.Keys.S:
                     player.useKey(key);
                     break;
             }
@@ -303,6 +310,7 @@ public class GameWorld implements GameInterface{
         return player.getPositionInFront();
     }
 
+    @Override
     public boolean isPlayerMoving(){
         return player.isPlayerMoving();
     }
@@ -310,6 +318,12 @@ public class GameWorld implements GameInterface{
     @Override
     public void updateInventoryUI(){
 
+    }
+
+    @Override
+    public int[] getSelectedItem() {
+        int[] playerItem = player.getInventory().getSelectedItem();
+        return new int[]{player.getInventory().getSelectedItemPos(), playerItem[0], playerItem[1], playerItem[3]};
     }
     //endregion
 

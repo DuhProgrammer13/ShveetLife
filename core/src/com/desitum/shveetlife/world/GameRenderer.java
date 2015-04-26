@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.desitum.shveetlife.data.Assets;
 import com.desitum.shveetlife.objects.Chunk;
 import com.desitum.shveetlife.objects.npc.NPC;
-import com.desitum.shveetlife.objects.tiles.TileObject;
 import com.desitum.shveetlife.objects.particles.Particle;
 import com.desitum.shveetlife.objects.tiles.GrassTile;
+import com.desitum.shveetlife.objects.tiles.TileObject;
 import com.desitum.shveetlife.screens.GameScreen;
 
 /**

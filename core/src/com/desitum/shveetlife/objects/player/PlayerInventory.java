@@ -24,6 +24,7 @@ public class PlayerInventory {
 
     ArrayList<int[]> inventory;
     int[] itemSelected;
+    int itemSelectedPosition;
 
     public static final int TYPE = 0;
     public static final int THING = 1;
@@ -56,6 +57,7 @@ public class PlayerInventory {
     }
 
     public void selectItem(int position){
+        itemSelectedPosition = position;
         itemSelected = inventory.get(position);
     }
 
@@ -76,7 +78,9 @@ public class PlayerInventory {
             int[] item = iter.next();
             if (item[AMOUNT] == 0){
                 iter.remove();
-                itemSelected = null;
+                itemSelectedPosition -= 1;
+                if (itemSelectedPosition < 0) itemSelectedPosition = 0;
+                itemSelected = inventory.size() >= 1 ? inventory.get(itemSelectedPosition) : null;
                 needUpdate = true;
                 gameInterface.updateInventoryUI();
             }
@@ -100,5 +104,29 @@ public class PlayerInventory {
         needUpdate = false;
 
         return popupWidgetArrayList;
+    }
+
+    public int[] getSelectedItem(){
+        return itemSelected;
+    }
+
+    public int getSelectedItemPos(){
+        return itemSelectedPosition;
+    }
+
+    public void selectPrevious(){
+        itemSelectedPosition -= 1;
+        if (itemSelectedPosition < 0){
+            itemSelectedPosition = 0;
+        }
+        needUpdate = true;
+    }
+
+    public void selectNext(){
+        itemSelectedPosition++;
+        if (itemSelectedPosition >= inventory.size()){
+            itemSelectedPosition--;
+        }
+        needUpdate = true;
     }
 }

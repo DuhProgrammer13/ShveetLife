@@ -79,6 +79,15 @@ public class PopupScrollArea extends PopupWidget {
                 } else {
                     button.onClickUp(false);
                 }
+            } else if (widget.getClass().equals(PopupImage.class)){
+                PopupImage button = (PopupImage) widget;
+                if (clickInArea && clickDown){
+                    button.onClickDown();
+                } else if (clickInArea) {
+                    button.onClickUp(true);
+                } else {
+                    button.onClickUp(false);
+                }
             }
         }
     }
@@ -206,6 +215,25 @@ public class PopupScrollArea extends PopupWidget {
     }
 
     public void goToWidget(int widgetNum){
+        System.out.println(widgetNum);
         scrollAmount = -(widgetNum / columns) * (widgetSize + spacing);
+        updateWidgets();
+        System.out.println(scrollAmount);
+    }
+
+    public void selectWidget(int position, boolean deselectRest){
+        if (deselectRest){
+            for (int pos = 0; pos < widgets.size(); pos++){
+                PopupWidget widget = widgets.get(pos);
+                if (widget.getClass().equals(PopupImage.class)){
+                    PopupImage image = (PopupImage) widget;
+                    if (pos == position){
+                        image.setActive();
+                    } else {
+                        image.deactivate();
+                    }
+                }
+            }
+        }
     }
 }

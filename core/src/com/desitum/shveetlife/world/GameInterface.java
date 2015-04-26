@@ -18,7 +18,7 @@ public interface GameInterface {
     public void placeTileInFrontOfPlayer(TileObject to);
     public void givePlayerItem(int type, int thing, int amounts);
     public void updateInventoryUI();
-
+    public int[] getSelectedItem();
     public Vector3 getPlayerPosition();
     public boolean isPlayerMoving();
 }

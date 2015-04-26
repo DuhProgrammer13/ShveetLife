@@ -59,6 +59,13 @@ public class Player extends Sprite {
         switch (key){
             case Input.Keys.A:
                 inventory.placeItem();
+                break;
+            case Input.Keys.S:
+                inventory.selectPrevious();
+                break;
+            case Input.Keys.D:
+                inventory.selectNext();
+                break;
         }
     }
 

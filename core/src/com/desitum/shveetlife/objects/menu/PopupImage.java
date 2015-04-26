@@ -97,14 +97,14 @@ public class PopupImage extends PopupWidget {
     @Override
     public void draw(SpriteBatch batch){
         super.draw(batch);
-        if (this.beenDown) batch.draw(downTexture, this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        if (this.beenDown) batch.draw(downTexture, this.getX() + getWidth()/2 - (getWidth() * getScaleX())/2, this.getY(), this.getWidth() * getScaleX(), this.getHeight());
     }
 
     public void setActive(){
         beenDown = true;
     }
 
-    public void deActive(){
+    public void deactivate(){
         beenDown = false;
     }
 

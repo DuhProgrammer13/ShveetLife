@@ -2,6 +2,7 @@ package com.desitum.shveetlife.objects.tiles;
 
 import com.badlogic.gdx.Input;
 import com.desitum.shveetlife.data.Assets;
+import com.desitum.shveetlife.network.ProcessData;
 import com.desitum.shveetlife.objects.particles.ParticleSettings;
 import com.desitum.shveetlife.objects.player.Player;
 import com.desitum.shveetlife.world.GameInterface;
@@ -54,6 +55,9 @@ public class WaterTile extends TileObject {
         health -= amount;
         if (health <= 0){
             gi.changeTile(this, new PathTile(gi, this.getX(), this.getY()));
+            gi.givePlayerItem(ProcessData.TILE, TileData.WATER, 1);
+            gi.givePlayerItem(ProcessData.TILE, TileData.FIRE, 1);
+            gi.givePlayerItem(ProcessData.TILE, TileData.PATH, 1);
         }
     }
 }
