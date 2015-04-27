@@ -15,8 +15,4 @@ public class ProcessData {
     public static final int TILE = 6;
     public static final int NPC = 7;
     public static final int BUILDING = 8;
-
-    public ProcessData(){
-
-    }
 }
