@@ -106,7 +106,6 @@ public class NPCActions {
 
 
     public void followKingAction(NPC currentNPC){
-        //Vector3 playerLocation = npcController.playerPosition();
         Vector3 kingLocation = npcController.npcPosition(npcList.get(0));
         Vector3 npcLocation = npcController.npcPosition(currentNPC);
 

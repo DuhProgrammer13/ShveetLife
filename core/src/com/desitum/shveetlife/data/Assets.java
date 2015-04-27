@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
  * Created by Zmyth97 on 4/3/2015.
  */
 public class Assets {
-
+    //Button Textures
     public static Texture playButtonUp;
     public static Texture playButtonDown;
     public static Texture connectButtonUp;
@@ -25,6 +25,7 @@ public class Assets {
     public static Texture exitButtonUp;
     public static Texture exitButtonDown;
 
+    //Menu Textures
     public static Texture textCursor;
     public static Texture textSelection;
     public static Texture textFieldBackground;
@@ -32,23 +33,30 @@ public class Assets {
     public static Texture itemMenuBackground;
     public static Texture itemMenuScrollArea;
 
+    //Tile Textures
     public static Texture grassTexture;
     public static Texture dirtTexture;
     public static Texture waterTexture;
     public static Texture fireTexture;
     public static Texture pathTexture;
 
+    //Building Textures
+    public static Texture castle;
+
+    //Particle Textures
     public static Texture grassParticle;
     public static Texture fireParticle;
     //public static Texture dirtParticle;
 
-    public static Texture emptyTexture;
-
+    //Character Textures
     public static Texture player;
     public static Texture player2;
     public static Texture kingNPC;
     public static Texture npc;
 
+
+    //Misc Textures
+    public static Texture emptyTexture;
     public static BitmapFont textFieldFont;
 
     public static void loadMenuButtons(){
@@ -84,6 +92,8 @@ public class Assets {
         player2 = new Texture("game/player/player_square_two.png");
         npc = new Texture("game/player/npc_square.png");
         kingNPC = new Texture("game/player/king_npc.png");
+
+        castle = new Texture("game/buildings/castle.png");
 
         loadGameParticles();
         loadGameTiles();
