@@ -99,7 +99,7 @@ public class GameWorld implements GameInterface{
         settingsMenu.update(delta);
         if (player.inventoryUINeedsUpdate()){
             itemsScrollArea.setWidgets(player.getInventory().getPopupWidgets());
-            itemsScrollArea.goToWidget(player.getInventory().getSelectedItemPos());
+            itemsScrollArea.slideToPosition(itemsScrollArea.getPositionToCenter(player.getInventory().getSelectedItemPos()));
             itemsScrollArea.selectWidget(player.getInventory().getSelectedItemPos(), true);
         }
         itemsMenu.update(delta);
@@ -384,13 +384,9 @@ public class GameWorld implements GameInterface{
     }
 
     public void setupItemsMenu(){
-        itemsMenu = new PopupMenu(Assets.menuBackground, 10, 0, 130, 20);
+        itemsMenu = new PopupMenu(Assets.itemMenuBackground, 0, 0, 150, 15);
 
-        itemsScrollArea = new PopupScrollArea(Assets.textSelection, 5, 5, 90, 10, 90, 10, PopupScrollArea.HORIZONTAL, 1, 5, 10);
-        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
-        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
-        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
-        itemsScrollArea.addWidget(new PopupButton(Assets.exitButtonUp, Assets.exitButtonDown, 0, 0, 10, 10));
+        itemsScrollArea = new PopupScrollArea(Assets.itemMenuScrollArea, 2.5f, 2.5f, 145, 10, 140, 10, PopupScrollArea.HORIZONTAL, 1, 5, 10);
 
         itemsMenu.addPopupWidget(itemsScrollArea);
     }

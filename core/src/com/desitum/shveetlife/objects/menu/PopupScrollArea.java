@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.desitum.shveetlife.libraries.CollisionDetection;
 import com.desitum.shveetlife.libraries.animation.Animator;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
+import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 
 import java.util.ArrayList;
 
@@ -31,6 +32,8 @@ public class PopupScrollArea extends PopupWidget {
     private float spacing;
     private float activeWidth;
     private float activeHeight;
+
+    private MovementAnimator slideAnimator;
 
     public PopupScrollArea (Texture background, float x, float y, float width, float height, float activeWidth, float activeHeight, int scrollDirection, int columns, float spacing, float widgetSize){
         super(background, width, height, x, y);
@@ -100,6 +103,14 @@ public class PopupScrollArea extends PopupWidget {
 
         for (Animator anim: goingOutAnimators){
             anim.update(delta);
+        }
+
+        if (slideAnimator != null){
+            if (slideAnimator.isRunning()){
+                slideAnimator.update(delta);
+                scrollAmount = slideAnimator.getAmount();
+                updateWidgets();
+            }
         }
     }
 
@@ -219,6 +230,15 @@ public class PopupScrollArea extends PopupWidget {
         scrollAmount = -(widgetNum / columns) * (widgetSize + spacing);
         updateWidgets();
         System.out.println(scrollAmount);
+    }
+
+    public void slideToPosition(float position){
+        slideAnimator = new MovementAnimator(scrollAmount, position, 0.75f, Interpolation.ACCELERATE_DECELERATE_INTERPOLATOR);
+        slideAnimator.start(false);
+    }
+
+    public float getPositionToCenter(int widgetNum){
+        return -(widgetNum / columns) * (widgetSize + spacing) - widgetSize/2;
     }
 
     public void selectWidget(int position, boolean deselectRest){

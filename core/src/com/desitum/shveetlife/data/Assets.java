@@ -29,6 +29,8 @@ public class Assets {
     public static Texture textSelection;
     public static Texture textFieldBackground;
     public static Texture menuBackground;
+    public static Texture itemMenuBackground;
+    public static Texture itemMenuScrollArea;
 
     public static Texture grassTexture;
     public static Texture dirtTexture;
@@ -69,6 +71,8 @@ public class Assets {
         textSelection = new Texture("menu/highlight.png");
         textFieldBackground = new Texture("menu/textFieldBackground.png");
         menuBackground = new Texture("menu/menu_bg.png");
+        itemMenuBackground = new Texture("menu/items_menu_area.png");
+        itemMenuScrollArea = new Texture("menu/items_scroll_area.png");
 
         textFieldFont = new BitmapFont(Gdx.files.internal("font/cartoon.fnt"), Gdx.files.internal("font/cartoon.png"), false);
         textFieldFont.setScale(0.15f);
