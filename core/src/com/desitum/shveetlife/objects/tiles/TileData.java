@@ -102,4 +102,26 @@ public class TileData {
         }
         return returnTexture;
     }
+
+    public static int getTilePrice(int tileNum){
+        int price = 0;
+        switch (tileNum){
+            case GRASS:
+                price = 10;
+                break;
+            case DIRT:
+                price = 5;
+                break;
+            case WATER:
+                price = 20;
+                break;
+            case PATH:
+                price = 50;
+                break;
+            case FIRE:
+                price = 50;
+                break;
+        }
+        return price;
+    }
 }

@@ -24,13 +24,6 @@ import com.desitum.shveetlife.world.MenuInterface;
 import com.desitum.shveetlife.world.MenuRenderer;
 import com.desitum.shveetlife.world.MenuWorld;
 
-import java.awt.GridLayout;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 /**
  * Created by dvan6234 on 4/3/2015.
  */

@@ -217,4 +217,12 @@ public class PopupMenu {
     public float getY(){
         return y;
     }
+
+    public float getWidth(){
+        return width;
+    }
+
+    public float getHeight(){
+        return height;
+    }
 }

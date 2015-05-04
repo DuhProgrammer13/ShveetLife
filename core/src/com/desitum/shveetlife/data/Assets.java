@@ -25,6 +25,13 @@ public class Assets {
     public static Texture exitButtonUp;
     public static Texture exitButtonDown;
 
+    public static Texture leftButtonUp;
+    public static Texture leftButtonDown;
+    public static Texture rightButtonUp;
+    public static Texture rightButtonDown;
+    public static Texture goldShopButtonUp;
+    public static Texture goldShopButtonDown;
+
     //Menu Textures
     public static Texture textCursor;
     public static Texture textSelection;
@@ -74,6 +81,13 @@ public class Assets {
         saveButtonDown = new Texture("menu/save_button_down.png");
         exitButtonUp = new Texture("menu/exit_button_up.png");
         exitButtonDown = new Texture("menu/exit_button_down.png");
+
+        leftButtonUp = new Texture("menu/left_arrow_up_button.png");
+        leftButtonDown = new Texture("menu/left_arrow_down_button.png");
+        rightButtonUp = new Texture("menu/right_arrow_up_button.png");
+        rightButtonDown = new Texture("menu/right_arrow_down_button.png");
+        goldShopButtonUp = new Texture("menu/shop_button_up.png");
+        goldShopButtonDown = new Texture("menu/shop_button_down.png");
 
         textCursor = new Texture("menu/cursor.png");
         textSelection = new Texture("menu/highlight.png");

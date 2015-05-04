@@ -131,6 +131,8 @@ public class GameScreen implements Screen, InputProcessor {
         batch.setProjectionMatrix(cam.combined);
         gameWorld.getSettingsMenu().draw(batch);
         gameWorld.getItemsMenu().draw(batch);
+        gameWorld.getGoldShopMenu().draw(batch);
+        gameWorld.getGoldShopButton().draw(batch);
         batch.end();
     }
 

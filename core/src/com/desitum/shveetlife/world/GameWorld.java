@@ -4,12 +4,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3;
 import com.desitum.shveetlife.ShveetLife;
 import com.desitum.shveetlife.data.Assets;
+import com.desitum.shveetlife.data.P2PGoldShop;
 import com.desitum.shveetlife.libraries.CollisionDetection;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
 import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 import com.desitum.shveetlife.network.DataManager;
 import com.desitum.shveetlife.network.ProcessData;
 import com.desitum.shveetlife.objects.Chunk;
+import com.desitum.shveetlife.objects.MenuButton;
+import com.desitum.shveetlife.objects.MenuButtonOnClickListener;
 import com.desitum.shveetlife.objects.menu.PopupButton;
 import com.desitum.shveetlife.objects.menu.PopupButtonListener;
 import com.desitum.shveetlife.objects.menu.PopupMenu;
@@ -45,6 +48,7 @@ public class GameWorld implements GameInterface{
     private ArrayList<String> loadData;
 
     private NPCController npcController;
+    private P2PGoldShop goldShop;
 
     private ArrayList<Particle> particles;
 
@@ -53,6 +57,8 @@ public class GameWorld implements GameInterface{
 
     private PopupMenu itemsMenu;
     private PopupScrollArea itemsScrollArea;
+
+    private MenuButton goldShopButton;
 
     public static final int RUNNING = 0;
     public static final int PAUSED = 1;
@@ -84,7 +90,17 @@ public class GameWorld implements GameInterface{
             npcController.addNPC(new NPC(this, 10, 10, randomX, randomY, count));
         }
 
+        goldShop = new P2PGoldShop(this);
+
         allChunks.add(loadedChunks.get(0));
+
+        goldShopButton = new MenuButton(Assets.goldShopButtonUp, Assets.goldShopButtonDown, 0, GameScreen.FRUSTUM_WIDTH - 15, GameScreen.FRUSTUM_HEIGHT - 15, 10, 10);
+        goldShopButton.setOnClickListener(new MenuButtonOnClickListener() {
+            @Override
+            public void onClick() {
+                moveInGoldShop();
+            }
+        });
 
         createLoadString();
 
@@ -103,6 +119,7 @@ public class GameWorld implements GameInterface{
             itemsScrollArea.selectWidget(player.getInventory().getSelectedItemPos(), true);
         }
         itemsMenu.update(delta);
+        goldShop.getPopupMenu().update(delta);
 
         player.update(delta);
         player2.update(delta, "");
@@ -168,6 +185,16 @@ public class GameWorld implements GameInterface{
             settingsMenu.updateTouchInput(touchPoint, isTouched);
         } else if (state == RUNNING){
             itemsMenu.updateTouchInput(touchPoint, isTouched);
+            goldShop.getPopupMenu().updateTouchInput(touchPoint, isTouched);
+
+            boolean clickInArea = CollisionDetection.pointInRectangle(goldShopButton.getBoundingRectangle(), touchPoint);
+            if (clickInArea && isTouched){
+                goldShopButton.onClickDown();
+            } else if (clickInArea) {
+                goldShopButton.onClickUp(true);
+            } else {
+                goldShopButton.onClickUp(false);
+            }
         }
     }
 
@@ -185,6 +212,8 @@ public class GameWorld implements GameInterface{
                     editPlayer(infoToUse);
                 } else if (Integer.parseInt(infoToUse[1]) == ProcessData.NPC){
                     npcController.updateFromString(infoToUse);
+                } else if (Integer.parseInt(infoToUse[1]) == ProcessData.SHOP){
+
                 }
             }
         } else {
@@ -193,8 +222,10 @@ public class GameWorld implements GameInterface{
                 workOnTile(infoToUse);
             } else if (Integer.parseInt(infoToUse[1]) == ProcessData.PLAYER) {
                 editPlayer(infoToUse);
-            } else if (Integer.parseInt(infoToUse[1]) == ProcessData.NPC){
+            } else if (Integer.parseInt(infoToUse[1]) == ProcessData.NPC) {
                 npcController.updateFromString(infoToUse);
+            } else if (Integer.parseInt(infoToUse[1]) == ProcessData.SHOP) {
+
             }
         }
     }
@@ -317,6 +348,11 @@ public class GameWorld implements GameInterface{
 
     @Override
     public void updateInventoryUI(){
+
+    }
+
+    @Override
+    public void addItemToShop() {
 
     }
 
@@ -514,6 +550,10 @@ public class GameWorld implements GameInterface{
         return settingsMenu;
     }
 
+    public PopupMenu getGoldShopMenu(){
+        return goldShop.getPopupMenu();
+    }
+
     public Chunk getChunkAtPos(float x, float y){
         for (Chunk chunk: allChunks){
             if (CollisionDetection.pointInRectangle(chunk.getBoundingRect(), new Vector3(x, y, 0))){
@@ -539,6 +579,10 @@ public class GameWorld implements GameInterface{
 
     public NPCController getNpcController(){
         return npcController;
+    }
+
+    public MenuButton getGoldShopButton(){
+        return goldShopButton;
     }
     //endregion
 
@@ -569,5 +613,13 @@ public class GameWorld implements GameInterface{
         settingsMenu.moveIn();
         player.pause();
         state = PAUSED;
+    }
+
+    public void moveInGoldShop(){
+        goldShop.moveIn();
+    }
+
+    public void moveOutGoldShop(){
+
     }
 }
