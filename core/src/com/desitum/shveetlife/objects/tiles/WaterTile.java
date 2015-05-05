@@ -23,7 +23,7 @@ public class WaterTile extends TileObject {
      */
     public WaterTile(GameInterface gi, float x, float y){
         super(Assets.waterTexture, 0, 0, Assets.waterTexture.getWidth(), Assets.waterTexture.getHeight());
-        health = 10;
+        health = 20;
 
         this.gi = gi;
 

@@ -13,8 +13,8 @@ import com.desitum.shveetlife.network.ProcessData;
 import com.desitum.shveetlife.objects.Chunk;
 import com.desitum.shveetlife.objects.MenuButton;
 import com.desitum.shveetlife.objects.MenuButtonOnClickListener;
+import com.desitum.shveetlife.objects.menu.OnClickListener;
 import com.desitum.shveetlife.objects.menu.PopupButton;
-import com.desitum.shveetlife.objects.menu.PopupButtonListener;
 import com.desitum.shveetlife.objects.menu.PopupMenu;
 import com.desitum.shveetlife.objects.menu.PopupScrollArea;
 import com.desitum.shveetlife.objects.menu.PopupSlider;
@@ -476,7 +476,7 @@ public class GameWorld implements GameInterface{
         settingsMenu.addPopupWidget(exitButton);
 
 
-        cancelButton.setButtonListener(new PopupButtonListener() {
+        cancelButton.setButtonListener(new OnClickListener() {
             @Override
             public void onClick() {
                 settingsMenu.moveOut();
@@ -484,7 +484,7 @@ public class GameWorld implements GameInterface{
             }
         });
 
-        saveButton.setButtonListener(new PopupButtonListener() {
+        saveButton.setButtonListener(new OnClickListener() {
             @Override
             public void onClick() {
                 settingsMenu.moveOut();
@@ -492,7 +492,7 @@ public class GameWorld implements GameInterface{
             }
         });
 
-        exitButton.setButtonListener(new PopupButtonListener() {
+        exitButton.setButtonListener(new OnClickListener() {
             @Override
             public void onClick() {
                 DataManager.exitGame();

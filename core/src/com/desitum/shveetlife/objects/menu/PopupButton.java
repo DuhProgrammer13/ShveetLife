@@ -18,7 +18,7 @@ public class PopupButton extends PopupWidget {
 
     private boolean beenDown;
 
-    private PopupButtonListener buttonListener;
+    private OnClickListener buttonListener;
 
     public PopupButton(Texture upTexture, Texture downTexture, float x, float y, float width, float height) {
         super(upTexture, width, height, x, y);
@@ -89,7 +89,7 @@ public class PopupButton extends PopupWidget {
         }
     }
 
-    public void setButtonListener(PopupButtonListener buttonListener) {
+    public void setButtonListener(OnClickListener buttonListener) {
         this.buttonListener = buttonListener;
     }
 }

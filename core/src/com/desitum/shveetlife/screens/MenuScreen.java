@@ -15,8 +15,8 @@ import com.desitum.shveetlife.data.Settings;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
 import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 import com.desitum.shveetlife.network.DataManager;
+import com.desitum.shveetlife.objects.menu.OnClickListener;
 import com.desitum.shveetlife.objects.menu.PopupButton;
-import com.desitum.shveetlife.objects.menu.PopupButtonListener;
 import com.desitum.shveetlife.objects.menu.PopupMenu;
 import com.desitum.shveetlife.objects.menu.PopupSlider;
 import com.desitum.shveetlife.objects.menu.PopupSliderListener;
@@ -87,7 +87,7 @@ public class MenuScreen implements Screen, MenuInterface {
         popupMenu.addOutgoingAnimator(yAnimator2);
 
         PopupButton cancelButton = new PopupButton(Assets.cancelButtonUp, Assets.cancelButtonDown, 5, 5, 57.5f, 15);
-        cancelButton.setButtonListener(new PopupButtonListener() {
+        cancelButton.setButtonListener(new OnClickListener() {
             @Override
             public void onClick() {
                 System.out.println("WHY?!?");
@@ -108,7 +108,7 @@ public class MenuScreen implements Screen, MenuInterface {
         popupMenu.addPopupWidget(volumeSlider);
 
         PopupButton okButton = new PopupButton(Assets.okButtonUp, Assets.okButtonDown, 67.5f, 5, 57.5f, 15);
-        okButton.setButtonListener(new PopupButtonListener() {
+        okButton.setButtonListener(new OnClickListener() {
             @Override
             public void onClick() {
                 System.out.println("WHY?!?");

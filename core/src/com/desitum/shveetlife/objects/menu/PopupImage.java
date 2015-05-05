@@ -21,7 +21,7 @@ public class PopupImage extends PopupWidget {
     private boolean beenDown;
     private boolean enabledClicking;
 
-    private PopupButtonListener buttonListener;
+    private OnClickListener buttonListener;
 
     public PopupImage(Texture upTexture, Texture highlight, float x, float y, float width, float height, boolean enabledClicking) {
         super(upTexture, width, height, x, y);
@@ -111,7 +111,7 @@ public class PopupImage extends PopupWidget {
         beenDown = false;
     }
 
-    public void setButtonListener(PopupButtonListener buttonListener) {
+    public void setButtonListener(OnClickListener buttonListener) {
         this.buttonListener = buttonListener;
     }
 }

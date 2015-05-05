@@ -6,8 +6,9 @@ import com.desitum.shveetlife.libraries.Drawing;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
 import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 import com.desitum.shveetlife.network.ProcessData;
+import com.desitum.shveetlife.objects.menu.OnClickListener;
 import com.desitum.shveetlife.objects.menu.PopupButton;
-import com.desitum.shveetlife.objects.menu.PopupButtonListener;
+import com.desitum.shveetlife.objects.menu.OnClickListener;
 import com.desitum.shveetlife.objects.menu.PopupImage;
 import com.desitum.shveetlife.objects.menu.PopupMenu;
 import com.desitum.shveetlife.objects.menu.PopupScrollArea;
@@ -161,7 +162,7 @@ public class P2PGoldShop {
         tilesScroll = new PopupScrollArea(Assets.itemMenuScrollArea, 20, menu.getHeight() - 20, menu.getWidth() - 40, 15, menu.getWidth() - 40, 15, PopupScrollArea.HORIZONTAL, 1, 5, 15);
 
         PopupButton tileLeftButton = new PopupButton(Assets.leftButtonUp, Assets.leftButtonDown, 5, tilesScroll.getY() + 2.5f, 10, 10);
-        tileLeftButton.setButtonListener(new PopupButtonListener() {
+        tileLeftButton.setButtonListener(new OnClickListener() {
             @Override
             public void onClick() {
                 tileMoveLeft();
@@ -169,7 +170,7 @@ public class P2PGoldShop {
         });
 
         PopupButton tileRightButton = new PopupButton(Assets.rightButtonUp, Assets.rightButtonDown, menu.getWidth() - 15, tilesScroll.getY() + 2.5f, 10, 10);
-        tileRightButton.setButtonListener(new PopupButtonListener() {
+        tileRightButton.setButtonListener(new OnClickListener() {
             @Override
             public void onClick() {
                 tileMoveRight();
