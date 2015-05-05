@@ -29,10 +29,16 @@ public class P2PGoldShop {
 
     private PopupMenu menu;
     private PopupScrollArea tilesScroll;
+    private PopupScrollArea buildingsScroll;
+    private PopupScrollArea itemsScroll;
 
     private int selectedTileItem;
+    private int selectedBuildingItem;
+    private int selectedItem;
 
     private int amountOfTilesAvailable;
+    private int amountOfBuildingssAvailable;
+    private int amountOfItemsAvailable;
 
     private GameInterface gameInterface;
 
@@ -159,6 +165,11 @@ public class P2PGoldShop {
         moveInAnimator.setControllingY(true);
         menu.addIncomingAnimator(moveInAnimator);
 
+        MovementAnimator moveOutAnimator = new MovementAnimator(10, -menu.getHeight(), 1, Interpolation.ACCELERATE_INTERPOLATOR);
+        moveOutAnimator.setControllingY(true);
+        menu.addOutgoingAnimator(moveOutAnimator);
+
+        //Tiles Row
         tilesScroll = new PopupScrollArea(Assets.itemMenuScrollArea, 20, menu.getHeight() - 20, menu.getWidth() - 40, 15, menu.getWidth() - 40, 15, PopupScrollArea.HORIZONTAL, 1, 5, 15);
 
         PopupButton tileLeftButton = new PopupButton(Assets.leftButtonUp, Assets.leftButtonDown, 5, tilesScroll.getY() + 2.5f, 10, 10);
@@ -178,9 +189,55 @@ public class P2PGoldShop {
         });
 
         menu.addPopupWidget(tilesScroll);
-
         menu.addPopupWidget(tileLeftButton);
         menu.addPopupWidget(tileRightButton);
+
+        //Buildings Row
+        buildingsScroll = new PopupScrollArea(Assets.itemMenuScrollArea, 20, menu.getHeight() - 40, menu.getWidth() - 40, 15, menu.getWidth() - 40, 15, PopupScrollArea.HORIZONTAL, 1, 5, 15);
+
+        PopupButton buildingLeftButton = new PopupButton(Assets.leftButtonUp, Assets.leftButtonDown, 5, buildingsScroll.getY() + 2.5f, 10, 10);
+        buildingLeftButton.setButtonListener(new PopupButtonListener() {
+            @Override
+            public void onClick() {
+                buildingeMoveLeft();
+            }
+        });
+
+        PopupButton buildingRightButton = new PopupButton(Assets.rightButtonUp, Assets.rightButtonDown, menu.getWidth() - 15, buildingsScroll.getY() + 2.5f, 10, 10);
+        buildingRightButton.setButtonListener(new PopupButtonListener() {
+            @Override
+            public void onClick() {
+                buildingMoveRight();
+            }
+        });
+
+        menu.addPopupWidget(buildingsScroll);
+        menu.addPopupWidget(buildingLeftButton);
+        menu.addPopupWidget(buildingRightButton);
+
+        //Items/Misc Row
+        itemsScroll = new PopupScrollArea(Assets.itemMenuScrollArea, 20, menu.getHeight() - 60, menu.getWidth() - 40, 15, menu.getWidth() - 40, 15, PopupScrollArea.HORIZONTAL, 1, 5, 15);
+
+        PopupButton itemsLeftButton = new PopupButton(Assets.leftButtonUp, Assets.leftButtonDown, 5, itemsScroll.getY() + 2.5f, 10, 10);
+        itemsLeftButton.setButtonListener(new PopupButtonListener() {
+            @Override
+            public void onClick() {
+                itemsMoveLeft();
+            }
+        });
+
+        PopupButton itemsRightButton = new PopupButton(Assets.rightButtonUp, Assets.rightButtonDown, menu.getWidth() - 15, itemsScroll.getY() + 2.5f, 10, 10);
+        itemsRightButton.setButtonListener(new PopupButtonListener() {
+            @Override
+            public void onClick() {
+                itemsMoveRight();
+            }
+        });
+
+        menu.addPopupWidget(itemsScroll);
+        menu.addPopupWidget(itemsLeftButton);
+        menu.addPopupWidget(itemsRightButton);
+
 
         for (int[] item: p2items) {
             if (item[ITEM_TYPE] == ProcessData.TILE){
@@ -205,6 +262,34 @@ public class P2PGoldShop {
         if (selectedTileItem >= amountOfTilesAvailable) selectedTileItem = amountOfTilesAvailable - 1;
         tilesScroll.selectWidget(selectedTileItem, true);
         tilesScroll.slideToPosition(tilesScroll.getPositionToCenter(selectedTileItem));
+    }
+
+    private void buildingeMoveLeft(){
+        selectedBuildingItem -= 1;
+        if (selectedBuildingItem < 0) selectedBuildingItem = 0;
+        buildingsScroll.selectWidget(selectedBuildingItem, true);
+        buildingsScroll.slideToPosition(buildingsScroll.getPositionToCenter(selectedBuildingItem));
+    }
+
+    private void buildingMoveRight(){
+        selectedBuildingItem += 1;
+        if (selectedBuildingItem >= amountOfBuildingssAvailable) selectedTileItem = amountOfBuildingssAvailable - 1;
+        buildingsScroll.selectWidget(selectedBuildingItem, true);
+        buildingsScroll.slideToPosition(buildingsScroll.getPositionToCenter(selectedBuildingItem));
+    }
+
+    private void itemsMoveLeft(){
+        selectedItem -= 1;
+        if (selectedItem < 0) selectedItem = 0;
+        itemsScroll.selectWidget(selectedItem, true);
+        itemsScroll.slideToPosition(itemsScroll.getPositionToCenter(selectedItem));
+    }
+
+    private void itemsMoveRight(){
+        selectedItem += 1;
+        if (selectedItem >= amountOfItemsAvailable) selectedItem = amountOfItemsAvailable - 1;
+        itemsScroll.selectWidget(selectedItem, true);
+        itemsScroll.slideToPosition(itemsScroll.getPositionToCenter(selectedItem));
     }
 
     public void appear(){

@@ -3,6 +3,7 @@ package com.desitum.shveetlife;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.desitum.shveetlife.network.DataManager;
+import com.desitum.shveetlife.screens.MenuScreen;
 import com.desitum.shveetlife.screens.SplashScreen;
 
 public class ShveetLife extends Game {
@@ -35,8 +36,8 @@ public class ShveetLife extends Game {
 	}
 
     public void exitScreen(){
-        Screen splashScreen = new SplashScreen(this);
-        this.setScreen(splashScreen);
+        Screen menuScreen = new MenuScreen(this);
+        this.setScreen(menuScreen);
     }
     //TODO Zack and Kody Checklist
     //Game Items
@@ -45,7 +46,7 @@ public class ShveetLife extends Game {
     //Gold Currency
     //Gold Shop Thingy
     //Save data/settings to Accounts
-    //Add Savegame and LoadGame
+
 
     //OPTIONAL:
     //Add More NPC Commands/Actions
@@ -53,6 +54,7 @@ public class ShveetLife extends Game {
     //In Game Chat
     //In Game Compass/Mini Map
     //RedStone Like Stuff
+    //Add Savegame and LoadGame
 
     //POSSIBLE BUILDINGS
     //Castle

@@ -58,16 +58,16 @@ public class DataManager {
 
     public static void exitGame(){
         if(connectionType == "localhost"){
-            gameWorld.exitGame();
-            gameWorld = null;
             mainServer.disconnect();
             mainServer = null;
             myClient = null;
-        } else {
             gameWorld.exitGame();
             gameWorld = null;
+        } else {
             myClient.disconnect();
             myClient = null;
+            gameWorld.exitGame();
+            gameWorld = null;
         }
     }
 
