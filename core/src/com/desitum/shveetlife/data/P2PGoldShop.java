@@ -158,6 +158,10 @@ public class P2PGoldShop {
         moveInAnimator.setControllingY(true);
         menu.addIncomingAnimator(moveInAnimator);
 
+        MovementAnimator moveOutAnimator = new MovementAnimator(10, -menu.getHeight(), 1, Interpolation.ACCELERATE_INTERPOLATOR);
+        moveOutAnimator.setControllingY(true);
+        menu.addOutgoingAnimator(moveOutAnimator);
+
         tilesScroll = new PopupScrollArea(Assets.itemMenuScrollArea, 20, menu.getHeight() - 20, menu.getWidth() - 40, 15, menu.getWidth() - 40, 15, PopupScrollArea.HORIZONTAL, 1, 5, 15);
 
         PopupButton tileLeftButton = new PopupButton(Assets.leftButtonUp, Assets.leftButtonDown, 5, tilesScroll.getY() + 2.5f, 10, 10);

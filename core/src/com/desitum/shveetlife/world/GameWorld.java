@@ -96,9 +96,15 @@ public class GameWorld implements GameInterface{
 
         goldShopButton = new MenuButton(Assets.goldShopButtonUp, Assets.goldShopButtonDown, 0, GameScreen.FRUSTUM_WIDTH - 15, GameScreen.FRUSTUM_HEIGHT - 15, 10, 10);
         goldShopButton.setOnClickListener(new MenuButtonOnClickListener() {
+            int clickCount = 1;
             @Override
             public void onClick() {
-                moveInGoldShop();
+                clickCount++;
+                if(clickCount % 2 == 0) {
+                    moveInGoldShop();
+                } else {
+                    moveOutGoldShop();
+                }
             }
         });
 
@@ -620,6 +626,6 @@ public class GameWorld implements GameInterface{
     }
 
     public void moveOutGoldShop(){
-
+        goldShop.moveOut();
     }
 }
