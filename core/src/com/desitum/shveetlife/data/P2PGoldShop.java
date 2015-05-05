@@ -23,6 +23,7 @@ import java.util.Iterator;
  * can be used by kody and people in []
  */
 public class P2PGoldShop {
+    //region data members
     private ArrayList<int[]> p1items;
     private ArrayList<int[]> p2items;
 
@@ -48,6 +49,7 @@ public class P2PGoldShop {
     public static final int ITEM_TYPE_DATA = 2;
     public static final int ITEM_ITEM_DATA = 3;
     public static final int ITEM_COUNT_DATA = 4;
+    //endregion
 
     public P2PGoldShop(GameInterface gi){
         gameInterface = gi;
@@ -168,7 +170,7 @@ public class P2PGoldShop {
         moveOutAnimator.setControllingY(true);
         menu.addOutgoingAnimator(moveOutAnimator);
 
-        //Tiles Row
+        //region Tiles Row
         tilesScroll = new PopupScrollArea(Assets.itemMenuScrollArea, 20, menu.getHeight() - 20, menu.getWidth() - 40, 15, menu.getWidth() - 40, 15, PopupScrollArea.HORIZONTAL, 1, 5, 15);
 
         PopupButton tileLeftButton = new PopupButton(Assets.leftButtonUp, Assets.leftButtonDown, 5, tilesScroll.getY() + 2.5f, 10, 10);
@@ -190,8 +192,9 @@ public class P2PGoldShop {
         menu.addPopupWidget(tilesScroll);
         menu.addPopupWidget(tileLeftButton);
         menu.addPopupWidget(tileRightButton);
+        //endregion
 
-        //Buildings Row
+        //region Buildings Row
         buildingsScroll = new PopupScrollArea(Assets.itemMenuScrollArea, 20, menu.getHeight() - 40, menu.getWidth() - 40, 15, menu.getWidth() - 40, 15, PopupScrollArea.HORIZONTAL, 1, 5, 15);
 
         PopupButton buildingLeftButton = new PopupButton(Assets.leftButtonUp, Assets.leftButtonDown, 5, buildingsScroll.getY() + 2.5f, 10, 10);
@@ -213,8 +216,9 @@ public class P2PGoldShop {
         menu.addPopupWidget(buildingsScroll);
         menu.addPopupWidget(buildingLeftButton);
         menu.addPopupWidget(buildingRightButton);
+        //endregion
 
-        //Items/Misc Row
+        //region Items Misc Row
         itemsScroll = new PopupScrollArea(Assets.itemMenuScrollArea, 20, menu.getHeight() - 60, menu.getWidth() - 40, 15, menu.getWidth() - 40, 15, PopupScrollArea.HORIZONTAL, 1, 5, 15);
 
         PopupButton itemsLeftButton = new PopupButton(Assets.leftButtonUp, Assets.leftButtonDown, 5, itemsScroll.getY() + 2.5f, 10, 10);
@@ -236,6 +240,7 @@ public class P2PGoldShop {
         menu.addPopupWidget(itemsScroll);
         menu.addPopupWidget(itemsLeftButton);
         menu.addPopupWidget(itemsRightButton);
+        //endregion
 
 
         for (int[] item: p2items) {
