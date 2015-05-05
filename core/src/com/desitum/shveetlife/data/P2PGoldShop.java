@@ -8,7 +8,6 @@ import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 import com.desitum.shveetlife.network.ProcessData;
 import com.desitum.shveetlife.objects.menu.OnClickListener;
 import com.desitum.shveetlife.objects.menu.PopupButton;
-import com.desitum.shveetlife.objects.menu.OnClickListener;
 import com.desitum.shveetlife.objects.menu.PopupImage;
 import com.desitum.shveetlife.objects.menu.PopupMenu;
 import com.desitum.shveetlife.objects.menu.PopupScrollArea;
@@ -196,7 +195,7 @@ public class P2PGoldShop {
         buildingsScroll = new PopupScrollArea(Assets.itemMenuScrollArea, 20, menu.getHeight() - 40, menu.getWidth() - 40, 15, menu.getWidth() - 40, 15, PopupScrollArea.HORIZONTAL, 1, 5, 15);
 
         PopupButton buildingLeftButton = new PopupButton(Assets.leftButtonUp, Assets.leftButtonDown, 5, buildingsScroll.getY() + 2.5f, 10, 10);
-        buildingLeftButton.setButtonListener(new PopupButtonListener() {
+        buildingLeftButton.setButtonListener(new OnClickListener() {
             @Override
             public void onClick() {
                 buildingeMoveLeft();
@@ -204,7 +203,7 @@ public class P2PGoldShop {
         });
 
         PopupButton buildingRightButton = new PopupButton(Assets.rightButtonUp, Assets.rightButtonDown, menu.getWidth() - 15, buildingsScroll.getY() + 2.5f, 10, 10);
-        buildingRightButton.setButtonListener(new PopupButtonListener() {
+        buildingRightButton.setButtonListener(new OnClickListener() {
             @Override
             public void onClick() {
                 buildingMoveRight();
@@ -219,7 +218,7 @@ public class P2PGoldShop {
         itemsScroll = new PopupScrollArea(Assets.itemMenuScrollArea, 20, menu.getHeight() - 60, menu.getWidth() - 40, 15, menu.getWidth() - 40, 15, PopupScrollArea.HORIZONTAL, 1, 5, 15);
 
         PopupButton itemsLeftButton = new PopupButton(Assets.leftButtonUp, Assets.leftButtonDown, 5, itemsScroll.getY() + 2.5f, 10, 10);
-        itemsLeftButton.setButtonListener(new PopupButtonListener() {
+        itemsLeftButton.setButtonListener(new OnClickListener() {
             @Override
             public void onClick() {
                 itemsMoveLeft();
@@ -227,7 +226,7 @@ public class P2PGoldShop {
         });
 
         PopupButton itemsRightButton = new PopupButton(Assets.rightButtonUp, Assets.rightButtonDown, menu.getWidth() - 15, itemsScroll.getY() + 2.5f, 10, 10);
-        itemsRightButton.setButtonListener(new PopupButtonListener() {
+        itemsRightButton.setButtonListener(new OnClickListener() {
             @Override
             public void onClick() {
                 itemsMoveRight();
