@@ -62,11 +62,6 @@ public class PopupScrollArea extends PopupWidget {
         } else if (scrollAmount < -(widgets.size() - 1) * (widgetSize + spacing)){
             scrollAmount = -(widgets.size() - 1) * (widgetSize + spacing);
         }
-
-        System.out.println(scrollAmount);
-        System.out.println(widgets.size());
-        System.out.println(widgetSize);
-        System.out.println(-(widgets.size() + spacing) * widgetSize + "\n----------------");
         updateWidgets();
     }
 
@@ -105,6 +100,10 @@ public class PopupScrollArea extends PopupWidget {
             anim.update(delta);
         }
 
+        for (PopupWidget widget: widgets){
+            widget.update(delta);
+        }
+
         if (slideAnimator != null){
             if (slideAnimator.isRunning()){
                 slideAnimator.update(delta);
@@ -130,6 +129,10 @@ public class PopupScrollArea extends PopupWidget {
 
     @Override
     public void startIncomingAnimators(){
+        for (PopupWidget widget: widgets){
+            widget.startIncomingAnimators();
+        }
+
         for (Animator anim: comingInAnimators){
             anim.start(false);
         }
@@ -137,6 +140,9 @@ public class PopupScrollArea extends PopupWidget {
 
     @Override
     public void startOutgoingAnimators(){
+        for (PopupWidget widget: widgets){
+            widget.startOutgoingAnimators();
+        }
         for (Animator anim: goingOutAnimators){
             anim.start(false);
         }
@@ -191,8 +197,8 @@ public class PopupScrollArea extends PopupWidget {
                         dupMov.setStartPos(toAdd.getX() - dupMov.getDistance());
                         dupMov.setEndPos(toAdd.getX());
                     } if (dupMov.isControllingY()){
-                        dupMov.setStartPos(toAdd.getY() - dupMov.getStartPos());
-                        dupMov.setEndPos(toAdd.getY());
+                        dupMov.setStartPos(dupMov.getStartPos());
+                        dupMov.setEndPos(dupMov.getEndPos());
                     }
                     toAdd.addIncomingAnimator(dupMov);
                 }
@@ -226,10 +232,8 @@ public class PopupScrollArea extends PopupWidget {
     }
 
     public void goToWidget(int widgetNum){
-        System.out.println(widgetNum);
         scrollAmount = -(widgetNum / columns) * (widgetSize + spacing);
         updateWidgets();
-        System.out.println(scrollAmount);
     }
 
     public void slideToPosition(float position){

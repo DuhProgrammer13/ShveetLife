@@ -160,14 +160,7 @@ public class P2PGoldShop {
 
         tilesScroll = new PopupScrollArea(Assets.itemMenuScrollArea, 20, menu.getHeight() - 20, menu.getWidth() - 40, 15, menu.getWidth() - 40, 15, PopupScrollArea.HORIZONTAL, 1, 5, 15);
 
-        for (int[] item: p2items) {
-            if (item[ITEM_TYPE] == ProcessData.TILE){
-                tilesScroll.addWidget(new PopupImage(TileData.getTileTexture(item[ITEM_ITEM]), highlight, 0, 0, 15, 15, false));
-            }
-        }
-
-        menu.addPopupWidget(tilesScroll);
-        PopupButton tileLeftButton = new PopupButton(Assets.leftButtonUp, Assets.leftButtonDown, 5, tilesScroll.getY() + 5, 10, 10);
+        PopupButton tileLeftButton = new PopupButton(Assets.leftButtonUp, Assets.leftButtonDown, 5, tilesScroll.getY() + 2.5f, 10, 10);
         tileLeftButton.setButtonListener(new PopupButtonListener() {
             @Override
             public void onClick() {
@@ -175,7 +168,7 @@ public class P2PGoldShop {
             }
         });
 
-        PopupButton tileRightButton = new PopupButton(Assets.rightButtonUp, Assets.rightButtonDown, menu.getWidth() - 15, tilesScroll.getY() + 5, 10, 10);
+        PopupButton tileRightButton = new PopupButton(Assets.rightButtonUp, Assets.rightButtonDown, menu.getWidth() - 15, tilesScroll.getY() + 2.5f, 10, 10);
         tileRightButton.setButtonListener(new PopupButtonListener() {
             @Override
             public void onClick() {
@@ -183,8 +176,16 @@ public class P2PGoldShop {
             }
         });
 
+        menu.addPopupWidget(tilesScroll);
+
         menu.addPopupWidget(tileLeftButton);
         menu.addPopupWidget(tileRightButton);
+
+        for (int[] item: p2items) {
+            if (item[ITEM_TYPE] == ProcessData.TILE){
+                tilesScroll.addWidget(new PopupImage(TileData.getTileTexture(item[ITEM_ITEM]), highlight, 0, 0, 15, 15, false));
+            }
+        }
     }
 
     public PopupMenu getPopupMenu(){

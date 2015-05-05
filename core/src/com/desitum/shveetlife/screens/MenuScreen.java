@@ -160,7 +160,7 @@ public class MenuScreen implements Screen, MenuInterface {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        batch.draw(Assets.menuBackground, 0, 0, 160, 160);
+        batch.draw(Assets.menuBackground, 0, 0, MenuScreen.FRUSTUM_WIDTH, MenuScreen.FRUSTUM_HEIGHT);
         menuRenderer.draw();
         popupMenu.draw(batch);
         batch.end();

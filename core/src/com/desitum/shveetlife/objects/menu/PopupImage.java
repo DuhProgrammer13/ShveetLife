@@ -3,12 +3,13 @@ package com.desitum.shveetlife.objects.menu;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.desitum.shveetlife.libraries.animation.Animator;
+import com.desitum.shveetlife.libraries.animation.MovementAnimator;
 
 import java.util.ArrayList;
 
 /**
  * Created by kody on 4/19/15.
- * can be used by kody and people in []
+ * can be used by kody and people in [Zack]
  */
 public class PopupImage extends PopupWidget {
     private Texture downTexture;
@@ -66,6 +67,7 @@ public class PopupImage extends PopupWidget {
         for (Animator anim: goingOutAnimators){
             anim.update(delta);
         }
+
     }
 
     @Override
@@ -82,7 +84,8 @@ public class PopupImage extends PopupWidget {
 
     @Override
     public void startIncomingAnimators(){
-        for (Animator anim: comingInAnimators){
+        for (Animator anim2: comingInAnimators){
+            MovementAnimator anim = (MovementAnimator) anim2;
             anim.start(false);
         }
     }
