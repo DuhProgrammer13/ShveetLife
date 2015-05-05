@@ -41,7 +41,6 @@ public class ShveetLife extends Game {
     //TODO Zack and Kody Checklist
     //Game Items
     //Game Objects (Buildings)
-    //Inventory (Whats left)
     //Life
     //Gold Currency
     //Gold Shop Thingy
@@ -49,9 +48,26 @@ public class ShveetLife extends Game {
     //Add Savegame and LoadGame
 
     //OPTIONAL:
-    //Fix Exitgame() command
+    //Add More NPC Commands/Actions
     //Add More Particles (Fireworks?)
     //In Game Chat
     //In Game Compass/Mini Map
+    //RedStone Like Stuff
+
+    //POSSIBLE BUILDINGS
+    //Castle
+    //Bank
+    //Village
+    //Shop
+    //Food Place
+    //NPC Spawner Building Thing
+    //Slave Shop (NPC's that follow you? :D)
+    //Weapon/Tool Shop?
+    //House
+    //Fountain
+    //Lamp
+    //Bush/Hedge
+    //Firework Shop
+    //Firework Spawner
 
 }

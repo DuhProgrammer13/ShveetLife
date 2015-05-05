@@ -78,7 +78,7 @@ public class MenuScreen implements Screen, MenuInterface {
 
         // code to create the settings menu
         // do not delete or edit without permission first
-        popupMenu = new PopupMenu(Assets.fireTexture, 10, -130, 130, 80);
+        popupMenu = new PopupMenu(Assets.textFieldBackground, 10, -130, 130, 80);
         MovementAnimator yAnimator = new MovementAnimator(-130, 10, 1, Interpolation.DECELERATE_INTERPOLATOR);
         yAnimator.setControllingY(true);
         popupMenu.addIncomingAnimator(yAnimator);
@@ -98,7 +98,7 @@ public class MenuScreen implements Screen, MenuInterface {
         });
         popupMenu.addPopupWidget(cancelButton);
 
-        final PopupSlider volumeSlider = new PopupSlider(Assets.pathTexture, Assets.textFieldBackground, 5, 60, 120, 5, 3, 10);
+        final PopupSlider volumeSlider = new PopupSlider(Assets.textFieldBackground, Assets.textFieldBackground, 5, 60, 120, 5, 3, 10);
         volumeSlider.setSliderListener(new PopupSliderListener() {
             @Override
             public void onChange(float pos) {
