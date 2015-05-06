@@ -119,7 +119,11 @@ public class PlayerInventory {
         if (itemSelectedPosition < 0){
             itemSelectedPosition = 0;
         }
-        itemSelected = inventory.get(itemSelectedPosition);
+        if (inventory.size() != 0){
+            itemSelected = inventory.get(itemSelectedPosition);
+        } else {
+            itemSelected = null;
+        }
         needUpdate = true;
     }
 
