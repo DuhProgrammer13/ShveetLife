@@ -1,4 +1,4 @@
-package com.desitum.shveetlife.objects.menu;
+package com.desitum.shveetlife.libraries.menu;
 
 /**
  * Created by kody on 4/21/15.

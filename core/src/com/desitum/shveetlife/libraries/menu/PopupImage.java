@@ -1,4 +1,4 @@
-package com.desitum.shveetlife.objects.menu;
+package com.desitum.shveetlife.libraries.menu;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
