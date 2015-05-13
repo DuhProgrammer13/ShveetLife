@@ -20,5 +20,6 @@ public class MenuRenderer {
         for (MenuButton menuButton: menuWorld.getMenuButtons()){
             menuButton.draw(batch);
         }
+        menuWorld.getPlayButton2().draw(batch);
     }
 }

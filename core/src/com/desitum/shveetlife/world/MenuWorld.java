@@ -1,12 +1,15 @@
 package com.desitum.shveetlife.world;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.desitum.shveetlife.data.Assets;
 import com.desitum.shveetlife.libraries.CollisionDetection;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
+import com.desitum.shveetlife.libraries.animation.ScaleAnimator;
 import com.desitum.shveetlife.libraries.interpolation.Interpolation;
 import com.desitum.shveetlife.objects.MenuButton;
 import com.desitum.shveetlife.objects.MenuButtonOnClickListener;
+import com.desitum.shveetlife.screens.MenuScreen;
 
 import java.util.ArrayList;
 
@@ -27,6 +30,10 @@ public class MenuWorld {
     private MenuButton playButton;
     private MenuButton connectButton;
     private MenuButton settingsButton;
+
+    private Sprite playButton2;
+
+    private ScaleAnimator animator;
 
 
     public MenuWorld(MenuInterface mi){
@@ -53,12 +60,20 @@ public class MenuWorld {
         buttons.add(settingsButton);
 
         setupOnClickListeners();
+
+        playButton2 = new Sprite(Assets.dirtTexture, 20, 20);
+        playButton2.setPosition(10, 10);
+        playButton2.setOrigin(MenuScreen.FRUSTUM_WIDTH/2, MenuScreen.FRUSTUM_HEIGHT/2);
+
+        animator = new ScaleAnimator(playButton2, 2, 1, 0, 1, Interpolation.ACCELERATE_INTERPOLATOR, true, true);
+        animator.start(false);
     }
 
     public void update(float delta){
         for (MenuButton menuButton: buttons){
             menuButton.update(delta);
         }
+        animator.update(delta);
     }
 
     public void updateTouchInput(Vector3 touchPos, boolean clickDown) {
@@ -97,5 +112,9 @@ public class MenuWorld {
 
     public ArrayList<MenuButton> getMenuButtons(){
         return this.buttons;
+    }
+
+    public Sprite getPlayButton2(){
+        return playButton2;
     }
 }
