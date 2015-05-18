@@ -201,7 +201,7 @@ public class P2PGoldShop {
         buildingLeftButton.setButtonListener(new OnClickListener() {
             @Override
             public void onClick() {
-                buildingeMoveLeft();
+                buildingMoveLeft();
             }
         });
 
@@ -268,7 +268,7 @@ public class P2PGoldShop {
         tilesScroll.slideToPosition(tilesScroll.getPositionToCenter(selectedTileItem));
     }
 
-    private void buildingeMoveLeft(){
+    private void buildingMoveLeft(){
         selectedBuildingItem -= 1;
         if (selectedBuildingItem < 0) selectedBuildingItem = 0;
         buildingsScroll.selectWidget(selectedBuildingItem, true);
