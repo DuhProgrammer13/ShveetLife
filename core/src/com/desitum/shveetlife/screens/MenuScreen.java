@@ -50,7 +50,6 @@ public class MenuScreen implements Screen, MenuInterface {
     private MenuRenderer menuRenderer;
 
     private Vector3 touchPoint;
-    private float lastClick;
 
     SpriteBatch batch;
 
@@ -73,8 +72,6 @@ public class MenuScreen implements Screen, MenuInterface {
         accounts = new Accounts();
 
         touchPoint = new Vector3(0, 0, 0);
-
-        lastClick = 0;
 
         // code to create the settings menu
         // do not delete or edit without permission first
@@ -134,12 +131,8 @@ public class MenuScreen implements Screen, MenuInterface {
     }
 
     private void updateInput(){
-        if (lastClick > 0){
-            return;
-        }
         if (Gdx.input.isTouched()) {
             cam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-            lastClick = 0.2f;
         }
 
         if (state == SETTINGS_MENU) {
@@ -152,7 +145,6 @@ public class MenuScreen implements Screen, MenuInterface {
     private void update(float delta){
         menuWorld.update(delta);
         popupMenu.update(delta);
-        lastClick -= delta;
     }
 
     private void draw(){
