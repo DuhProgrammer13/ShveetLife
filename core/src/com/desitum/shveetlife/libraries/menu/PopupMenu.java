@@ -1,12 +1,12 @@
 package com.desitum.shveetlife.libraries.menu;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.desitum.shveetlife.libraries.CollisionDetection;
 import com.desitum.shveetlife.libraries.animation.Animator;
 import com.desitum.shveetlife.libraries.animation.MovementAnimator;
-import com.desitum.shveetlife.libraries.animation.ScaleAnimator;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Created by kody on 4/18/15.
  * can be used by kody and people in [Zack, Kody]
  */
-public class PopupMenu {
+public class PopupMenu extends Sprite {
 
     private ArrayList<PopupWidget> widgets;
     private ArrayList<Animator> incomingAnimators;
@@ -32,6 +32,7 @@ public class PopupMenu {
     private int commandToSend;
 
     public PopupMenu(Texture background, float x, float y, float width, float height){
+        super(background, 0, 0, background.getWidth(), background.getHeight());
         widgets = new ArrayList<PopupWidget>();
         incomingAnimators = new ArrayList<Animator>();
         outgoingAnimators = new ArrayList<Animator>();
@@ -40,10 +41,8 @@ public class PopupMenu {
 
         this.background = background;
 
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+        setPosition(x, y);
+        this.setSize(width, height);
     }
 
     public void draw(SpriteBatch batch){
@@ -108,46 +107,12 @@ public class PopupMenu {
     }
 //Kody is an idiot
     private void updateAnimation(float delta){
-        for (Animator animator: incomingAnimators){
-            if (!animator.isRunning()) {
-                continue;
-            } else {
-                animator.update(delta);
-            }
-            if (animator.getClass().equals(MovementAnimator.class)){
-                if (animator.updateY()){
-                    this.y = animator.getAmount();
-                } if (animator.updateX()){
-                    this.x = animator.getAmount();
-                }
-            } else if (animator.getClass().equals(ScaleAnimator.class)) {
-                if (animator.updateY()){
-                    this.height = animator.getAmount();
-                } if (animator.updateX()){
-                    this.width = animator.getAmount();
-                }
-            }
+        for (Animator anim: incomingAnimators) {
+            anim.update(delta);
         }
 
-        for (Animator animator: outgoingAnimators){
-            if (!animator.isRunning()) {
-                continue;
-            } else {
-                animator.update(delta);
-            }
-            if (animator.getClass().equals(MovementAnimator.class)){
-                if (animator.updateY()){
-                    this.y = animator.getAmount();
-                } if (animator.updateX()){
-                    this.x = animator.getAmount();
-                }
-            } else if (animator.getClass().equals(ScaleAnimator.class)) {
-                if (animator.updateY()){
-                    this.height = animator.getAmount();
-                } if (animator.updateX()){
-                    this.width = animator.getAmount();
-                }
-            }
+        for (Animator anim: outgoingAnimators) {
+            anim.update(delta);
         }
     }
 

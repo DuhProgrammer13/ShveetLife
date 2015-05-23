@@ -19,6 +19,7 @@ public class Shatter {
     private int splitAmount;
     private int timesToSplit;
     private float gravity;
+    private float rotation;
     Texture shatterTexture;
     ArrayList<ShatteredPiece> pieces;
 
@@ -27,14 +28,26 @@ public class Shatter {
         this.timesToSplit = timesToSplit;
         this.splitAmount = splitAmount;
         this.gravity = gravity;
-        this.shatterTexture(shatterTexture, timesToSplit, splitAmount, new Vector2(shatterTexture.getWidth()/2, shatterTexture.getHeight()/2));
+        this.shatterTexture(shatterTexture, timesToSplit, splitAmount, new Vector2(shatterTexture.getWidth()/2, shatterTexture.getHeight()/2), null);
     }
 
     public Shatter(Texture shatterTexture, int timesToSplit, int splitAmount, float gravity, Vector2 shatterFrom) {
+        if (timesToSplit < 4) timesToSplit = 4;
         this.timesToSplit = timesToSplit;
         this.splitAmount = splitAmount;
         this.gravity = gravity;
-        this.shatterTexture(shatterTexture, timesToSplit, splitAmount, shatterFrom);
+        this.shatterTexture(shatterTexture, timesToSplit, splitAmount, shatterFrom, null);
+    }
+
+    public Shatter(Sprite sprite, int timesToSplit, int splitAmount, float gravity, Vector2 shatterFrom) {
+        if (timesToSplit < 4) timesToSplit = 4;
+        this.timesToSplit = timesToSplit;
+        this.splitAmount = splitAmount;
+        this.gravity = gravity;
+        shatterFrom.x = shatterFrom.x / sprite.getScaleX();
+        shatterFrom.y = shatterFrom.y / sprite.getScaleY();
+        this.shatterTexture(shatterTexture, timesToSplit, splitAmount, shatterFrom, null);
+
     }
 
     public void start() {
@@ -46,14 +59,15 @@ public class Shatter {
     }
 
     public void setRotationAmount(float rotationAmount) {
-
+        this.rotation = rotationAmount;
     }
 
-    private ArrayList<Texture> shatterTexture(Texture textureToShatter, int insideTimesToSplit, int insideSplitAmount, Vector2 shatterFrom) {
-        ArrayList<Texture> returnArray = new ArrayList<Texture>();
-        returnArray.add(textureToShatter);
-
+    private ArrayList<ShatteredPiece> shatterTexture(Texture textureToShatter, int insideTimesToSplit, int insideSplitAmount, Vector2 shatterFrom, PieceArea pieceArea) {
+        ArrayList<ShatteredPiece> returnArray = new ArrayList<ShatteredPiece>();
         if (insideTimesToSplit == 0){
+            if (pieceArea != null){
+                returnArray.add(new ShatteredPiece(pieceArea, this.gravity, this.rotation, this.gravity));
+            }
             return returnArray;
         }
 
@@ -77,8 +91,14 @@ public class Shatter {
 
             pieces.add(buildArea(angles.get(angles.size() - 1), firstAngle, shatterFrom, textureToShatter, insideTimesToSplit));
 
+            for (PieceArea piece: pieces){
+
+            }
+
             if (insideTimesToSplit > 1){
-                for (Texture text: shatterTexture(textureToShatter, insideTimesToSplit - 1, insideSplitAmount, shatterFrom, textureToShatter));
+//                for (Texture text: shatterTexture(textureToShatter, insideTimesToSplit - 1, insideSplitAmount, shatterFrom)) {
+//                    //returnArray.add(text);
+//                }
             }
         }
         return returnArray;
@@ -104,7 +124,34 @@ public class Shatter {
 
     private class ShatteredPiece extends Sprite {
 
-        public ShatteredPiece(Texture texture, float gravity, float rotation, float speedX, float speedY) {
+        private float rotation;
+        private float speedX;
+        private float speedY;
+        private float gravity;
+
+        public ShatteredPiece(Texture texture, float width, float height, float x, float y, float gravity, float rotation, float speedX, float speedY) {
+            super(texture, 0, 0, texture.getWidth(), texture.getHeight());
+            this.setSize(width, height);
+            this.setOriginCenter();
+
+            this.rotation = rotation;
+            this.speedX = speedX;
+            this.speedY = speedY;
+            this.gravity = gravity;
+        }
+
+        public ShatteredPiece(PieceArea pieceArea, float gravity, float rotation, float startingSpeed) {
+            super(pieceArea.getTexture(), 0, 0, pieceArea.getTexture().getWidth(), pieceArea.getTexture().getHeight());
+            this.setSize(pieceArea.getWidth(), pieceArea.getHeight());
+            this.setOriginCenter();
+
+            this.gravity = gravity;
+            this.rotation = rotation;
+            this.speedX = (float) Math.cos(pieceArea.getAverageAngle()) * startingSpeed;
+            this.speedY = (float) Math.sin(pieceArea.getAverageAngle()) * startingSpeed;
+        }
+
+        public void update(){
 
         }
     }
@@ -257,6 +304,10 @@ public class Shatter {
             Texture returnTexture = new Texture(pixmap.getWidth(), pixmap.getHeight(), Pixmap.Format.RGBA8888);
             returnTexture.draw(pixmap, 0, 0);
             return returnTexture;
+        }
+
+        public float getAverageAngle(){
+            return averageAngle;
         }
     }
 }

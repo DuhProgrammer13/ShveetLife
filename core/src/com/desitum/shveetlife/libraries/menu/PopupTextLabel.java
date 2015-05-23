@@ -1,41 +1,30 @@
-package com.desitum.shveetlife.objects.menu;
+package com.desitum.shveetlife.libraries.menu;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.desitum.shveetlife.libraries.animation.Animator;
 
 import java.util.ArrayList;
 
 /**
- * Created by kody on 4/21/15.
- * can be used by kody and people in []
+ * Created by kody on 5/23/15.
+ * can be used by kody and people in [kody}]
  */
-public class PopupTextBox extends PopupWidget {
+public class PopupTextLabel extends PopupWidget{
+
     private Texture backgroundTexture;
-    private Texture highlightTexture;
 
     private ArrayList<Animator> comingInAnimators;
     private ArrayList<Animator> goingOutAnimators;
 
-    private PopupSliderListener sliderListener;
+    private boolean beenDown;
 
-    private float sliderX;
-    private float sliderWidth;
-    private float sliderHeight;
+    private OnClickListener buttonListener;
 
-    private boolean beingMoved;
-
-    public PopupTextBox(Texture backgroundTexture, Texture highlightTexture, float x, float y, float width, float height, float sliderWidth, float sliderHeight) {
+    public PopupTextLabel(Texture backgroundTexture, Color highlightColor, float x, float y, float width, float height) {
         super(backgroundTexture, width, height, x, y);
 
-        this.beingMoved = false;
-
         this.backgroundTexture = backgroundTexture;
-        this.highlightTexture = highlightTexture;
-
-        this.sliderWidth = sliderWidth;
-        this.sliderHeight = sliderHeight;
 
         this.setSize(width, height);
         this.setPosition(x, y);
@@ -46,16 +35,19 @@ public class PopupTextBox extends PopupWidget {
         this.goingOutAnimators = new ArrayList<Animator>();
     }
 
-    public void onClickDown(Vector3 pos){
-        sliderX = pos.x - getX();
-        beingMoved = true;
+    public void onClickDown(){
+        beenDown = true;
     }
 
-    public void onClickUp(){
-        if (sliderListener != null  && beingMoved){
-            sliderListener.onChange(getPosition());
+    public void onClickUp(boolean clicked){
+        this.setTexture(backgroundTexture);
+        if (buttonListener != null && clicked && beenDown){
+            buttonListener.onClick();
         }
-        beingMoved = false;
+        beenDown = false;
+    }
+
+    public void resetState(){
     }
 
     @Override
@@ -69,40 +61,33 @@ public class PopupTextBox extends PopupWidget {
         }
     }
 
+    @Override
     public void addIncomingAnimator(Animator anim){
         anim.setSprite(this, anim.updateX(), anim.updateY());
         this.comingInAnimators.add(anim);
     }
 
+    @Override
     public void addOutgoingAnimator(Animator anim){
         anim.setSprite(this, anim.updateX(), anim.updateY());
         this.goingOutAnimators.add(anim);
     }
 
+    @Override
     public void startIncomingAnimators(){
         for (Animator anim: comingInAnimators){
             anim.start(false);
         }
     }
 
+    @Override
     public void startOutgoingAnimators(){
         for (Animator anim: goingOutAnimators){
             anim.start(false);
         }
     }
 
-    public void setSliderListener(PopupSliderListener sliderListener) {
-        this.sliderListener = sliderListener;
-    }
-
-    public float getPosition(){
-        return sliderX/getWidth();
-    }
-
-    @Override
-    public void draw(SpriteBatch batch){
-        super.draw(batch);
-        batch.draw(highlightTexture, getX() + sliderX - sliderWidth/2, getY() + getHeight()/2 - sliderHeight/2, sliderWidth, sliderHeight);
+    public void setButtonListener(OnClickListener buttonListener) {
+        this.buttonListener = buttonListener;
     }
 }
-
