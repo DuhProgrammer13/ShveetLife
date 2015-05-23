@@ -105,7 +105,7 @@ public class PopupMenu extends Sprite {
 
         updateAnimation(delta);
     }
-//Kody is an idiot
+
     private void updateAnimation(float delta){
         for (Animator anim: incomingAnimators) {
             anim.update(delta);
